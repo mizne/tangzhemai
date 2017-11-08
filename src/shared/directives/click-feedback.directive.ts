@@ -17,20 +17,10 @@ export class ClickFeedbackDirective {
     this.rd.addClass(this.el.nativeElement, this.activeCls)
 
     this.deviceFeedback.acoustic();
-    
     this.deviceFeedback.haptic(0);
-    
-    this.deviceFeedback.isFeedbackEnabled()
-      .then((feedback) => {
-        window.alert(feedback);
-        // {
-        //   acoustic: true,
-        //   haptic: true
-        // }
-      });
 
     setTimeout(() => {
-      this.rd.removeClass(this.el.nativeElement, this.activeCls)
+      this.rd.removeClass(this.el.nativeElement, this.activeCls || 'active')
     }, 1e2)
   }
 }

@@ -18,11 +18,13 @@ import { ApiErrorInterceptor } from './interceptors/api-error-interceptor'
 // import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { TabsPageModule } from '../pages/tabs/tabs.module'
 import { HomerPageModule } from '../pages/home/home.module'
 import { LoginPageModule } from '../pages/login/login.module'
 import { MinePageModule } from '../pages/mine/mine.module'
 import { StatisticsPageModule } from '../pages/statistics/statistics.module'
 import { OrderPageModule } from '../pages/order/order.module'
+import { AboutPageModule } from '../pages/about/about.module'
 
 import { LoggerService } from './services/logger.service'
 import { NativeService } from './services/native.service'
@@ -39,16 +41,17 @@ import './rxjs-imports'
 @NgModule({
   declarations: [
     MyApp,
-    TabsPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    TabsPageModule,
     HomerPageModule,
     LoginPageModule,
     MinePageModule,
     StatisticsPageModule,
-    // OrderPageModule,
+    OrderPageModule,
+    AboutPageModule,
 
     StoreModule.forRoot(reducers),
     !environment.production
@@ -64,7 +67,6 @@ import './rxjs-imports'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    TabsPage
   ],
   providers: [
     StatusBar,

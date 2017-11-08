@@ -1,5 +1,5 @@
 <ion-tabs>
-  <ion-tab [root]="home" tabTitle="躺着买" tabIcon="home"></ion-tab>
-  <ion-tab [root]="statistics" tabTitle="数据" tabIcon="podium"></ion-tab>
-  <ion-tab [root]="mine" tabTitle="我的" tabIcon="person"></ion-tab>
+  <ion-tab [root]="home" tabTitle="躺着买" tabIcon="home" (ionSelect)="clickTab()"></ion-tab>
+  <ion-tab [root]="statistics" tabTitle="数据" tabIcon="podium" (ionSelect)="clickTab()"></ion-tab>
+  <ion-tab [root]="mine" tabTitle="我的" tabIcon="person" (ionSelect)="clickTab()"></ion-tab>
 </ion-tabs>
