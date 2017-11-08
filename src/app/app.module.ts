@@ -28,6 +28,7 @@ import { AboutPageModule } from '../pages/about/about.module'
 
 import { LoggerService } from './services/logger.service'
 import { NativeService } from './services/native.service'
+import { FeedbackService } from './services/feedback.service'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -77,7 +78,8 @@ import './rxjs-imports'
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true },
     LoggerService,
-    NativeService
+    NativeService,
+    FeedbackService
   ]
 })
 export class AppModule {}

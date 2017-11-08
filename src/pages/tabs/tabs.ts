@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 
-import { DeviceFeedback } from '@ionic-native/device-feedback'
+import { FeedbackService } from '../../app/services/feedback.service'
 
 import { MinePage } from '../mine/mine'
 import { StatisticsPage } from '../statistics/statistics'
@@ -15,12 +15,11 @@ export class TabsPage {
   mine = MinePage
 
   constructor(
-    private deviceFeedback: DeviceFeedback
+    private feedbackService: FeedbackService
   ) {}
 
   clickTab() {
     console.log(123)
-    this.deviceFeedback.acoustic();
-    this.deviceFeedback.haptic(0);
+    this.feedbackService.feedback()
   }
 }
