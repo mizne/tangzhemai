@@ -16,7 +16,8 @@
       <div class="phone">13721080281</div>
     </div>
 
-    <div *ngFor="let action of actionItems" [ngClass]="['list-item', action.icon]" clickFeedback="active" (click)="executeAction(action.command)">
+    <div *ngFor="let action of actionItems" [ngClass]="['list-item', action.icon]"
+     clickFeedback (click)="executeAction(action.command)">
       <i [ngClass]="['prefix', 'iconfont', 'icon-' + action.icon]"></i>
       <span class="content">{{action.label}}</span>
       <i class="suffix iconfont icon-rightarrow"></i>

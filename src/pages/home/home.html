@@ -1,33 +1,33 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>金二村酒店</ion-title>
+    <ion-title class="text-center">金二村酒店</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <div class="home-container">
     <div class="main-actions">
-      <div class="main-action">
+      <div class="main-action" clickFeedback>
         <i class="iconfont icon-order"></i>
         <span>订单</span>
       </div>
-      <div class="main-action">
+      <div class="main-action" clickFeedback>
         <i class="iconfont icon-checkorder"></i>
         <span>对账</span>
       </div>
-      <div class="main-action">
+      <div class="main-action" clickFeedback>
         <i class="iconfont icon-statistics"></i>
         <span>统计</span>
       </div>
     </div>
 
     <div class="today-statistics">
-      <div class="today-item shishou">
+      <div class="today-item shishou" clickFeedback>
         <span class="value">0.00</span>
         <span class="label">今日实收(元)</span>
       </div>
 
-      <div class="today-item order">
+      <div class="today-item order" clickFeedback>
         <span class="value">0</span>
         <span class="label">订单笔数(笔)</span>
       </div>
@@ -36,7 +36,7 @@
     <div class="main-apps">
       <ion-grid>
         <ion-row class="first-row">
-          <ion-col *ngFor="let app of appRow1" col-3 class="main-app" clickFeedback="active">
+          <ion-col *ngFor="let app of appRow1" col-3 class="main-app" clickFeedback>
             <div [ngClass]="['icon-wrapper', app.value]">
               <i [ngClass]="['iconfont', 'icon-'+ app.value]"></i>
             </div>
@@ -44,7 +44,7 @@
           </ion-col>
         </ion-row>
         <ion-row class="second-row">
-          <ion-col *ngFor="let app of appRow2" col-3 class="main-app" clickFeedback="active">
+          <ion-col *ngFor="let app of appRow2" col-3 class="main-app" clickFeedback>
             <div [ngClass]="['icon-wrapper', app.value]">
               <i [ngClass]="['iconfont', 'icon-'+ app.value]"></i>
             </div>

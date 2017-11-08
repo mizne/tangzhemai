@@ -54,8 +54,6 @@ export class MinePage {
   ) {}
 
   executeAction(command: string) {
-    console.log(command)
-
     switch (command) {
       case 'employee':
         break
@@ -73,21 +71,19 @@ export class MinePage {
                 text: '取消',
                 role: 'cancel',
                 handler: () => {
-                  console.log('Cancel clicked')
                 }
               },
               {
                 text: '拨打',
                 handler: () => {
-                  console.log('Buy clicked')
 
                   this.callNumber
                     .callNumber('02586662644', true)
-                    .then(e => console.log(e))
                     .catch(e =>
                       this.alertCtrl.create({
                         title: '打电话失败',
-                        message: '拨打电话失败'
+                        message: '拨打电话失败',
+                        buttons: ['我知道了']
                       })
                     )
                 }
@@ -97,6 +93,8 @@ export class MinePage {
           .present()
         break
       case 'about':
+      this.navCtrl.push('AboutPage')
+      // this.store.dispatch(new ToAboutPageAction())
         break
 
       default:
@@ -114,13 +112,11 @@ export class MinePage {
             text: '取消',
             role: 'cancel',
             handler: () => {
-              console.log('Cancel clicked')
             }
           },
           {
             text: '退出',
             handler: () => {
-              console.log('Buy clicked')
               this.store.dispatch(new LogoutAction())
             }
           }

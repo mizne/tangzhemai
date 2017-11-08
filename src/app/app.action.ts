@@ -7,7 +7,6 @@ export const LOGOUT = '[App] Logout'
 export class ToLoginPageAction implements Action {
   readonly type = TO_LOGIN_PAGE
 }
-
 export class ToTabsPageAction implements Action {
   readonly type = TO_TABS_PAGE
 }
@@ -15,4 +14,8 @@ export class LogoutAction implements Action {
   readonly type = LOGOUT
 }
 
-export type Actions = ToLoginPageAction | ToTabsPageAction |LogoutAction
+
+export type Actions = 
+ToLoginPageAction | 
+ToTabsPageAction |
+LogoutAction 

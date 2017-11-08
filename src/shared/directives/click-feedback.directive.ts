@@ -14,12 +14,13 @@ export class ClickFeedbackDirective {
 
   @HostListener('click')
   clickItem() {
-    this.rd.addClass(this.el.nativeElement, this.activeCls)
+    const cls = this.activeCls || 'active'
+    this.rd.addClass(this.el.nativeElement, cls)
 
     this.feedabckService.feedback()
 
     setTimeout(() => {
-      this.rd.removeClass(this.el.nativeElement, this.activeCls || 'active')
+      this.rd.removeClass(this.el.nativeElement, cls)
     }, 1e2)
   }
 }

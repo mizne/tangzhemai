@@ -19,13 +19,19 @@
   background-image: none !important;
 }
 
-.toolbar-background {
-  background-color: map-get($colors, primary);
+.toolbar {
+  .back-button {
+    color: map-get($colors, light);
+  }
+  .toolbar-background {
+    background-color: map-get($colors, primary);
+  }
+  .toolbar-title {
+    color: map-get($colors, light);
+  }
 }
-.toolbar-title {
-  color: map-get($colors, light);
-  text-align: center;
-}
+
+
 
 .segment-button {
   color: map-get($map: $colors, $key: light) !important;
@@ -35,6 +41,7 @@
   }
 }
 
-.list-md[inset] {
-  margin: 0 !important;
+.scroll-content { 
+  background-color: map-get($map: $colors, $key: bgPage);
+  padding: 0 !important;
 }

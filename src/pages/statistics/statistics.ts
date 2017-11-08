@@ -164,8 +164,6 @@ export class StatisticsPage implements OnInit {
   }
 
   ionViewDidEnter(): void {
-    console.log('statistics did enter')
-
     this.store.dispatch(new FetchOrdersStatisticsOfToday())
     this.store.dispatch(new FetchOrdersStatisticsOfThisMonth())
     this.store.dispatch(new FetchOrdersStatisticsOfThisYear())

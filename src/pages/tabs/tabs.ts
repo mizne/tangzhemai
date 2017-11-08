@@ -19,7 +19,6 @@ export class TabsPage {
   ) {}
 
   clickTab() {
-    console.log(123)
     this.feedbackService.feedback()
   }
 }

@@ -8,7 +8,5 @@ export class FeedbackService {
   feedback() {
     this.deviceFeedback.acoustic()
     this.deviceFeedback.haptic(0)
-
-    console.log('fake feedback')
   }
 }
