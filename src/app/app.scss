@@ -14,3 +14,27 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+  background-image: none !important;
+}
+
+.toolbar-background {
+  background-color: map-get($colors, primary);
+}
+.toolbar-title {
+  color: map-get($colors, light);
+  text-align: center;
+}
+
+.segment-button {
+  color: map-get($map: $colors, $key: light) !important;
+  border-bottom: none !important;
+  &.segment-activated {
+    border-bottom: 2px solid map-get($map: $colors, $key: light) !important;
+  }
+}
+
+.list-md[inset] {
+  margin: 0 !important;
+}

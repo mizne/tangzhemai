@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>登录</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div class="logo">
+    <img src="assets/imgs/logo.png" alt="Ionic logo">
+  </div>
+
+  <form [formGroup]="myForm" novalidate (ngSubmit)="onLogin()">
+    <ion-list no-lines>
+      <ion-item>
+        <ion-label stacked color="primary">用户名</ion-label>
+        <ion-input type="text" formControlName="name" placeholder="请输入手机号/登录名" [clearInput]="true">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked color="primary">密码</ion-label>
+        <ion-input type="password" formControlName="password" placeholder="请输入登录密码" [clearInput]="true">
+        </ion-input>
+      </ion-item>
+
+      <div padding>
+        <button ion-button type="submit" [disabled]="!myForm.valid" block style="margin-top: 20px;">登录</button>
+      </div>
+    </ion-list>
+
+    
+    
+    <!--<button ion-button (click)="onSignup()" color="light" block>Signup</button>-->
+  </form>
+
+</ion-content>
