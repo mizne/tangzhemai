@@ -1,10 +1,13 @@
 import { Directive, HostListener, Input, Renderer2, ElementRef } from '@angular/core';
 
+import { DeviceFeedback } from '@ionic-native/device-feedback'
+
 @Directive({ selector: '[clickFeedback]' })
 export class ClickFeedbackDirective {
   constructor(
     private el: ElementRef,
-    private rd: Renderer2
+    private rd: Renderer2,
+    private deviceFeedback: DeviceFeedback
   ) { }
 
   @Input('clickFeedback') activeCls: string
@@ -12,6 +15,19 @@ export class ClickFeedbackDirective {
   @HostListener('click')
   clickItem() {
     this.rd.addClass(this.el.nativeElement, this.activeCls)
+
+    this.deviceFeedback.acoustic();
+    
+    this.deviceFeedback.haptic(0);
+    
+    this.deviceFeedback.isFeedbackEnabled()
+      .then((feedback) => {
+        window.alert(feedback);
+        // {
+        //   acoustic: true,
+        //   haptic: true
+        // }
+      });
 
     setTimeout(() => {
       this.rd.removeClass(this.el.nativeElement, this.activeCls)

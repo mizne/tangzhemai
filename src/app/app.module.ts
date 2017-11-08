@@ -31,6 +31,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Device } from '@ionic-native/device'
 import { CallNumber } from '@ionic-native/call-number'
+import { DeviceFeedback } from '@ionic-native/device-feedback'
 
 import './rxjs-imports'
 
@@ -70,6 +71,7 @@ import './rxjs-imports'
     SplashScreen,
     Device,
     CallNumber,
+    DeviceFeedback,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true },
     LoggerService,
