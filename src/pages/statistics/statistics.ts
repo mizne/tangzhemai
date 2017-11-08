@@ -23,6 +23,7 @@ import {
 
 import { StatisticsService } from './statistics.service'
 import { DestroyService } from '../../app/services/destroy.service'
+import { FeedbackService } from '../../app/services/feedback.service'
 /**
  * Generated class for the StatisticsManage page.
  *
@@ -156,7 +157,8 @@ export class StatisticsPage implements OnInit {
     public navParams: NavParams,
     private store: Store<State>,
     private statisticsService: StatisticsService,
-    private destroyService: DestroyService
+    private destroyService: DestroyService,
+    private feedbackService: FeedbackService
   ) {}
 
   ngOnInit(): void {
@@ -169,7 +171,9 @@ export class StatisticsPage implements OnInit {
     this.store.dispatch(new FetchOrdersStatisticsOfThisYear())
   }
 
-  segmentChanged() {}
+  segmentChanged() {
+    this.feedbackService.feedback()
+  }
 
   private initSubscriber(): void {
     Observable.combineLatest(

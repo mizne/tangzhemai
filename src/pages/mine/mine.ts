@@ -5,6 +5,7 @@ import { CallNumber } from '@ionic-native/call-number'
 import { Store } from '@ngrx/store'
 import { State } from './reducers'
 import { LogoutAction } from '../../app/app.action'
+import { FeedbackService } from '../../app/services/feedback.service'
 
 @Component({
   selector: 'page-mine',
@@ -50,7 +51,8 @@ export class MinePage {
     public navCtrl: NavController,
     private alertCtrl: AlertController,
     private callNumber: CallNumber,
-    private store: Store<State>
+    private store: Store<State>,
+    private feedbackService: FeedbackService
   ) {}
 
   executeAction(command: string) {
@@ -103,6 +105,9 @@ export class MinePage {
   }
 
   logout(): void {
+
+    this.feedbackService.feedback()
+
     this.alertCtrl
       .create({
         title: '退出',
