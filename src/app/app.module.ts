@@ -13,13 +13,15 @@ import { environment } from '../environments/environment';
 
 import { ApiErrorInterceptor } from './interceptors/api-error-interceptor'
 
-
-import { TabsPageModule } from '../pages/tabs/tabs.module'
-import { HomerPageModule } from '../pages/home/home.module'
 import { LoginPageModule } from '../pages/login/login.module'
-import { MinePageModule } from '../pages/mine/mine.module'
+import { TabsPageModule } from '../pages/tabs/tabs.module'
+
+import { HomePageModule } from '../pages/home/home.module'
 import { StatisticsPageModule } from '../pages/statistics/statistics.module'
+import { MinePageModule } from '../pages/mine/mine.module'
 import { OrderPageModule } from '../pages/order/order.module'
+import { CheckAccountPageModule } from '../pages/check-account/check-account.module'
+
 import { AboutPageModule } from '../pages/about/about.module'
 import { GoodsManagementPageModule } from '../pages/goods-management/goods-management.module'
 import { PurchaseManagementPageModule } from '../pages/purchase-management/purchase-management.module'
@@ -47,12 +49,16 @@ import './rxjs-imports'
   imports: [
     BrowserModule,
     HttpClientModule,
-    TabsPageModule,
-    HomerPageModule,
+
     LoginPageModule,
-    MinePageModule,
+    TabsPageModule,
+
+    HomePageModule,
     StatisticsPageModule,
+    MinePageModule,
     OrderPageModule,
+    CheckAccountPageModule,
+    
     AboutPageModule,
     GoodsManagementPageModule,
     PurchaseManagementPageModule,

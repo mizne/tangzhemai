@@ -7,15 +7,15 @@
 <ion-content>
   <div class="home-container">
     <div class="main-actions">
-      <div class="main-action" clickFeedback>
+      <div class="main-action" clickFeedback (click)="toPage('OrderPage')">
         <i class="iconfont icon-order"></i>
         <span>订单</span>
       </div>
-      <div class="main-action" clickFeedback>
+      <div class="main-action" clickFeedback (click)="toPage('CheckAccountPage')">
         <i class="iconfont icon-checkorder"></i>
         <span>对账</span>
       </div>
-      <div class="main-action" clickFeedback>
+      <div class="main-action" clickFeedback (click)="toPage('StatisticsPage')">
         <i class="iconfont icon-statistics"></i>
         <span>统计</span>
       </div>

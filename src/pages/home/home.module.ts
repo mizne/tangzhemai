@@ -15,4 +15,4 @@ import { reducers } from './reducers'
     IonicPageModule.forChild(HomePage)
   ]
 })
-export class HomerPageModule {}
+export class HomePageModule {}
