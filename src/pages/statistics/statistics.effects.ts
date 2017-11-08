@@ -4,7 +4,7 @@ import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/zip'
 import 'rxjs/add/operator/switchMap'
 import { Injectable } from '@angular/core'
-import { Effect, Actions, toPayload } from '@ngrx/effects'
+import { Effect, Actions } from '@ngrx/effects'
 import { Action } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
 import { of } from 'rxjs/observable/of'
@@ -12,12 +12,16 @@ import { of } from 'rxjs/observable/of'
 import { StatisticsService } from './statistics.service'
 import {
   FETCH_ORDERS_STATISTICS_OF_TODAY,
+  FetchOrdersStatisticsOfToday,
   LoadSuccessOrdersOfToday,
   FETCH_ORDERS_STATISTICS_OF_THIS_MONTH,
+  FetchOrdersStatisticsOfThisMonth,
   LoadSuccessOrdersOfThisMonth,
   FETCH_ORDERS_STATISTICS_OF_THIS_YEAR,
+  FetchOrdersStatisticsOfThisYear,
   LoadSuccessOrdersOfThisYear
 } from './statistics.action'
+import { StatisticsItem } from './models/statistics.model'
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your
@@ -40,12 +44,11 @@ export class StatisticsEffects {
   @Effect()
   fetchOrderStatisticsOfToday$: Observable<Action> = this.actions$
     .ofType(FETCH_ORDERS_STATISTICS_OF_TODAY)
-    .map(toPayload)
     .switchMap(() => {
       return this.statisticsService
         .fetchOrderStatisticsOfToday()
-        .map((orders: any[]) => {
-          return new LoadSuccessOrdersOfToday(orders)
+        .map((statisticsItems: StatisticsItem[]) => {
+          return new LoadSuccessOrdersOfToday(statisticsItems)
         })
         .catch(() => of(new LoadSuccessOrdersOfToday([])))
     })
@@ -53,12 +56,11 @@ export class StatisticsEffects {
   @Effect()
   fetchOrderStatisticsOfThisMonth$: Observable<Action> = this.actions$
     .ofType(FETCH_ORDERS_STATISTICS_OF_THIS_MONTH)
-    .map(toPayload)
     .switchMap(() => {
       return this.statisticsService
         .fetchOrderStatisticsOfThisMonth()
-        .map((orders: any[]) => {
-          return new LoadSuccessOrdersOfThisMonth(orders)
+        .map((statisticsItems: StatisticsItem[]) => {
+          return new LoadSuccessOrdersOfThisMonth(statisticsItems)
         })
         .catch(() => of(new LoadSuccessOrdersOfThisMonth([])))
     })
@@ -66,12 +68,11 @@ export class StatisticsEffects {
   @Effect()
   fetchOrderStatisticsOfThisYear$: Observable<Action> = this.actions$
     .ofType(FETCH_ORDERS_STATISTICS_OF_THIS_YEAR)
-    .map(toPayload)
     .switchMap(() => {
       return this.statisticsService
         .fetchOrderStatisticsOfThisYear()
-        .map((orders: any[]) => {
-          return new LoadSuccessOrdersOfThisYear(orders)
+        .map((statisticsItems: StatisticsItem[]) => {
+          return new LoadSuccessOrdersOfThisYear(statisticsItems)
         })
         .catch(() => of(new LoadSuccessOrdersOfThisYear([])))
     })

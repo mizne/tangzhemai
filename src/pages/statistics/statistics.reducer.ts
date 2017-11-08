@@ -1,4 +1,4 @@
-import { createSelector } from '@ngrx/store'
+import { StatisticsItem } from './models/statistics.model'
 
 import {
   FETCH_ORDERS_STATISTICS_OF_TODAY,
@@ -12,22 +12,16 @@ import {
 
 export interface State {
   loading: boolean
-  ordersStatisticsOfToday: any[]
-  todayChartData: any[]
-  ordersStatisticsOfThisMonth: any[]
-  monthChartData: any[]
-  ordersStatisticsOfThisYear: any[]
-  yearChartData: any[]
+  ordersStatisticsOfToday: StatisticsItem[]
+  ordersStatisticsOfThisMonth: StatisticsItem[]
+  ordersStatisticsOfThisYear: StatisticsItem[]
 }
 
 const initialState: State = {
   loading: false,
   ordersStatisticsOfToday: [],
-  todayChartData: [],
   ordersStatisticsOfThisMonth: [],
-  monthChartData: [],
   ordersStatisticsOfThisYear: [],
-  yearChartData: []
 }
 
 export function reducer(state: State = initialState, action: Actions): State {
@@ -41,57 +35,25 @@ export function reducer(state: State = initialState, action: Actions): State {
       }
 
     case LOAD_SUCCESS_ORDERS_OF_TODAY:
-      const todayChartData = [
-        {
-          data: action.payload.map(e => e.merchantAmount.value).map(Number),
-          label: '转给商户的钱'
-        },
-        {
-          data: action.payload.map(e => e.totalPrice.value).map(Number),
-          label: '订单价格'
-        }
-      ]
       return {
         ...state,
-        todayChartData,
         loading: false,
-        ordersStatisticsOfToday: action.payload
+        ordersStatisticsOfToday: action.todayStatistics
       }
 
     case LOAD_SUCCESS_ORDERS_OF_THIS_MONTH:
-      const monthChartData = [
-        {
-          data: action.payload.map(e => e.merchantAmount.value).map(Number),
-          label: '转给商户的钱'
-        },
-        {
-          data: action.payload.map(e => e.totalPrice.value).map(Number),
-          label: '订单价格'
-        }
-      ]
       return {
         ...state,
-        monthChartData,
         loading: false,
-        ordersStatisticsOfThisMonth: action.payload
+        ordersStatisticsOfThisMonth: action.thisMonthStatistics
       }
 
     case LOAD_SUCCESS_ORDERS_OF_THIS_YEAR:
-      const yearChartData = [
-        {
-          data: action.payload.map(e => e.merchantAmount.value).map(Number),
-          label: '转给商户的钱'
-        },
-        {
-          data: action.payload.map(e => e.totalPrice.value).map(Number),
-          label: '订单价格'
-        }
-      ]
+      
       return {
         ...state,
-        yearChartData,
         loading: false,
-        ordersStatisticsOfThisYear: action.payload
+        ordersStatisticsOfThisYear: action.thisYearStatistics
       }
 
     default: {
@@ -113,10 +75,10 @@ export const getLoading: (s: State) => boolean =
 (state) => state.loading
 
 export const getOrdersStatisticsOfToday: (s: State) => any[] = 
-(state) => state.todayChartData
+(state) => state.ordersStatisticsOfToday
 
 export const getOrdersStatisticsOfThisMonth: (s: State) => any[] = 
-(state) => state.monthChartData
+(state) => state.ordersStatisticsOfThisMonth
 
 export const getOrdersStatisticsOfThisYear: (s: State) => any[] = 
-(state) => state.yearChartData
+(state) => state.ordersStatisticsOfThisYear

@@ -22,6 +22,7 @@ import {
 
 
 import { StatisticsService } from './statistics.service'
+import { DestroyService } from '../../app/services/destroy.service'
 /**
  * Generated class for the StatisticsManage page.
  *
@@ -31,9 +32,10 @@ import { StatisticsService } from './statistics.service'
 @IonicPage()
 @Component({
   selector: 'page-statistics',
-  templateUrl: 'statistics.html'
+  templateUrl: 'statistics.html',
+  providers: [DestroyService]
 })
-export class StatisticsPage implements OnInit, OnDestroy {
+export class StatisticsPage implements OnInit {
   dateType: '今日' | '本月' | '本年' = '今日'
 
   // chartTypes: string[] = ['line', 'bar', 'doughnut']
@@ -153,67 +155,38 @@ export class StatisticsPage implements OnInit, OnDestroy {
     public navCtrl: NavController,
     public navParams: NavParams,
     private store: Store<State>,
-    private statisticsService: StatisticsService
+    private statisticsService: StatisticsService,
+    private destroyService: DestroyService
   ) {}
 
   ngOnInit(): void {
-    this.initStatistics()
-
-    this.store.select(getOrdersStatisticsOfToday)
-    .subscribe(e => {
-      console.log(e)
-    })
-
-    this.store.select(getOrdersStatisticsOfThisMonth)
-    .subscribe(e => {
-      console.log(e)
-    })
-
-    this.store.select(getOrdersStatisticsOfThisYear)
-    .subscribe(e => {
-      console.log(e)
-    })
+    this.initSubscriber()
   }
 
   ionViewDidEnter(): void {
     console.log('statistics did enter')
+
+    this.store.dispatch(new FetchOrdersStatisticsOfToday())
+    this.store.dispatch(new FetchOrdersStatisticsOfThisMonth())
+    this.store.dispatch(new FetchOrdersStatisticsOfThisYear())
   }
 
-  ngOnDestroy(): void {
-    this.destroyStatistics()
+  segmentChanged() {}
+
+  private initSubscriber(): void {
+    Observable.combineLatest(
+      this.store.select(getOrdersStatisticsOfToday).filter(e => e.length > 0),
+      this.store.select(getOrdersStatisticsOfThisMonth).filter(e => e.length > 0),
+      this.store.select(getOrdersStatisticsOfThisYear).filter(e => e.length > 0)
+    )
+    .takeUntil(this.destroyService)
+    .subscribe(([today, month, year]) => {
+      this.computeGridStatistics(today, month, year)
+      this.computeChartStatistics(today, month, year)
+    })
   }
 
-  segmentChanged(ev): void {}
-
-  /**
-   * 取消订阅 统计信息
-   * 
-   * @private
-   * @memberof StatisticsManage
-   */
-  private destroyStatistics(): void {
-    this.subscription.unsubscribe()
-  }
-
-  /**
-   * 订阅 统计消息
-   * 
-   * @private
-   * @memberof StatisticsManage
-   */
-  private initStatistics(): void {
-    this.subscription = this.statisticsService
-      .fetchOrderStatisticsOfToday()
-      .zip(
-        this.statisticsService.fetchOrderStatisticsOfThisMonth(),
-        this.statisticsService.fetchOrderStatisticsOfThisYear(),
-        (today, month, year) => [today, month, year]
-      )
-      .subscribe(([today, month, year]) => {
-        this.computeGridStatistics(today, month, year)
-        this.computeChartStatistics(today, month, year)
-      })
-  }
+  
 
   /**
    * 计算 表格统计信息

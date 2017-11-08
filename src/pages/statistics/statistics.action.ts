@@ -1,5 +1,7 @@
 import { Action } from '@ngrx/store'
 
+import { StatisticsItem } from './models/statistics.model'
+
 export const FETCH_ORDERS_STATISTICS_OF_TODAY =
   '[Statistics] FetchOrdersStatisticsOfToday'
 export const LOAD_SUCCESS_ORDERS_OF_TODAY =
@@ -24,38 +26,30 @@ export const LOAD_SUCCESS_ORDERS_OF_THIS_YEAR =
  */
 export class FetchOrdersStatisticsOfToday implements Action {
   readonly type = FETCH_ORDERS_STATISTICS_OF_TODAY
-
-  constructor(public payload?: any) {}
 }
 
 export class LoadSuccessOrdersOfToday implements Action {
   readonly type = LOAD_SUCCESS_ORDERS_OF_TODAY
 
-  constructor(public payload: any) {}
+  constructor(public todayStatistics: StatisticsItem[]) {}
 }
 
 export class FetchOrdersStatisticsOfThisMonth implements Action {
   readonly type = FETCH_ORDERS_STATISTICS_OF_THIS_MONTH
-
-  constructor(public payload?: any) {}
 }
 
 export class LoadSuccessOrdersOfThisMonth implements Action {
   readonly type = LOAD_SUCCESS_ORDERS_OF_THIS_MONTH
-
-  constructor(public payload: any) {}
+  constructor(public thisMonthStatistics: StatisticsItem[]) {}
 }
 
 export class FetchOrdersStatisticsOfThisYear implements Action {
   readonly type = FETCH_ORDERS_STATISTICS_OF_THIS_YEAR
-
-  constructor(public payload?: any) {}
 }
 
 export class LoadSuccessOrdersOfThisYear implements Action {
   readonly type = LOAD_SUCCESS_ORDERS_OF_THIS_YEAR
-
-  constructor(public payload: any) {}
+  constructor(public thisYearStatistics: StatisticsItem[]) {}
 }
 
 /**
