@@ -63,28 +63,28 @@ export class GoodsManagementPage implements OnInit {
     console.log('ionViewDidLoad GoodsManagementPage')
     const originalHandler = this.navbar.backButtonClick
 
-    this.navbar.backButtonClick = (event) => {
-      this.alertCtrl.create({
-        title: '测试',
-        message: '测试内容',
-        buttons: [
-          {
-            text: '取消',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          },
-          {
-            text: '确定',
-            handler: () => {
-              console.log('ensure');
-              originalHandler.call(this, event)
-            }
-          }
-        ]
-      }).present()
-    }
+    // this.navbar.backButtonClick = (event) => {
+    //   this.alertCtrl.create({
+    //     title: '测试',
+    //     message: '测试内容',
+    //     buttons: [
+    //       {
+    //         text: '取消',
+    //         role: 'cancel',
+    //         handler: () => {
+    //           console.log('Cancel clicked');
+    //         }
+    //       },
+    //       {
+    //         text: '确定',
+    //         handler: () => {
+    //           console.log('ensure');
+    //           originalHandler.call(this, event)
+    //         }
+    //       }
+    //     ]
+    //   }).present()
+    // }
 
     console.log(this.navbar)
   }
@@ -95,6 +95,31 @@ export class GoodsManagementPage implements OnInit {
     })
   }
 
+  ionViewCanLeave(): Promise<void> {
+    return new Promise((res, rej) => {
+      this.alertCtrl.create({
+        title: '可以走么',
+        message: '真的不可以走么',
+        buttons: [
+          {
+            text: '取消',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked')
+              rej()
+            }
+          },
+          {
+            text: '确定',
+            handler: () => {
+              console.log('ensure')
+              res()
+            }
+          }
+        ]
+      }).present()
+    })
+  }
 
   toAddGoods() {
     this.app.getRootNav().push(AddGoodsPage)
