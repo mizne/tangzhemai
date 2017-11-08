@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { Platform } from 'ionic-angular'
+import { Platform, AlertController } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { Storage } from '@ionic/storage'
@@ -19,14 +19,14 @@ import { NativeService } from './services/native.service'
 })
 export class MyApp {
   rootPage$: Observable<any>
-
   constructor(
     private platform: Platform,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     private store: Store<State>,
     private storage: Storage,
-    private nativeService: NativeService
+    private nativeService: NativeService,
+    private alertCtrl: AlertController
   ) {
     this.platformReady()
 
@@ -56,7 +56,10 @@ export class MyApp {
       }
     })
     .catch(e => {
-      window.alert(JSON.stringify(e, null, 2))
+      this.alertCtrl.create({
+        title: '内部错误',
+        message: e.message || '躺着买出错了，请稍后重试'
+      })
     })
   }
 }

@@ -72,7 +72,9 @@ import './rxjs-imports'
       : [],
     EffectsModule.forRoot([]),
 
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      spinner: 'crescent'
+    }),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],

@@ -1,10 +1,18 @@
-import { Component, OnInit } from '@angular/core'
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import {
+  IonicPage,
+  Navbar,
+  NavController,
+  NavParams,
+  App,
+  AlertController
+} from 'ionic-angular'
 import { FormControl } from '@angular/forms'
 import { AddGoodsPage } from './add-goods/add-goods'
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/observable/of'
 
+import { FeedbackService } from '../../app/services/feedback.service'
 /**
  * Generated class for the GoodsManagementPage page.
  *
@@ -41,14 +49,44 @@ export class GoodsManagementPage implements OnInit {
     }
   ]
 
+  @ViewChild(Navbar) navbar: Navbar
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private app: App
+    private app: App,
+    private feedbackService: FeedbackService,
+    private alertCtrl: AlertController
   ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GoodsManagementPage')
+    const originalHandler = this.navbar.backButtonClick
+
+    this.navbar.backButtonClick = (event) => {
+      this.alertCtrl.create({
+        title: '测试',
+        message: '测试内容',
+        buttons: [
+          {
+            text: '取消',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: '确定',
+            handler: () => {
+              console.log('ensure');
+              originalHandler.call(this, event)
+            }
+          }
+        ]
+      }).present()
+    }
+
+    console.log(this.navbar)
   }
 
   ngOnInit() {
@@ -56,6 +94,7 @@ export class GoodsManagementPage implements OnInit {
       console.log(e)
     })
   }
+
 
   toAddGoods() {
     this.app.getRootNav().push(AddGoodsPage)

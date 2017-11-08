@@ -6,6 +6,7 @@ import { ChartsModule } from 'ng2-charts'
 
 import { TestPipe } from './pipes/test.pipe'
 import { ClickFeedbackDirective } from './directives/click-feedback.directive'
+import { BackFeedbackDirective } from './directives/back-feedback.directive'
 
 const pipes = [
   TestPipe
@@ -15,7 +16,8 @@ const components = [
 ]
 
 const directives = [
-  ClickFeedbackDirective
+  ClickFeedbackDirective,
+  BackFeedbackDirective
 ]
 
 @NgModule({

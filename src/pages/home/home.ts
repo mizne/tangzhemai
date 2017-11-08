@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, App } from 'ionic-angular';
 
 import { OrderPage } from '../order/order'
@@ -61,8 +61,12 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     private store: Store<State>,
-    private app: App
+    private app: App,
   ) {
+
+  }
+
+  ionViewDidLoad() {
   }
 
   toPage(pageName: string): void {

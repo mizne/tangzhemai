@@ -94,7 +94,6 @@ export class LoginPage implements OnInit, OnDestroy {
   onLogin(): void {
     let loading = this.loadingCtrl.create({
       content: '登录中...',
-      spinner: 'bubbles'
     })
 
     loading.present()
