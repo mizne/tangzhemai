@@ -1,0 +1,31 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-title>
+      Mine
+    </ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content>
+  <div class="mine-container">
+    <div class="user-info">
+      <div class="image-container">
+        <img src="assets/imgs/logo.png">
+      </div>
+      <div class="user-name">管靖</div>
+      <div class="phone">13721080281</div>
+    </div>
+
+    <div *ngFor="let action of actionItems" [ngClass]="['list-item', action.icon]" clickFeedback="active" (click)="executeAction(action.command)">
+      <i [ngClass]="['prefix', 'iconfont', 'icon-' + action.icon]"></i>
+      <span class="content">{{action.label}}</span>
+      <i class="suffix iconfont icon-rightarrow"></i>
+    </div>
+
+
+    <div class="logout">
+      <button ion-button (click)="logout()">退出登录</button>
+    </div>
+  </div>
+
+</ion-content>

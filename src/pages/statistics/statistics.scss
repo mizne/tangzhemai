@@ -1,0 +1,14 @@
+page-statistics {
+  .chart-area {
+    .doughnut {
+      width: 50%;
+    }
+  }
+
+  .statistics-list {
+    ion-label {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

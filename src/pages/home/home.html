@@ -1,17 +1,59 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>金二村酒店</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>{{ 'Welcome to Ionic!' | test }}</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content>
+  <div class="home-container">
+    <div class="main-actions">
+      <div class="main-action">
+        <i class="iconfont icon-order"></i>
+        <span>订单</span>
+      </div>
+      <div class="main-action">
+        <i class="iconfont icon-checkorder"></i>
+        <span>对账</span>
+      </div>
+      <div class="main-action">
+        <i class="iconfont icon-statistics"></i>
+        <span>统计</span>
+      </div>
+    </div>
+
+    <div class="today-statistics">
+      <div class="today-item shishou">
+        <span class="value">0.00</span>
+        <span class="label">今日实收(元)</span>
+      </div>
+
+      <div class="today-item order">
+        <span class="value">0</span>
+        <span class="label">订单笔数(笔)</span>
+      </div>
+    </div>
+
+    <div class="main-apps">
+      <ion-grid>
+        <ion-row class="first-row">
+          <ion-col *ngFor="let app of appRow1" col-3 class="main-app" clickFeedback="active">
+            <div [ngClass]="['icon-wrapper', app.value]">
+              <i [ngClass]="['iconfont', 'icon-'+ app.value]"></i>
+            </div>
+            <span>{{app.label}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row class="second-row">
+          <ion-col *ngFor="let app of appRow2" col-3 class="main-app" clickFeedback="active">
+            <div [ngClass]="['icon-wrapper', app.value]">
+              <i [ngClass]="['iconfont', 'icon-'+ app.value]"></i>
+            </div>
+            <span>{{app.label}}</span>
+          </ion-col>
+
+
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
 </ion-content>

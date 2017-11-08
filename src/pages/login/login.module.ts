@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { LoginPage } from './login';
 
-// import { SharedModule } from '../../shared/shared.module'
+import { SharedModule } from '../../shared/shared.module'
 
 import { LoginService } from './login.service'
 
@@ -11,7 +11,7 @@ import { LoginService } from './login.service'
     LoginPage,
   ],
   imports: [
-    // SharedModule,
+    SharedModule,
     IonicPageModule.forChild(LoginPage),
   ],
   providers: [LoginService]

@@ -1,6 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts'
 
 import { TestPipe } from './pipes/test.pipe'
+import { ClickFeedbackDirective } from './directives/click-feedback.directive'
 
 const pipes = [
   TestPipe
@@ -10,10 +15,16 @@ const components = [
 ]
 
 const directives = [
+  ClickFeedbackDirective
 ]
 
 @NgModule({
     imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        // ChartsModule,
+        HttpClientModule
     ],
     declarations: [
       ...pipes,
@@ -23,10 +34,20 @@ const directives = [
     providers: [
     ],
     exports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        // ChartsModule,
+        HttpClientModule,
         ...pipes,
         ...components,
         ...directives
     ]
 })
 export class SharedModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: SharedModule
+        };
+    }
 }

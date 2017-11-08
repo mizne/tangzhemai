@@ -17,6 +17,7 @@ export function reducer(
 ): State {
   switch (action.type) {
     case fromApp.TO_LOGIN_PAGE:
+    case fromApp.LOGOUT:
       return {
         rootPage: LoginPage
       }

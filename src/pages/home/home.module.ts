@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core'
-import { HomePage } from './home'
 import { IonicPageModule } from 'ionic-angular'
+import { HomePage } from './home'
 
 import { SharedModule } from '../../shared/shared.module'
+
+import { StoreModule } from '@ngrx/store'
+import { reducers } from './reducers'
 
 @NgModule({
   declarations: [HomePage],
   imports: [
-    SharedModule,
+    SharedModule, 
+    // StoreModule.forFeature('home', reducers),
     IonicPageModule.forChild(HomePage)
   ]
 })
-export class HomePageModule {}
+export class HomerPageModule {}
