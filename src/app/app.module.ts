@@ -1,15 +1,15 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, ErrorHandler } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { IonicStorageModule } from '@ionic/storage'
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular'
+import { MyApp } from './app.component'
 
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { reducers } from './reducers'
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment'
 
 import { ApiErrorInterceptor } from './interceptors/api-error-interceptor'
 
@@ -24,6 +24,7 @@ import { CheckAccountPageModule } from '../pages/check-account/check-account.mod
 
 import { AboutPageModule } from '../pages/about/about.module'
 import { GoodsManagementPageModule } from '../pages/goods-management/goods-management.module'
+import { AddGoodsPage } from '../pages/goods-management/add-goods/add-goods'
 import { PurchaseManagementPageModule } from '../pages/purchase-management/purchase-management.module'
 import { SalesorderManagementPageModule } from '../pages/salesorder-management/salesorder-management.module'
 import { StockManagementPageModule } from '../pages/stock-management/stock-management.module'
@@ -33,19 +34,16 @@ import { LoggerService } from './services/logger.service'
 import { NativeService } from './services/native.service'
 import { FeedbackService } from './services/feedback.service'
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar'
+import { SplashScreen } from '@ionic-native/splash-screen'
 import { Device } from '@ionic-native/device'
 import { CallNumber } from '@ionic-native/call-number'
 import { DeviceFeedback } from '@ionic-native/device-feedback'
 
 import './rxjs-imports'
 
-
 @NgModule({
-  declarations: [
-    MyApp,
-  ],
+  declarations: [MyApp],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -58,7 +56,7 @@ import './rxjs-imports'
     MinePageModule,
     OrderPageModule,
     CheckAccountPageModule,
-    
+
     AboutPageModule,
     GoodsManagementPageModule,
     PurchaseManagementPageModule,
@@ -73,13 +71,14 @@ import './rxjs-imports'
         })
       : [],
     EffectsModule.forRoot([]),
+
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
-    
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    AddGoodsPage
   ],
   providers: [
     StatusBar,
@@ -87,7 +86,7 @@ import './rxjs-imports'
     Device,
     CallNumber,
     DeviceFeedback,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true },
     LoggerService,
     NativeService,

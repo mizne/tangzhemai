@@ -1,0 +1,25 @@
+page-add-goods {
+  .add-goods-container {
+    .image-input {
+      padding: 10px;
+      background-color: map-get($map: $colors, $key: bgWhite);
+
+      .add-area {
+        @include flexCenter;
+        width: 80px;
+        height: 80px;
+        margin: 8px 16px 8px 0;
+        line-height: 1;
+        border: 1px solid map-get($map: $colors, $key: bgPage);
+        .icon {
+          font-size: 4rem;
+        }
+      }
+    }
+
+    ion-item {
+      margin-top: 10px;
+    }
+
+  }
+}

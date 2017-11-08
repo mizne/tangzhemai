@@ -18,6 +18,8 @@ import { ToTabsPageAction } from '../../app/app.action'
 import { LoginService } from './login.service'
 import { LoggerService } from '../../app/services/logger.service'
 
+import { FeedbackService } from '../../app/services/feedback.service'
+
 // declare var JPush: any
 /**
  * Generated class for the LoginPage page.
@@ -47,6 +49,7 @@ export class LoginPage implements OnInit, OnDestroy {
     private storage: Storage,
     private store: Store<State>,
     private device: Device,
+    private feedbackService: FeedbackService
   ) {
   }
 
@@ -95,6 +98,8 @@ export class LoginPage implements OnInit, OnDestroy {
     })
 
     loading.present()
+
+    this.feedbackService.feedback()
 
     this.subscription = this.loginService.login(this.myForm.value)
       .subscribe(result => {
