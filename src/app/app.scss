@@ -29,6 +29,12 @@
   .toolbar-title {
     color: map-get($colors, light);
   }
+
+  .show-back-button+.toolbar-content {
+    .title {
+      text-align: left;
+    }
+  }
 }
 
 

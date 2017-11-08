@@ -13,10 +13,6 @@ import { environment } from '../environments/environment';
 
 import { ApiErrorInterceptor } from './interceptors/api-error-interceptor'
 
-// import { AboutPage } from '../pages/about/about';
-// import { StatisticsPage } from '../pages/statistics/statistics';
-// import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
 
 import { TabsPageModule } from '../pages/tabs/tabs.module'
 import { HomerPageModule } from '../pages/home/home.module'
@@ -25,6 +21,11 @@ import { MinePageModule } from '../pages/mine/mine.module'
 import { StatisticsPageModule } from '../pages/statistics/statistics.module'
 import { OrderPageModule } from '../pages/order/order.module'
 import { AboutPageModule } from '../pages/about/about.module'
+import { GoodsManagementPageModule } from '../pages/goods-management/goods-management.module'
+import { PurchaseManagementPageModule } from '../pages/purchase-management/purchase-management.module'
+import { SalesorderManagementPageModule } from '../pages/salesorder-management/salesorder-management.module'
+import { StockManagementPageModule } from '../pages/stock-management/stock-management.module'
+import { MoreAppsPageModule } from '../pages/more-apps/more-apps.module'
 
 import { LoggerService } from './services/logger.service'
 import { NativeService } from './services/native.service'
@@ -53,6 +54,11 @@ import './rxjs-imports'
     StatisticsPageModule,
     OrderPageModule,
     AboutPageModule,
+    GoodsManagementPageModule,
+    PurchaseManagementPageModule,
+    SalesorderManagementPageModule,
+    StockManagementPageModule,
+    MoreAppsPageModule,
 
     StoreModule.forRoot(reducers),
     !environment.production

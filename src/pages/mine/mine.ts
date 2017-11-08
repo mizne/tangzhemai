@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { NavController, AlertController } from 'ionic-angular'
+import { NavController, AlertController, App } from 'ionic-angular'
 import { CallNumber } from '@ionic-native/call-number'
 
 import { Store } from '@ngrx/store'
@@ -52,7 +52,8 @@ export class MinePage {
     private alertCtrl: AlertController,
     private callNumber: CallNumber,
     private store: Store<State>,
-    private feedbackService: FeedbackService
+    private feedbackService: FeedbackService,
+    private app: App
   ) {}
 
   executeAction(command: string) {
@@ -72,22 +73,18 @@ export class MinePage {
               {
                 text: '取消',
                 role: 'cancel',
-                handler: () => {
-                }
+                handler: () => {}
               },
               {
                 text: '拨打',
                 handler: () => {
-
-                  this.callNumber
-                    .callNumber('02586662644', true)
-                    .catch(e =>
-                      this.alertCtrl.create({
-                        title: '打电话失败',
-                        message: '拨打电话失败',
-                        buttons: ['我知道了']
-                      })
-                    )
+                  this.callNumber.callNumber('02586662644', true).catch(e =>
+                    this.alertCtrl.create({
+                      title: '打电话失败',
+                      message: '拨打电话失败',
+                      buttons: ['我知道了']
+                    })
+                  )
                 }
               }
             ]
@@ -95,8 +92,7 @@ export class MinePage {
           .present()
         break
       case 'about':
-      this.navCtrl.push('AboutPage')
-      // this.store.dispatch(new ToAboutPageAction())
+        this.app.getRootNav().push('AboutPage')
         break
 
       default:
@@ -105,7 +101,6 @@ export class MinePage {
   }
 
   logout(): void {
-
     this.feedbackService.feedback()
 
     this.alertCtrl
@@ -116,8 +111,7 @@ export class MinePage {
           {
             text: '取消',
             role: 'cancel',
-            handler: () => {
-            }
+            handler: () => {}
           },
           {
             text: '退出',

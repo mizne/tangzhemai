@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, App } from 'ionic-angular';
 
 import { OrderPage } from '../order/order'
 
@@ -19,23 +19,27 @@ export class HomePage {
     {
       id: 0,
       label: '商品管理',
-      value: 'goods'
+      value: 'goods',
+      page: 'GoodsManagementPage'
     },
     {
       id: 1,
       label: '进货管理',
       icon: 'jinhuo',
-      value: 'purchase'
+      value: 'purchase',
+      page: 'PurchaseManagementPage'
     },
     {
       id: 2,
       label: '销售订单',
-      value: 'sales'
+      value: 'sales',
+      page: 'SalesorderManagementPage'
     },
     {
       id: 3,
       label: '库存管理',
-      value: 'stock'
+      value: 'stock',
+      page: 'StockManagementPage'
     }
   ]
 
@@ -43,23 +47,26 @@ export class HomePage {
     {
       id: 0,
       label: '统计管理',
-      value: 'statistics'
+      value: 'statistics',
+      page: 'StatisticsPage'
     },
     {
       id: 1,
       label: '更多',
-      value: 'more'
+      value: 'more',
+      page: 'MoreAppsPage'
     }
   ]
 
   constructor(
     public navCtrl: NavController,
-    private store: Store<State>
+    private store: Store<State>,
+    private app: App
   ) {
   }
 
-  toOrder() {
-    this.navCtrl.push(OrderPage)
+  toPage(pageName: string): void {
+    this.app.getRootNav().push(pageName)
   }
 
 }
