@@ -1,6 +1,6 @@
 page-goods-detail {
   .goods-detail-container {
-    .goods-description {
+    .goods-abstract {
       .desc {
         display: flex;
         justify-content: space-between;
@@ -11,6 +11,19 @@ page-goods-detail {
         }
         .price {
           color: map-get($map: $colors, $key: primary);
+        }
+      }
+    }
+
+    .goods-description {
+      margin-top: 10px;
+      padding: 0 10px;
+
+      .item {
+        border-bottom: 1px solid #dedede;
+
+        .item-inner {
+          border-bottom: none;
         }
       }
     }

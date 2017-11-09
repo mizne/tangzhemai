@@ -19,7 +19,6 @@ export class MoreAppsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MoreAppsPage');
   }
 
 }

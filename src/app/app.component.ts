@@ -41,7 +41,7 @@ export class MyApp {
       this.splashScreen.hide()
 
 
-      this.localService.clear()
+      // this.localService.clear()
 
       this.localService.hasLogin()
       .then(() => {

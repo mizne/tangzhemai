@@ -112,7 +112,6 @@ export class GoodsManagementPage {
   ) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GoodsManagementPage')
     this.initFetchData()
     this.initDataSource()
     this.initSubscriber()
@@ -147,10 +146,12 @@ export class GoodsManagementPage {
 
     fetchParams$.takeUntil(this.destroyService)
     .subscribe(({ goodsParams, countParams }) => {
-      console.log(goodsParams)
-      console.log(countParams)
       this.store.dispatch(new FetchGoodsAction(goodsParams))
       this.store.dispatch(new FetchGoodsCountAction(countParams))
+    })
+
+    this.filterCtrl.valueChanges.subscribe(e => {
+      this.feedbackService.feedback()
     })
   }
 
@@ -166,9 +167,6 @@ export class GoodsManagementPage {
     this.app.getRootNav().push(AddGoodsPage)
   }
 
-  selectChange() {
-    console.log('select option')
-  }
   
 
   toGoodsDetail(id: string): void {

@@ -54,7 +54,6 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   ionViewDidLoad(): void {
-    console.log('ionViewDidLoad LoginPage')
   }
 
   ngOnInit(): void {

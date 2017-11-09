@@ -19,7 +19,6 @@ export class PurchaseManagementPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PurchaseManagementPage');
   }
 
 }

@@ -241,16 +241,27 @@ export class GoodsEffects {
     .ofType(fromGoods.OFF_SHELF_GOODS)
     .map((action: fromGoods.OffShelfGoodsAction) => action.goodsId)
     .switchMap(goodsId => {
+      const load = this.loadCtrl.create({
+        content: '下架商品中...'
+      })
+      load.present()
+
       return Observable.fromPromise(
         this.localService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .offShelfGoods(tenantId, goodsId)
-          .concatMap(e => [
-            new fromGoods.OffShelfGoodsSuccessAction(),
-            new fromGoods.FetchGoodsAction()
-          ])
-          .catch(e => Observable.of(new fromGoods.OffShelfGoodsFailureAction()))
+          .concatMap(e => {
+            load.dismiss()
+            return [
+              new fromGoods.OffShelfGoodsSuccessAction(),
+              new fromGoods.FetchGoodsAction()
+            ]
+          })
+          .catch(e => {
+            load.dismiss()
+            return Observable.of(new fromGoods.OffShelfGoodsFailureAction())
+          })
       )
     })
   @Effect({ dispatch: false })
@@ -283,16 +294,27 @@ export class GoodsEffects {
     .ofType(fromGoods.ON_SHELF_GOODS)
     .map((action: fromGoods.OnShelfGoodsAction) => action.goodsId)
     .switchMap(goodsId => {
+      const load = this.loadCtrl.create({
+        content: '上架商品中...'
+      })
+      load.present()
+
       return Observable.fromPromise(
         this.localService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .onShelfGoods(tenantId, goodsId)
-          .concatMap(e => [
-            new fromGoods.OnShelfGoodsSuccessAction(),
-            new fromGoods.FetchGoodsAction()
-          ])
-          .catch(e => Observable.of(new fromGoods.OnShelfGoodsFailureAction()))
+          .concatMap(e => {
+            load.dismiss()
+            return [
+              new fromGoods.OnShelfGoodsSuccessAction(),
+              new fromGoods.FetchGoodsAction()
+            ]
+          })
+          .catch(e => {
+            load.dismiss()
+            return Observable.of(new fromGoods.OnShelfGoodsFailureAction())
+          })
       )
     })
   @Effect({ dispatch: false })

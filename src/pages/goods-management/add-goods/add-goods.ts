@@ -19,7 +19,6 @@ export class AddGoodsPage implements OnDestroy {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddGoodsPage');
 
     this.nameCtrol.valueChanges.subscribe(e => {
       console.log(e)

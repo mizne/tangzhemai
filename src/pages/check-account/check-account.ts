@@ -19,7 +19,6 @@ export class CheckAccountPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CheckAccountPage');
   }
 
 }

@@ -19,7 +19,5 @@ export class BackFeedbackDirective implements OnInit {
       this.feedbackService.feedback()
       originalHandler.call(this, ev)
     }
-
-    console.log(this.navbar)
   }
 }

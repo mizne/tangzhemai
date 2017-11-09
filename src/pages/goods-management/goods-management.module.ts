@@ -3,6 +3,8 @@ import { IonicPageModule } from 'ionic-angular';
 import { GoodsManagementPage } from './goods-management';
 import { AddGoodsPage } from './add-goods/add-goods'
 import { GoodsDetailPage } from './goods-detail/goods-detail'
+import { GoodsActionPopoverPage } from './goods-detail/goods-action-popover'
+import { EditGoodsPage } from './edit-goods/edit-goods'
 
 import { SharedModule } from '../../shared/shared.module'
 
@@ -21,7 +23,9 @@ const effects = [
   declarations: [
     GoodsManagementPage,
     AddGoodsPage,
-    GoodsDetailPage
+    GoodsDetailPage,
+    GoodsActionPopoverPage,
+    EditGoodsPage
   ],
   imports: [
     SharedModule,
@@ -30,6 +34,11 @@ const effects = [
     IonicPageModule.forChild(GoodsManagementPage),
   ],
   providers: [GoodsService],
-  entryComponents: [AddGoodsPage, GoodsDetailPage],
+  entryComponents: [
+    AddGoodsPage, 
+    GoodsDetailPage, 
+    GoodsActionPopoverPage,
+    EditGoodsPage
+  ],
 })
 export class GoodsManagementPageModule {}

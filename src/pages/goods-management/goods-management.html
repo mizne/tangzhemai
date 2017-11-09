@@ -24,7 +24,7 @@
   <ion-item>
     <ion-label>{{showFilter$ | async}}</ion-label>
     <ion-select okText="确定" cancelText="取消" [formControl]="filterCtrl" interface="popover" placeholder="筛选">
-      <ion-option *ngFor="let mode of modes" [value]="mode.value" (click)="selectChange()">{{mode.label}}</ion-option>
+      <ion-option *ngFor="let mode of modes" [value]="mode.value">{{mode.label}}</ion-option>
     </ion-select>
   </ion-item>
 

@@ -19,7 +19,6 @@ export class SalesorderManagementPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SalesorderManagementPage');
   }
 
 }
