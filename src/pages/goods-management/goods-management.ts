@@ -57,6 +57,8 @@ export class GoodsManagementPage {
   addGoodsSub: Subject<void> = new Subject<void>()
   viewDetailSub: Subject<string> = new Subject<string>()
 
+  ionViewDidEnterSub: Subject<void> = new Subject<void>()
+
   modes = [
     {
       id: 0,
@@ -114,9 +116,12 @@ export class GoodsManagementPage {
   ) {}
 
   ionViewDidLoad() {
-    this.initFetchData()
     this.initDataSource()
     this.initSubscriber()
+  }
+
+  ionViewDidEnter(): void {
+    this.ionViewDidEnterSub.next()
   }
 
   toAddGoods() {
@@ -125,11 +130,6 @@ export class GoodsManagementPage {
 
   toGoodsDetail(id: string): void {
     this.viewDetailSub.next(id)
-  }
-
-  private initFetchData(): void {
-    this.store.dispatch(new FetchGoodsAction())
-    this.store.dispatch(new FetchGoodsCountAction())
   }
 
   private initDataSource(): void {
@@ -159,9 +159,13 @@ export class GoodsManagementPage {
   }
 
   private initFetchGoodsAndCount(): void {
+    const initFilter$ = this.filterCtrl.valueChanges.startWith('all')
     const fetchParams$: Observable<
       FetchParams
-    > = this.filterCtrl.valueChanges.map(this.mapToParams)
+    > = Observable.merge(
+      initFilter$,
+      this.ionViewDidEnterSub.skip(1)
+    ).withLatestFrom(initFilter$, (_, value) => this.mapToParams(value))
 
     fetchParams$
       .takeUntil(this.destroyService)
