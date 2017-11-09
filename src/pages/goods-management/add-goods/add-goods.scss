@@ -17,9 +17,13 @@ page-add-goods {
       }
     }
 
-    ion-item {
+    .goods-name,
+    .goods-type {
       margin-top: 10px;
     }
 
+    button {
+      color: map-get($map: $colors, $key: grey);
+    }
   }
 }

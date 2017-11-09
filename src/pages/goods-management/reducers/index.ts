@@ -26,3 +26,8 @@ export const getCurrentGoods = createSelector(
   fromGoodsIndex.getGoods
 )
 
+export const getAllGoodsTypes = createSelector(
+  getGoodsIndexState,
+  fromGoodsIndex.getGoodsTyps
+)
+

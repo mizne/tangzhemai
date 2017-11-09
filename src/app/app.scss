@@ -54,3 +54,18 @@
 .toast-message {
   text-align: center;
 }
+
+.item {
+  border-bottom: 1px solid #dedede;
+  padding-right: 16px;
+
+  ion-label {
+    h2 {
+      margin: 2px 0 !important;
+    }
+  }
+
+  .item-inner {
+    border-bottom: none !important;
+  }
+}

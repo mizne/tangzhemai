@@ -5,22 +5,20 @@ import {
   NavController,
   NavParams,
   App,
-  AlertController
+  AlertController,
+  ModalController
 } from 'ionic-angular'
 import { FormControl } from '@angular/forms'
-import { AddGoodsPage } from './add-goods/add-goods'
+import { AddGoodsPage, GooodsActionType } from './add-goods/add-goods'
 import { GoodsDetailPage } from './goods-detail/goods-detail'
 import { Observable } from 'rxjs/Observable'
+import { Subject } from 'rxjs/Subject'
 
 import { FeedbackService } from '../../app/services/feedback.service'
 import { DestroyService } from '../../app/services/destroy.service'
 
 import { Store } from '@ngrx/store'
-import { 
-  State, 
-  getTotalCount,
-  getCurrentGoods
- } from './reducers'
+import { State, getTotalCount, getCurrentGoods } from './reducers'
 import {
   FetchGoodsCountAction,
   FetchGoodsAction,
@@ -38,8 +36,8 @@ import * as R from 'ramda'
  * Ionic pages and navigation.
  */
 
- export interface FetchParams {
-  goodsParams: FetchGoodsParams,
+export interface FetchParams {
+  goodsParams: FetchGoodsParams
   countParams: FetchGoodsCountParams
 }
 
@@ -55,6 +53,9 @@ export class GoodsManagementPage {
   filterCtrl: FormControl = new FormControl('all')
   showFilter$: Observable<string>
   goods$: Observable<Goods[]>
+
+  addGoodsSub: Subject<void> = new Subject<void>()
+  viewDetailSub: Subject<string> = new Subject<string>()
 
   modes = [
     {
@@ -108,13 +109,22 @@ export class GoodsManagementPage {
     private feedbackService: FeedbackService,
     private alertCtrl: AlertController,
     private store: Store<State>,
-    private destroyService: DestroyService
+    private destroyService: DestroyService,
+    private modalCtrl: ModalController
   ) {}
 
   ionViewDidLoad() {
     this.initFetchData()
     this.initDataSource()
     this.initSubscriber()
+  }
+
+  toAddGoods() {
+    this.addGoodsSub.next()
+  }
+
+  toGoodsDetail(id: string): void {
+    this.viewDetailSub.next(id)
   }
 
   private initFetchData(): void {
@@ -141,18 +151,24 @@ export class GoodsManagementPage {
 
   private initSubscriber(): void {
     // 下拉刷新(TODO) 拉到底部load(TODO) 选择过滤条件
-    const fetchParams$: Observable<FetchParams> = this.filterCtrl.valueChanges
-    .map(this.mapToParams)
+    this.initFetchGoodsAndCount()
+    this.initSelectedFeedback()
 
-    fetchParams$.takeUntil(this.destroyService)
-    .subscribe(({ goodsParams, countParams }) => {
-      this.store.dispatch(new FetchGoodsAction(goodsParams))
-      this.store.dispatch(new FetchGoodsCountAction(countParams))
-    })
+    this.initCreateGoods()
+    this.initToViewGoodsDetail()
+  }
 
-    this.filterCtrl.valueChanges.subscribe(e => {
-      this.feedbackService.feedback()
-    })
+  private initFetchGoodsAndCount(): void {
+    const fetchParams$: Observable<
+      FetchParams
+    > = this.filterCtrl.valueChanges.map(this.mapToParams)
+
+    fetchParams$
+      .takeUntil(this.destroyService)
+      .subscribe(({ goodsParams, countParams }) => {
+        this.store.dispatch(new FetchGoodsAction(goodsParams))
+        this.store.dispatch(new FetchGoodsCountAction(countParams))
+      })
   }
 
   private mapToParams = (value: string): FetchParams => {
@@ -163,16 +179,53 @@ export class GoodsManagementPage {
     }
   }
 
-  toAddGoods() {
-    this.app.getRootNav().push(AddGoodsPage)
+  private initSelectedFeedback(): void {
+    this.filterCtrl.valueChanges
+      .do(_ => {
+        this.feedbackService.feedback()
+      })
+      .takeUntil(this.destroyService)
+      .subscribe()
   }
 
-  
+  private initCreateGoods(): void {
+    this.addGoodsSub
+      .do(_ => {
+        this.feedbackService.feedback()
+      })
+      .switchMap(() => {
+        return new Observable(observer => {
+          const modal = this.modalCtrl.create(AddGoodsPage, {
+            action: GooodsActionType.CREATE
+          })
+          modal.present()
+          modal.onWillDismiss(data => {
+            if (data) {
+              observer.next(data)
+              observer.complete()
+            } else {
+              observer.complete()
+            }
+          })
+        })
+      })
+      .takeUntil(this.destroyService)
+      .subscribe(data => {
+        console.log('to create goods ', data)
+      })
+  }
 
-  toGoodsDetail(id: string): void {
-    this.feedbackService.feedback()
-    this.app.getRootNav().push(GoodsDetailPage, {
-      id
-    })
+  private initToViewGoodsDetail(): void {
+    this.viewDetailSub
+      .asObservable()
+      .do(_ => {
+        this.feedbackService.feedback()
+      })
+      .takeUntil(this.destroyService)
+      .subscribe(id => {
+        this.app.getRootNav().push(GoodsDetailPage, {
+          id
+        })
+      })
   }
 }

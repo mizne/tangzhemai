@@ -16,7 +16,7 @@ import { OffShelfGoodsAction, OnShelfGoodsAction } from '../goods-management.act
 
 import { FeedbackService } from '../../../app/services/feedback.service'
 
-import { EditGoodsPage } from '../edit-goods/edit-goods'
+import { AddGoodsPage, GooodsActionType } from '../add-goods/add-goods'
 
 @Component({
   template: `
@@ -39,7 +39,7 @@ import { EditGoodsPage } from '../edit-goods/edit-goods'
   `,
   styles: [`
     .list-md {
-
+      margin: 0 !important;
     }
   `]
 })
@@ -76,7 +76,10 @@ export class GoodsActionPopoverPage {
     this.feedbackService.feedback()
     this.dismiss()
 
-    this.app.getRootNav().push(EditGoodsPage, {id: this.goodsId})
+    this.app.getRootNav().push(AddGoodsPage, {
+      id: this.goodsId,
+      action: GooodsActionType.EDIT
+    })
   }
 
   toOffShelf() {

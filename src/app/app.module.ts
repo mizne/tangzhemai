@@ -25,8 +25,6 @@ import { CheckAccountPageModule } from '../pages/check-account/check-account.mod
 
 import { AboutPageModule } from '../pages/about/about.module'
 import { GoodsManagementPageModule } from '../pages/goods-management/goods-management.module'
-import { AddGoodsPage } from '../pages/goods-management/add-goods/add-goods'
-import { GoodsActionPopoverPage } from '../pages/goods-management/goods-detail/goods-action-popover'
 import { PurchaseManagementPageModule } from '../pages/purchase-management/purchase-management.module'
 import { SalesorderManagementPageModule } from '../pages/salesorder-management/salesorder-management.module'
 import { StockManagementPageModule } from '../pages/stock-management/stock-management.module'
@@ -83,8 +81,6 @@ import './rxjs-imports'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    // AddGoodsPage
-    // GoodsActionPopoverPage
   ],
   providers: [
     StatusBar,
