@@ -2,7 +2,6 @@ import { Component } from '@angular/core'
 import { Platform, AlertController } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
-import { Storage } from '@ionic/storage'
 
 import { Store } from '@ngrx/store'
 import { ToLoginPageAction, ToTabsPageAction } from './app.action'
@@ -13,6 +12,7 @@ import { TabsPage } from '../pages/tabs/tabs'
 
 
 import { NativeService } from './services/native.service'
+import { LocalService } from './services/local.service'
 
 @Component({
   templateUrl: 'app.html'
@@ -24,9 +24,9 @@ export class MyApp {
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     private store: Store<State>,
-    private storage: Storage,
     private nativeService: NativeService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private localService: LocalService
   ) {
     this.platformReady()
 
@@ -41,15 +41,16 @@ export class MyApp {
       this.splashScreen.hide()
 
 
-      // this.storage.clear()
+      this.localService.clear()
 
-      this.storage.get('HAS_LOGIN').then(hasLogin => {
-        if (hasLogin) {
-          this.store.dispatch(new ToTabsPageAction())
-        } else {
-          this.store.dispatch(new ToLoginPageAction())
-        }
+      this.localService.hasLogin()
+      .then(() => {
+        this.store.dispatch(new ToTabsPageAction())
       })
+      .catch(() => {
+        this.store.dispatch(new ToLoginPageAction())
+      })
+
 
       // 真机
       if (this.nativeService.isIos() || this.nativeService.isAndroid()) {

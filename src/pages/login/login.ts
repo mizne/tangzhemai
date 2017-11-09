@@ -7,7 +7,6 @@ import {
   NavParams
 } from 'ionic-angular'
 import { FormGroup, FormBuilder, Validators } from "@angular/forms"
-import { Storage } from '@ionic/storage'
 import { Device } from '@ionic-native/device'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
@@ -19,6 +18,7 @@ import { LoginService } from './login.service'
 import { LoggerService } from '../../app/services/logger.service'
 
 import { FeedbackService } from '../../app/services/feedback.service'
+import { LocalService } from '../../app/services/local.service'
 
 // declare var JPush: any
 /**
@@ -46,10 +46,10 @@ export class LoginPage implements OnInit, OnDestroy {
     private loginService: LoginService,
     public navCtrl: NavController,
     public navParams: NavParams,
-    private storage: Storage,
     private store: Store<State>,
     private device: Device,
-    private feedbackService: FeedbackService
+    private feedbackService: FeedbackService,
+    private localService: LocalService
   ) {
   }
 
@@ -103,11 +103,10 @@ export class LoginPage implements OnInit, OnDestroy {
     this.subscription = this.loginService.login(this.myForm.value)
       .subscribe(result => {
         loading.dismiss()
-        // 存储tenantId
-        const tenantId = result.tenantId
-        this.storage.set('TENANT_ID', tenantId)
-        this.storage.set('HAS_LOGIN', true)
-        this.storage.set('LOGIN_NAME', this.myForm.value.name)
+        this.localService.setTenantId(result.tenantId)
+        this.localService.setToken(result.token)
+        this.localService.setLoginName(result.name)
+
         this.store.dispatch(new ToTabsPageAction())
 
         // 真机或模拟器运行

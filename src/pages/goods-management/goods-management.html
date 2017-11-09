@@ -22,8 +22,8 @@
 <ion-content padding>
 
   <ion-item>
-    <ion-label>{{selectMode}}({{totalCount$ | async}})</ion-label>
-    <ion-select [(ngModel)]="selectMode" okText="确定" cancelText="取消" [formControl]="mode" interface="popover" placeholder="筛选">
+    <ion-label>{{showFilter$ | async}}</ion-label>
+    <ion-select okText="确定" cancelText="取消" [formControl]="modeCtrl" interface="popover" placeholder="筛选">
       <ion-option value="all">全部商品</ion-option>
       <ion-option value="on">已上架</ion-option>
       <ion-option value="off">已下架</ion-option>

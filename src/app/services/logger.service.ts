@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
-import { Storage } from '@ionic/storage'
-// import { Device } from '@ionic-native/device'
+import { LocalService } from '../services/local.service'
+import { Device } from '@ionic-native/device'
 
 interface ErrorInfo {
   module: string,
@@ -22,8 +22,8 @@ export class LoggerService {
 
   constructor(
     public http: HttpClient,
-    private storage: Storage,
-    // private device: Device
+    private localService: LocalService,
+    private device: Device
   ) {
   }
 
@@ -61,7 +61,7 @@ export class LoggerService {
    * @memberof LoggerProvider
    */
   private postErrorMessage(module, level, method, description): Promise<any> {
-    return Promise.all([this.storage.get('TENANT_ID'), this.storage.get('LOGIN_NAME')])
+    return Promise.all([this.localService.getTenantId(), this.localService.getLoginName()])
     .then(([tenantId, loginName]) => {
       const params = {
         tenantId,
@@ -70,9 +70,9 @@ export class LoggerService {
         level,
         method,
         description,
-        // devicePlatform: this.device.platform,
-        // deviceVersion: this.device.version,
-        // deviceUUID: this.device.uuid
+        devicePlatform: this.device.platform,
+        deviceVersion: this.device.version,
+        deviceUUID: this.device.uuid
       }
       return this.http.post(this.url, params)
       .toPromise()

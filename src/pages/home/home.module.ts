@@ -11,7 +11,7 @@ import { reducers } from './reducers'
   declarations: [HomePage],
   imports: [
     SharedModule, 
-    // StoreModule.forFeature('home', reducers),
+    StoreModule.forFeature('home', reducers),
     IonicPageModule.forChild(HomePage)
   ]
 })

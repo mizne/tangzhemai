@@ -10,12 +10,10 @@ import {
 } from '@angular/common/http'
 
 import { AlertController, NavController } from 'ionic-angular'
-import { Storage } from '@ionic/storage'
 import { Observable } from 'rxjs/Observable'
 
 import { environment } from '../../environments/environment'
 import { LoginPage } from '../../pages/login/login'
-
 import { Store } from '@ngrx/store'
 import { State } from '../reducers'
 import { ToLoginPageAction } from '../app.action'
@@ -25,11 +23,8 @@ export class ApiErrorInterceptor implements HttpInterceptor {
   private url = `${environment.SERVER_URL}/api/test`
 
   constructor(
-    private storage: Storage, 
     private injector: Injector,
     private store: Store<State>
-    // private alertCtrl: AlertController,
-    // private navCtrl: NavController
   ) {}
 
   intercept(
@@ -63,7 +58,7 @@ export class ApiErrorInterceptor implements HttpInterceptor {
               title: '内部错误，请稍候重试',
               subTitle: '小V宝 遇到了意外情况，无法完成您的请求',
               buttons: ['我知道了']
-            })
+            }).present()
           }
         }
 

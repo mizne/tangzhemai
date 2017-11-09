@@ -8,6 +8,8 @@ import { State, getCount } from './reducers'
 import { IncrementAction, DecrementAction } from './home.action'
 import { Observable } from 'rxjs/Observable';
 
+import { LocalService } from '../../app/services/local.service'
+
 
 @Component({
   selector: 'page-home',
@@ -62,6 +64,7 @@ export class HomePage {
     public navCtrl: NavController,
     private store: Store<State>,
     private app: App,
+    private localService: LocalService
   ) {
 
   }

@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Observable'
 */
 @Injectable()
 export class LoginService {
-  private url = 'https://salesproxy.xiaovbao.cn/api/test/admin/login'
+  private url = '/admin/login'
 
   constructor(
     public http: HttpClient, 

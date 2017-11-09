@@ -12,6 +12,7 @@ import { reducers } from './reducers'
 import { environment } from '../environments/environment'
 
 import { ApiErrorInterceptor } from './interceptors/api-error-interceptor'
+import { TokenInterceptor } from './interceptors/token-interceptor'
 
 import { LoginPageModule } from '../pages/login/login.module'
 import { TabsPageModule } from '../pages/tabs/tabs.module'
@@ -33,6 +34,7 @@ import { MoreAppsPageModule } from '../pages/more-apps/more-apps.module'
 import { LoggerService } from './services/logger.service'
 import { NativeService } from './services/native.service'
 import { FeedbackService } from './services/feedback.service'
+import { LocalService } from './services/local.service'
 
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
@@ -90,9 +92,11 @@ import './rxjs-imports'
     DeviceFeedback,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     LoggerService,
     NativeService,
-    FeedbackService
+    FeedbackService,
+    LocalService
   ]
 })
 export class AppModule {}

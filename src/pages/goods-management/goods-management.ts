@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
 import {
   IonicPage,
   Navbar,
@@ -10,9 +10,13 @@ import {
 import { FormControl } from '@angular/forms'
 import { AddGoodsPage } from './add-goods/add-goods'
 import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/observable/of'
 
 import { FeedbackService } from '../../app/services/feedback.service'
+
+import { Store } from '@ngrx/store'
+import { State, getTotalCount } from './reducers'
+import { FetchGoodsCountAction } from './goods-management.action'
+
 /**
  * Generated class for the GoodsManagementPage page.
  *
@@ -25,11 +29,29 @@ import { FeedbackService } from '../../app/services/feedback.service'
   selector: 'page-goods-management',
   templateUrl: 'goods-management.html'
 })
-export class GoodsManagementPage implements OnInit {
-  totalCount$: Observable<number> = Observable.of(42)
+export class GoodsManagementPage {
+  totalCount$: Observable<number>
 
-  selectMode = 'all'
-  mode: FormControl = new FormControl('')
+  modeCtrl: FormControl = new FormControl('all')
+  showFilter$: Observable<string>
+
+  modes = [
+    {
+      id: 0,
+      label: '全部商品',
+      value: 'all'
+    },
+    {
+      id: 1,
+      label: '已上架',
+      value: 'onShelf'
+    },
+    {
+      id: 2,
+      label: '已下架',
+      value: 'offShelf'
+    }
+  ]
 
   goodses = [
     {
@@ -56,46 +78,30 @@ export class GoodsManagementPage implements OnInit {
     public navParams: NavParams,
     private app: App,
     private feedbackService: FeedbackService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private store: Store<State>
   ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GoodsManagementPage')
-    const originalHandler = this.navbar.backButtonClick
 
-    // this.navbar.backButtonClick = (event) => {
-    //   this.alertCtrl.create({
-    //     title: '测试',
-    //     message: '测试内容',
-    //     buttons: [
-    //       {
-    //         text: '取消',
-    //         role: 'cancel',
-    //         handler: () => {
-    //           console.log('Cancel clicked');
-    //         }
-    //       },
-    //       {
-    //         text: '确定',
-    //         handler: () => {
-    //           console.log('ensure');
-    //           originalHandler.call(this, event)
-    //         }
-    //       }
-    //     ]
-    //   }).present()
-    // }
 
-    console.log(this.navbar)
+    this.totalCount$ = this.store.select(getTotalCount)
+    this.store.dispatch(new FetchGoodsCountAction())
+
+    this.showFilter$ = Observable.combineLatest(
+      this.totalCount$,
+      this.modeCtrl.valueChanges
+      .map(this.findModeLabel).startWith(this.modes[0].label)
+    )
+    .map(([count, modeLabel]) => `${modeLabel}(${count})`)
   }
 
-  ngOnInit() {
-    this.mode.valueChanges.subscribe(e => {
-      console.log(e)
-    })
+  private findModeLabel = (value: string): string => {
+    return this.modes.find(e => e.value === value).label
   }
 
-  ionViewCanLeave(): Promise<void> {
+  ionViewCanLeave(): Promise<any> {
     return new Promise((res, rej) => {
       this.alertCtrl.create({
         title: '可以走么',

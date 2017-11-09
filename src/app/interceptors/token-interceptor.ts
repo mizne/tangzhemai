@@ -10,38 +10,42 @@ import {
 } from '@angular/common/http'
 
 import { Observable } from 'rxjs/Observable'
-import { Storage } from '@ionic/storage'
 
 import { environment } from '../../environments/environment'
+import { LocalService } from '../services/local.service'
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   private url = `${environment.SERVER_URL}/api/test`
 
-  constructor(private local: Storage, private injector: Injector) {}
+  constructor(private localService: LocalService, private injector: Injector) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const cloneParams: {
-      url?: string
-      headers?: HttpHeaders
-    } = {}
-    if (this.requestWithSelf(req.url)) {
-      cloneParams.url = `${this.url}${req.url}`
-      if (!this.requestWithAuth(req.url)) {
-        cloneParams.headers = req.headers.set(
-          'Authorization',
-          'Bearer ' + this.local.get('token') // TOFIX 如何将promise接口 调整好
-        )
-      }
-    } else {
-      cloneParams.url = req.url
-    }
+    return Observable.fromPromise(this.localService.getToken())
+      .map(token => {
+        const cloneParams: {
+          url?: string
+          headers?: HttpHeaders
+        } = {}
 
-    return next
-      .handle(req.clone(cloneParams))
+        if (this.requestWithSelf(req.url)) {
+          cloneParams.url = `${this.url}${req.url}`
+          if (!this.requestWithAuth(req.url)) {
+            cloneParams.headers = req.headers.set(
+              'Authorization',
+              'Bearer ' + token
+            )
+          }
+        } else {
+          cloneParams.url = req.url
+        }
+
+        return cloneParams
+      })
+      .switchMap(cloneParams => next.handle(req.clone(cloneParams)))
   }
 
   /**
@@ -67,4 +71,3 @@ export class TokenInterceptor implements HttpInterceptor {
     return /login|register/i.test(url)
   }
 }
-
