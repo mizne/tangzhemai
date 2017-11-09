@@ -30,4 +30,8 @@ export const getAllGoodsTypes = createSelector(
   getGoodsIndexState,
   fromGoodsIndex.getGoodsTyps
 )
+export const getAllGoodsUnits = createSelector(
+  getGoodsIndexState,
+  fromGoodsIndex.getGoodsUnits
+)
 

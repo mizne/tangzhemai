@@ -35,13 +35,13 @@
         </div>
       </div>
 
-      <ion-item class="goods-name">
-        <ion-label color="grey">商品名称</ion-label>
+      <ion-item class="goods-item">
+        <ion-label color="primary">商品名称</ion-label>
         <ion-input formControlName="name"></ion-input>
       </ion-item>
 
-      <ion-item class="goods-type">
-        <ion-label>商品分类</ion-label>
+      <ion-item class="goods-item">
+        <ion-label color="primary">商品分类</ion-label>
         <ion-select formControlName="goodsTypeId" cancelText="取消" interface="action-sheet" placeholder="请选择">
           <ion-option *ngFor="let type of allGoodsTypes$ | async" [value]="type.id">
             {{type.name}}
@@ -53,6 +53,49 @@
         添加分类
         <ion-icon color="grey" name="add" item-end></ion-icon>
       </button>
+
+      <ion-item class="goods-item">
+        <ion-label color="primary">进价(元)</ion-label>
+        <ion-input formControlName="buyPrice" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item class="goods-item">
+        <ion-label color="primary">单价(元)</ion-label>
+        <ion-input formControlName="price" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item class="goods-item">
+        <ion-label color="primary">会员价(元)</ion-label>
+        <ion-input formControlName="vipPrice" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item class="goods-item">
+        <ion-label color="primary">可售数量</ion-label>
+        <ion-input formControlName="totalCount" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item class="goods-item">
+        <ion-label color="primary">商品单位</ion-label>
+        <ion-select formControlName="goodsUnitId" cancelText="取消" interface="action-sheet" placeholder="请选择">
+          <ion-option *ngFor="let unit of allGoodsUnits$ | async" [value]="unit.id">
+            {{unit.name}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <button ion-item (click)="toAddGoodsUnit()">
+        添加单位
+        <ion-icon color="grey" name="add" item-end></ion-icon>
+      </button>
+
+      <ion-item class="goods-item">
+        <ion-label color="primary">是否上架</ion-label>
+        <ion-toggle formControlName="isActive"></ion-toggle>
+      </ion-item>
+
+      <ion-item class="goods-item">
+        <ion-textarea formControlName="description" placeholder="填写商品备注"></ion-textarea>
+      </ion-item>
 
     </div>
 
