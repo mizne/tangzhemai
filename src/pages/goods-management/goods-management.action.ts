@@ -44,14 +44,13 @@ export const FETCH_GOODS_UNITS_SUCCESS = '[Goods] Fetch Goods Units Success'
 export const FETCH_GOODS_UNITS_FAILURE = '[Goods] Fetch Goods Units Failure'
 
 export interface FetchGoodsParams {
-  pageIndex: number, 
-  pageSize: number,
+  pageIndex?: number, 
+  pageSize?: number,
   goodsName?: string,
-  goodsType?: string 
+  goodsType?: string,
+  isActive?: boolean
 }
 export const emptyFetchGoodsParams: FetchGoodsParams = {
-  pageIndex: 1,
-  pageSize: 10
 }
 export class FetchGoodsAction implements Action {
   readonly type = FETCH_GOODS
@@ -108,8 +107,7 @@ export interface FetchGoodsCountParams {
   isActive?: boolean
 }
 export const emptyFetchGoodsCountParams: FetchGoodsCountParams = {
-  goodsName: '',
-  goodsType: ''
+  
 }
 export class FetchGoodsCountAction implements Action {
   readonly type = FETCH_GOODS_COUNT

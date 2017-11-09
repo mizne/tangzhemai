@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { GoodsManagementPage } from './goods-management';
 import { AddGoodsPage } from './add-goods/add-goods'
+import { GoodsDetailPage } from './goods-detail/goods-detail'
+
 import { SharedModule } from '../../shared/shared.module'
 
 import { StoreModule } from '@ngrx/store'
@@ -18,7 +20,8 @@ const effects = [
 @NgModule({
   declarations: [
     GoodsManagementPage,
-    AddGoodsPage
+    AddGoodsPage,
+    GoodsDetailPage
   ],
   imports: [
     SharedModule,
@@ -26,6 +29,7 @@ const effects = [
     EffectsModule.forFeature(effects),
     IonicPageModule.forChild(GoodsManagementPage),
   ],
-  providers: [GoodsService]
+  providers: [GoodsService],
+  entryComponents: [AddGoodsPage, GoodsDetailPage],
 })
 export class GoodsManagementPageModule {}

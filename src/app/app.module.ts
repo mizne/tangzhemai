@@ -82,7 +82,7 @@ import './rxjs-imports'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AddGoodsPage
+    // AddGoodsPage
   ],
   providers: [
     StatusBar,

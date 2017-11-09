@@ -23,21 +23,19 @@
 
   <ion-item>
     <ion-label>{{showFilter$ | async}}</ion-label>
-    <ion-select okText="确定" cancelText="取消" [formControl]="modeCtrl" interface="popover" placeholder="筛选">
-      <ion-option value="all">全部商品</ion-option>
-      <ion-option value="on">已上架</ion-option>
-      <ion-option value="off">已下架</ion-option>
+    <ion-select okText="确定" cancelText="取消" [formControl]="filterCtrl" interface="popover" placeholder="筛选">
+      <ion-option *ngFor="let mode of modes" [value]="mode.value" (click)="selectChange()">{{mode.label}}</ion-option>
     </ion-select>
   </ion-item>
 
   <ion-list>
-    <ion-item *ngFor="let goods of goodses">
+    <ion-item *ngFor="let goods of goods$ | async">
       <ion-thumbnail item-start>
-        <img src="assets/imgs/logo.png">
+        <img [src]="goods.listImageUrl">
       </ion-thumbnail>
       <h2>{{goods.name}}</h2>
-      <p>{{ '￥' + goods.price }}</p>
-      <button ion-button clear item-end>查看</button>
+      <p color="primary">{{ '￥' + goods.price }}</p>
+      <button ion-button clear item-end (click)="toGoodsDetail(goods.id)">查看</button>
     </ion-item>
   </ion-list>
 

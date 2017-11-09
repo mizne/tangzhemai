@@ -9,13 +9,27 @@ import {
 } from 'ionic-angular'
 import { FormControl } from '@angular/forms'
 import { AddGoodsPage } from './add-goods/add-goods'
+import { GoodsDetailPage } from './goods-detail/goods-detail'
 import { Observable } from 'rxjs/Observable'
 
 import { FeedbackService } from '../../app/services/feedback.service'
+import { DestroyService } from '../../app/services/destroy.service'
 
 import { Store } from '@ngrx/store'
-import { State, getTotalCount } from './reducers'
-import { FetchGoodsCountAction } from './goods-management.action'
+import { 
+  State, 
+  getTotalCount,
+  getCurrentGoods
+ } from './reducers'
+import {
+  FetchGoodsCountAction,
+  FetchGoodsAction,
+  FetchGoodsParams,
+  FetchGoodsCountParams
+} from './goods-management.action'
+import { Goods } from './models/goods.model'
+
+import * as R from 'ramda'
 
 /**
  * Generated class for the GoodsManagementPage page.
@@ -24,32 +38,46 @@ import { FetchGoodsCountAction } from './goods-management.action'
  * Ionic pages and navigation.
  */
 
+ export interface FetchParams {
+  goodsParams: FetchGoodsParams,
+  countParams: FetchGoodsCountParams
+}
+
 @IonicPage()
 @Component({
   selector: 'page-goods-management',
-  templateUrl: 'goods-management.html'
+  templateUrl: 'goods-management.html',
+  providers: [DestroyService]
 })
 export class GoodsManagementPage {
-  totalCount$: Observable<number>
+  // totalCount$: Observable<number>
 
-  modeCtrl: FormControl = new FormControl('all')
+  filterCtrl: FormControl = new FormControl('all')
   showFilter$: Observable<string>
+  goods$: Observable<Goods[]>
 
   modes = [
     {
       id: 0,
       label: '全部商品',
-      value: 'all'
+      value: 'all',
+      filter: {}
     },
     {
       id: 1,
       label: '已上架',
-      value: 'onShelf'
+      value: 'onShelf',
+      filter: {
+        isActive: true
+      }
     },
     {
       id: 2,
       label: '已下架',
-      value: 'offShelf'
+      value: 'offShelf',
+      filter: {
+        isActive: false
+      }
     }
   ]
 
@@ -79,55 +107,74 @@ export class GoodsManagementPage {
     private app: App,
     private feedbackService: FeedbackService,
     private alertCtrl: AlertController,
-    private store: Store<State>
+    private store: Store<State>,
+    private destroyService: DestroyService
   ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad GoodsManagementPage')
+    this.initFetchData()
+    this.initDataSource()
+    this.initSubscriber()
+  }
 
-
-    this.totalCount$ = this.store.select(getTotalCount)
+  private initFetchData(): void {
+    this.store.dispatch(new FetchGoodsAction())
     this.store.dispatch(new FetchGoodsCountAction())
+  }
+
+  private initDataSource(): void {
+    const totalCount$ = this.store.select(getTotalCount)
 
     this.showFilter$ = Observable.combineLatest(
-      this.totalCount$,
-      this.modeCtrl.valueChanges
-      .map(this.findModeLabel).startWith(this.modes[0].label)
-    )
-    .map(([count, modeLabel]) => `${modeLabel}(${count})`)
+      totalCount$,
+      this.filterCtrl.valueChanges
+        .map(this.findModeLabel)
+        .startWith(this.modes[0].label)
+    ).map(([count, modeLabel]) => `${modeLabel}(${count})`)
+
+    this.goods$ = this.store.select(getCurrentGoods)
   }
 
   private findModeLabel = (value: string): string => {
     return this.modes.find(e => e.value === value).label
   }
 
-  ionViewCanLeave(): Promise<any> {
-    return new Promise((res, rej) => {
-      this.alertCtrl.create({
-        title: '可以走么',
-        message: '真的不可以走么',
-        buttons: [
-          {
-            text: '取消',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked')
-              rej()
-            }
-          },
-          {
-            text: '确定',
-            handler: () => {
-              console.log('ensure')
-              res()
-            }
-          }
-        ]
-      }).present()
+  private initSubscriber(): void {
+    // 下拉刷新(TODO) 拉到底部load(TODO) 选择过滤条件
+    const fetchParams$: Observable<FetchParams> = this.filterCtrl.valueChanges
+    .map(this.mapToParams)
+
+    fetchParams$.takeUntil(this.destroyService)
+    .subscribe(({ goodsParams, countParams }) => {
+      console.log(goodsParams)
+      console.log(countParams)
+      this.store.dispatch(new FetchGoodsAction(goodsParams))
+      this.store.dispatch(new FetchGoodsCountAction(countParams))
     })
+  }
+
+  private mapToParams = (value: string): FetchParams => {
+    const filterObj = this.modes.find(e => e.value === value)
+    return {
+      goodsParams: filterObj.filter,
+      countParams: filterObj.filter
+    }
   }
 
   toAddGoods() {
     this.app.getRootNav().push(AddGoodsPage)
+  }
+
+  selectChange() {
+    console.log('select option')
+  }
+  
+
+  toGoodsDetail(id: string): void {
+    this.feedbackService.feedback()
+    this.app.getRootNav().push(GoodsDetailPage, {
+      id
+    })
   }
 }

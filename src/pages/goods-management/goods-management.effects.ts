@@ -1,4 +1,4 @@
-import { ToastController } from 'ionic-angular'
+import { ToastController, LoadingController } from 'ionic-angular'
 
 import { Injectable } from '@angular/core'
 import { Effect, Actions } from '@ngrx/effects'
@@ -16,14 +16,24 @@ export class GoodsEffects {
   fetchGoods$ = this.actions$
     .ofType(fromGoods.FETCH_GOODS)
     .map((action: fromGoods.FetchGoodsAction) => action.payload)
-    .switchMap(({ pageIndex, pageSize, goodsName, goodsType }) => {
+    .switchMap(({ pageIndex, pageSize, goodsName, goodsType, isActive }) => {
+      const load = this.loadCtrl.create({
+        content: '获取商品中'
+      })
+      load.present()
       return Observable.fromPromise(
         this.localService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
-          .fetchGoods(tenantId, pageIndex, pageSize, goodsName, goodsType)
-          .map(goods => new fromGoods.FetchGoodsSuccessAction(goods))
-          .catch(e => Observable.of(new fromGoods.FetchGoodsFailureAction()))
+          .fetchGoods(tenantId, pageIndex, pageSize, goodsName, goodsType, isActive)
+          .map(goods => {
+            load.dismiss()
+            return new fromGoods.FetchGoodsSuccessAction(goods)
+          })
+          .catch(e => {
+            load.dismiss()
+            return Observable.of(new fromGoods.FetchGoodsFailureAction())
+          })
       )
     })
 
@@ -363,6 +373,7 @@ export class GoodsEffects {
     private actions$: Actions,
     private goodsService: GoodsService,
     private localService: LocalService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private loadCtrl: LoadingController
   ) {}
 }

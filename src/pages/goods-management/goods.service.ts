@@ -20,17 +20,27 @@ export class GoodsService {
 
   fetchGoods(
     tenantId: string,
-    pageIndex: number,
-    pageSize: number,
+    pageIndex?: number,
+    pageSize?: number,
     goodsName?: string,
-    goodsType?: string
+    goodsType?: string,
+    isActive?: boolean
   ): Observable<Goods[]> {
-    let query = `?tenantId=${tenantId}&pageNumber=${pageIndex}&pageSize=${pageSize}`
+    let query = `?tenantId=${tenantId}`
+    if (pageIndex) {
+      query += `&pageNumber=${pageIndex}`
+    }
+    if (pageSize) {
+      query += `&pageSize=${pageSize}`
+    }
     if (goodsName) {
       query += `&name=${goodsName}`
     }
     if (goodsType) {
       query += `&menuId=${goodsType}`
+    }
+    if (R.is(Boolean, isActive)) {
+      query += `&isActive=${isActive}`
     }
     return this.http
       .get(this.goodsUrl + query)

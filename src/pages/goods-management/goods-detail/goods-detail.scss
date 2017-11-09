@@ -1,0 +1,18 @@
+page-goods-detail {
+  .goods-detail-container {
+    .goods-description {
+      .desc {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .unit {
+          color: map-get($map: $colors, $key: grey);
+        }
+        .price {
+          color: map-get($map: $colors, $key: primary);
+        }
+      }
+    }
+  }
+}
