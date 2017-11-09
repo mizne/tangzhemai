@@ -255,7 +255,6 @@ export class GoodsEffects {
             load.dismiss()
             return [
               new fromGoods.OffShelfGoodsSuccessAction(),
-              new fromGoods.FetchGoodsAction()
             ]
           })
           .catch(e => {
@@ -308,7 +307,6 @@ export class GoodsEffects {
             load.dismiss()
             return [
               new fromGoods.OnShelfGoodsSuccessAction(),
-              new fromGoods.FetchGoodsAction()
             ]
           })
           .catch(e => {
