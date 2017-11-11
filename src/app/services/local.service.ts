@@ -34,7 +34,7 @@ export class LocalService {
   }
   
 
-  clear(): Promise<null> {
+  clear(): Promise<void> {
     return this.storage.clear()
   }
 

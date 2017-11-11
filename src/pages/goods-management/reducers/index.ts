@@ -35,3 +35,9 @@ export const getAllGoodsUnits = createSelector(
   fromGoodsIndex.getGoodsUnits
 )
 
+
+export const getSaveSuccessGoodsUUID = createSelector(
+  getGoodsIndexState,
+  fromGoodsIndex.getSaveSuccessGoodsUUID
+)
+

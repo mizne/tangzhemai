@@ -10,6 +10,7 @@ export interface State {
   goodsTotalCount: number
 
   addGoodsLoading: boolean
+  saveSuccessGoodsUUID: string // 用于标识 新建或编辑成功时的商品
 
   goodsUnits: GoodsUnit[]
   addGoodsUnitLoading: boolean
@@ -22,6 +23,7 @@ const initialState: State = {
   goodsTotalCount: 0,
 
   addGoodsLoading: false,
+  saveSuccessGoodsUUID: '',
 
   goodsUnits: [],
   addGoodsUnitLoading: false
@@ -78,10 +80,21 @@ export function reducer(
       }
 
     case fromGoods.ADD_GOODS_SUCCESS:
+      return {
+        ...state,
+        addGoodsLoading: false,
+        saveSuccessGoodsUUID: action.goodsUUID
+      }
     case fromGoods.ADD_GOODS_FAILURE:
       return {
         ...state,
         addGoodsLoading: false
+      }
+
+    case fromGoods.EDIT_GOODS_SUCCESS: 
+      return {
+        ...state,
+        saveSuccessGoodsUUID: action.goodsUUID
       }
 
     case fromGoods.FETCH_GOODS_UNITS_SUCCESS:
@@ -100,6 +113,7 @@ export const getGoodsTyps = (state: State) => state.goodsTypes
 export const getGoodsTotalCount = (state: State) => state.goodsTotalCount
 
 export const getAddGoodsLoading = (state: State) => state.addGoodsLoading
+export const getSaveSuccessGoodsUUID = (state: State) => state.saveSuccessGoodsUUID
 
 export const getGoodsUnits = (state: State) => state.goodsUnits
 export const getAddGoodsUnitLoading = (state: State) => state.addGoodsUnitLoading

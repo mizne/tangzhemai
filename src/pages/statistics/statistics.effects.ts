@@ -9,7 +9,7 @@ import { Action } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
 import { of } from 'rxjs/observable/of'
 
-import { StatisticsService } from './statistics.service'
+import { StatisticsService } from '../../app/services/statistics.service'
 import {
   FETCH_ORDERS_STATISTICS_OF_TODAY,
   FetchOrdersStatisticsOfToday,

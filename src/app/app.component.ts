@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { Platform, AlertController } from 'ionic-angular'
+import { Platform, AlertController, ToastController } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
 
@@ -15,7 +15,7 @@ import { NativeService } from './services/native.service'
 import { LocalService } from './services/local.service'
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
 })
 export class MyApp {
   rootPage$: Observable<any>
@@ -26,7 +26,8 @@ export class MyApp {
     private store: Store<State>,
     private nativeService: NativeService,
     private alertCtrl: AlertController,
-    private localService: LocalService
+    private toastCtrl: ToastController,
+    private localService: LocalService,
   ) {
     this.platformReady()
 
@@ -54,6 +55,7 @@ export class MyApp {
 
       // 真机
       if (this.nativeService.isIos() || this.nativeService.isAndroid()) {
+        this.nativeService.checkNetwork()
       }
     })
     .catch(e => {
@@ -63,4 +65,5 @@ export class MyApp {
       })
     })
   }
+
 }

@@ -17,8 +17,12 @@ export const reducers = {
 export const getHomeModuleState = createFeatureSelector<HomeState>('home')
 
 export const getHomeIndexState = createSelector(getHomeModuleState, (state: HomeState) => state.homeIndex)
-export const getCount = createSelector(
+export const getHomeLoading = createSelector(
   getHomeIndexState,
-  fromHomeIndex.getCount
+  fromHomeIndex.getLoading
+)
+export const getTodayStatistics = createSelector(
+  getHomeIndexState,
+  fromHomeIndex.getTodayStatistics
 )
 

@@ -12,7 +12,7 @@
       <button ion-button color="light" clickFeedback (click)="cancel()">取消</button>
     </ion-buttons>
 
-    <ion-title>新增商品</ion-title>
+    <ion-title>{{goodsActionDesc}}商品</ion-title>
 
     <ion-buttons end>
       <button ion-button color="light" clickFeedback (click)="toSaveGoods()" strong>
@@ -25,13 +25,30 @@
 
 
 <ion-content padding>
+  <ion-item>
+    <ion-row>
+      <ion-col width-50>
+        <button ion-button color="danger" type="button" full round large (click)="takePhoto()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col width-50>
+        <button ion-button color="secondary" type="button" full round large (click)="selectPhoto()">
+          <ion-icon name="image"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+
+
+
   <form [formGroup]="goodsForm">
     <div class="add-goods-container">
-
-
       <div class="image-input add-goods-input">
         <div class="add-area">
-          <ion-icon name="add" color="bgPage"></ion-icon>
+          <!-- <ion-icon name="add" color="bgPage"></ion-icon> -->
+          <img *ngIf="uploadImageUrl" class="img-responsive" [src]="uploadImageUrl" />
+          <ion-input [hidden]="true" formControlName="listImageUrl"></ion-input>
         </div>
       </div>
 

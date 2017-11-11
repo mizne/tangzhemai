@@ -20,8 +20,6 @@ import {
   FetchOrdersStatisticsOfThisYear
 } from './statistics.action'
 
-
-import { StatisticsService } from './statistics.service'
 import { DestroyService } from '../../app/services/destroy.service'
 import { FeedbackService } from '../../app/services/feedback.service'
 /**
@@ -156,7 +154,6 @@ export class StatisticsPage implements OnInit {
     public navCtrl: NavController,
     public navParams: NavParams,
     private store: Store<State>,
-    private statisticsService: StatisticsService,
     private destroyService: DestroyService,
     private feedbackService: FeedbackService
   ) {}

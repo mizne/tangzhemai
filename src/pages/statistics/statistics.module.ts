@@ -9,7 +9,6 @@ import { reducers } from './reducers'
 import { EffectsModule } from '@ngrx/effects'
 import { StatisticsEffects } from './statistics.effects'
 
-import { StatisticsService } from './statistics.service'
 import { ChartsModule } from 'ng2-charts'
 
 const effects = [
@@ -28,6 +27,6 @@ const effects = [
     IonicPageModule.forChild(StatisticsPage),
     ChartsModule,
   ],
-  providers: [StatisticsService]
+  providers: []
 })
 export class StatisticsPageModule {}

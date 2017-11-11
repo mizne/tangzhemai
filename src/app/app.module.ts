@@ -34,12 +34,19 @@ import { LoggerService } from './services/logger.service'
 import { NativeService } from './services/native.service'
 import { FeedbackService } from './services/feedback.service'
 import { LocalService } from './services/local.service'
+import { StatisticsService } from './services/statistics.service'
 
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { Device } from '@ionic-native/device'
 import { CallNumber } from '@ionic-native/call-number'
 import { DeviceFeedback } from '@ionic-native/device-feedback'
+import { Camera } from '@ionic-native/camera'
+import { File } from '@ionic-native/file'
+import { Network } from '@ionic-native/network'
+import { FileTransfer } from '@ionic-native/file-transfer'
+import { InAppBrowser } from '@ionic-native/in-app-browser'
+import { AppVersion } from '@ionic-native/app-version'
 
 import './rxjs-imports'
 
@@ -79,22 +86,27 @@ import './rxjs-imports'
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-  ],
+  entryComponents: [MyApp],
   providers: [
     StatusBar,
     SplashScreen,
     Device,
     CallNumber,
     DeviceFeedback,
+    Camera,
+    File,
+    Network,
+    FileTransfer,
+    InAppBrowser,
+    AppVersion,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     LoggerService,
     NativeService,
     FeedbackService,
-    LocalService
+    LocalService,
+    StatisticsService,
   ]
 })
 export class AppModule {}

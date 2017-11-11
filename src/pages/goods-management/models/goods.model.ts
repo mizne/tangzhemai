@@ -1,6 +1,7 @@
 import * as R from 'ramda'
 
 export class Goods {
+  uuid?: string
   id?: string
   name?: string
   listImageUrl?: string

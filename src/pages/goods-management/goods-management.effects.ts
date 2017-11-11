@@ -18,14 +18,21 @@ export class GoodsEffects {
     .map((action: fromGoods.FetchGoodsAction) => action.payload)
     .switchMap(({ pageIndex, pageSize, goodsName, goodsType, isActive }) => {
       const load = this.loadCtrl.create({
-        content: '获取商品中'
+        content: '获取商品中...'
       })
       load.present()
       return Observable.fromPromise(
         this.localService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
-          .fetchGoods(tenantId, pageIndex, pageSize, goodsName, goodsType, isActive)
+          .fetchGoods(
+            tenantId,
+            pageIndex,
+            pageSize,
+            goodsName,
+            goodsType,
+            isActive
+          )
           .map(goods => {
             load.dismiss()
             return new fromGoods.FetchGoodsSuccessAction(goods)
@@ -129,27 +136,38 @@ export class GoodsEffects {
     .switchMap(goods => {
       return Observable.fromPromise(
         this.localService.getTenantId()
-      ).mergeMap(tenantId =>
-        this.goodsService
+      ).mergeMap(tenantId => {
+        const load = this.loadCtrl.create({
+          content: '新增商品中...'
+        })
+        load.present()
+
+        return this.goodsService
           .addGoods(tenantId, goods)
-          .concatMap(() => [
-            new fromGoods.AddGoodsSuccessAction(goods.name),
-            new fromGoods.FetchGoodsCountAction()
-          ])
-          .catch(() =>
-            Observable.of(new fromGoods.AddGoodsFailureAction(goods.name))
-          )
-      )
+          .concatMap(() => {
+            load.dismiss()
+            return [
+              new fromGoods.AddGoodsSuccessAction(goods.uuid),
+              new fromGoods.FetchGoodsCountAction(),
+              new fromGoods.FetchGoodsAction()
+            ]
+          })
+          .catch(() => {
+            load.dismiss()
+            return Observable.of(
+              new fromGoods.AddGoodsFailureAction()
+            )
+          })
+      })
     })
 
   @Effect({ dispatch: false })
   addGoodsSuccess$ = this.actions$
     .ofType(fromGoods.ADD_GOODS_SUCCESS)
-    .map((action: fromGoods.AddGoodsSuccessAction) => action.goodsName)
     .do(goodsName => {
       this.toastCtrl
         .create({
-          message: `添加商品 ${goodsName} 成功！`,
+          message: `添加商品成功！`,
           duration: 3000,
           position: 'top'
         })
@@ -159,11 +177,10 @@ export class GoodsEffects {
   @Effect({ dispatch: false })
   addGoodsFailure$ = this.actions$
     .ofType(fromGoods.ADD_GOODS_FAILURE)
-    .map((action: fromGoods.AddGoodsFailureAction) => action.goodsName)
     .do(goodsName => {
       this.toastCtrl
         .create({
-          message: `添加商品 ${goodsName} 失败！`,
+          message: `添加商品失败！`,
           duration: 3000,
           position: 'top'
         })
@@ -255,6 +272,7 @@ export class GoodsEffects {
             load.dismiss()
             return [
               new fromGoods.OffShelfGoodsSuccessAction(),
+              new fromGoods.FetchGoodsAction()
             ]
           })
           .catch(e => {
@@ -307,6 +325,7 @@ export class GoodsEffects {
             load.dismiss()
             return [
               new fromGoods.OnShelfGoodsSuccessAction(),
+              new fromGoods.FetchGoodsAction()
             ]
           })
           .catch(e => {
@@ -353,15 +372,17 @@ export class GoodsEffects {
     .switchMap(goods => {
       return Observable.fromPromise(
         this.localService.getTenantId()
-      ).mergeMap(tenantId =>
-        this.goodsService
+      ).mergeMap(tenantId => {
+        return this.goodsService
           .editGoods(tenantId, goods.id, goods)
-          .concatMap(() => [
-            new fromGoods.EditGoodsSuccessAction(),
-            new fromGoods.FetchGoodsAction()
-          ])
+          .concatMap(() => {
+            return [
+              new fromGoods.EditGoodsSuccessAction(goods.uuid),
+              new fromGoods.FetchGoodsAction()
+            ]
+          })
           .catch(e => Observable.of(new fromGoods.EditGoodsFailureAction()))
-      )
+      })
     })
 
   @Effect({ dispatch: false })

@@ -6,13 +6,18 @@ page-add-goods {
 
       .add-area {
         @include flexCenter;
-        width: 80px;
-        height: 80px;
+        // width: 120px;
+        height: 120px;
         margin: 8px 16px 8px 0;
         line-height: 1;
-        border: 1px solid map-get($map: $colors, $key: bgPage);
+        // border: 1px solid map-get($map: $colors, $key: bgPage);
         .icon {
           font-size: 4rem;
+        }
+
+        .img-responsive {
+          max-width: 120px;
+          max-height: 100%;
         }
       }
     }

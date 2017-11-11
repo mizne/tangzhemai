@@ -14,6 +14,8 @@ import { GoodsEffects } from './goods-management.effects'
 
 import { GoodsService } from './goods.service'
 
+import { GoodsStatusPipe } from './pipes/goods-status.pipe'
+
 const effects = [
   GoodsEffects
 ]
@@ -24,6 +26,7 @@ const effects = [
     AddGoodsPage,
     GoodsDetailPage,
     GoodsActionPopoverPage,
+    GoodsStatusPipe,
   ],
   imports: [
     SharedModule,

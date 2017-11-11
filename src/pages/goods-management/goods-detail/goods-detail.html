@@ -27,7 +27,6 @@
         <ion-slide>
           <img [src]="goodsDetail.listImageUrl" [alt]="goodsDetail.name">
         </ion-slide>
-
       </ion-slides>
     </div>
 
@@ -53,6 +52,16 @@
       <ion-item>
         <ion-label>会员价</ion-label>
         <div item-content>{{goodsDetail.vipPrice}}</div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>状态</ion-label>
+        <div item-content>{{goodsDetail.isActive | goodsStatus}}</div>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>可售数量</ion-label>
+        <div item-content>{{goodsDetail.totalCount}}</div>
       </ion-item>
 
       <ion-item>

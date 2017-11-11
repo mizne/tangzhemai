@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, PopoverController } from 'ionic-angular';
+import { Component } from '@angular/core'
+import { NavController, NavParams, PopoverController } from 'ionic-angular'
 import { FormControl } from '@angular/forms'
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable'
 import { Goods } from '../models/goods.model'
 
 import { Store } from '@ngrx/store'
 import { State, getCurrentGoods } from '../reducers'
 
 import { GoodsActionPopoverPage } from './goods-action-popover'
-
 
 /**
  * Generated class for the GoodsDetailPage page.
@@ -20,18 +19,17 @@ import { GoodsActionPopoverPage } from './goods-action-popover'
 
 @Component({
   selector: 'page-goods-detail',
-  templateUrl: 'goods-detail.html',
+  templateUrl: 'goods-detail.html'
 })
 export class GoodsDetailPage {
   goodsDetail$: Observable<Goods>
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private popoverCtrl: PopoverController,
     private store: Store<State>
-  ) {
-  }
+  ) {}
 
   ionViewDidLoad() {
     const goodsId = this.navParams.get('id')
@@ -45,16 +43,9 @@ export class GoodsDetailPage {
   toActionPopover(ev) {
     let popover = this.popoverCtrl.create(GoodsActionPopoverPage, {
       id: this.navParams.get('id')
-    });
+    })
     popover.present({
       ev
-    });
-
-    // this.popoverCtrl.create(GoodsActionPopoverPage, {
-    //   id: this.navParams.get('id')
-    // }).present({
-    //   ev
-    // })
+    })
   }
-
 }

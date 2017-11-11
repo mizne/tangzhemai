@@ -1,13 +1,15 @@
 import * as fromHome from './home.action'
 
+import { StatisticsItem } from '../statistics/models/statistics.model'
+
 export interface State {
   loading: boolean
-  count: number
+  todayStatistics: StatisticsItem[]
 }
 
 const initialState: State = {
   loading: false,
-  count: 0
+  todayStatistics: []
 }
 
 export function reducer(
@@ -15,20 +17,21 @@ export function reducer(
   action: fromHome.Actions
 ): State {
   switch (action.type) {
-    case fromHome.SEARCH_TEXT:
+    case fromHome.FETCH_TODAY_STATISTICS:
+      return {
+        ...state,
+        loading: false
+      }
+    case fromHome.FETCH_TODAY_STATISTICS_SUCCESS:
+      return {
+        ...state,
+        loading: true,
+        todayStatistics: action.todayStatistics
+      }
+    case fromHome.FETCH_TODAY_STATISTICS_FAILURE: 
       return {
         ...state,
         loading: true
-      }
-    case fromHome.INCREMENT:
-      return {
-        ...state,
-        count: ++state.count
-      }
-    case fromHome.DECREMENT:
-      return {
-        ...state,
-        count: --state.count
       }
     default:
       return state
@@ -36,4 +39,4 @@ export function reducer(
 }
 
 export const getLoading = (state: State) => state.loading
-export const getCount = (state: State) => state.count
+export const getTodayStatistics = (state: State) => state.todayStatistics

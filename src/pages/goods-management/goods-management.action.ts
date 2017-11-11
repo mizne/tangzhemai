@@ -95,6 +95,7 @@ export class EditGoodsAction implements Action {
 }
 export class EditGoodsSuccessAction implements Action {
   readonly type = EDIT_GOODS_SUCCESS
+  constructor(public goodsUUID: string) {}
 }
 export class EditGoodsFailureAction implements Action {
   readonly type = EDIT_GOODS_FAILURE
@@ -154,11 +155,10 @@ export class AddGoodsAction implements Action {
 }
 export class AddGoodsSuccessAction implements Action {
   readonly type = ADD_GOODS_SUCCESS
-  constructor(public goodsName: string) {}
+  constructor(public goodsUUID: string) {}
 }
 export class AddGoodsFailureAction implements Action {
   readonly type = ADD_GOODS_FAILURE
-  constructor(public goodsName: string) {}
 }
 
 

@@ -1,21 +1,23 @@
 import { Action } from '@ngrx/store'
 
-export const SEARCH_TEXT = '[Heaer] Search Text'
-export class SearchTExtAction implements Action {
-  readonly type = SEARCH_TEXT
-  constructor(public text: string) {}
+import { StatisticsItem } from '../statistics/models/statistics.model'
+
+export const FETCH_TODAY_STATISTICS = '[Home] Fetch Today Statistics'
+export const FETCH_TODAY_STATISTICS_SUCCESS = '[Home] Fetch Today Statistics Success'
+export const FETCH_TODAY_STATISTICS_FAILURE = '[Home] Fetch Today Statistics Failure'
+
+export class FetchTodayStatisticsAction implements Action {
+  readonly type = FETCH_TODAY_STATISTICS
+}
+export class FetchTodayStatisticsSuccessAction implements Action {
+  readonly type = FETCH_TODAY_STATISTICS_SUCCESS
+  constructor(public todayStatistics: StatisticsItem[]) {}
+}
+export class FetchTodayStatisticsFailureAction implements Action {
+  readonly type = FETCH_TODAY_STATISTICS_FAILURE
 }
 
-export const INCREMENT = '[Home] Increment'
-export class IncrementAction implements Action {
-  readonly type = INCREMENT
-}
-export const DECREMENT = '[Home] Decrement'
-export class DecrementAction implements Action {
-  readonly type = DECREMENT
-}
-
-export type Actions =
-SearchTExtAction |
-IncrementAction |
-DecrementAction
+export type Actions = 
+FetchTodayStatisticsAction |
+FetchTodayStatisticsSuccessAction |
+FetchTodayStatisticsFailureAction

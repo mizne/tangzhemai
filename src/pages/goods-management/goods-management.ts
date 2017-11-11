@@ -23,7 +23,9 @@ import {
   FetchGoodsCountAction,
   FetchGoodsAction,
   FetchGoodsParams,
-  FetchGoodsCountParams
+  FetchGoodsCountParams,
+  FetchGoodsUnitsAction,
+  FectchGoodsTypesAction
 } from './goods-management.action'
 import { Goods } from './models/goods.model'
 
@@ -172,6 +174,7 @@ export class GoodsManagementPage {
       .subscribe(({ goodsParams, countParams }) => {
         this.store.dispatch(new FetchGoodsAction(goodsParams))
         this.store.dispatch(new FetchGoodsCountAction(countParams))
+        
       })
   }
 
@@ -197,25 +200,11 @@ export class GoodsManagementPage {
       .do(_ => {
         this.feedbackService.feedback()
       })
-      .switchMap(() => {
-        return new Observable(observer => {
-          const modal = this.modalCtrl.create(AddGoodsPage, {
-            action: GooodsActionType.CREATE
-          })
-          modal.present()
-          modal.onWillDismiss(data => {
-            if (data) {
-              observer.next(data)
-              observer.complete()
-            } else {
-              observer.complete()
-            }
-          })
-        })
-      })
       .takeUntil(this.destroyService)
       .subscribe(data => {
-        console.log('to create goods ', data)
+        this.modalCtrl.create(AddGoodsPage, {
+          action: GooodsActionType.CREATE
+        }).present()
       })
   }
 

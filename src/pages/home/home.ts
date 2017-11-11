@@ -4,16 +4,19 @@ import { NavController, App } from 'ionic-angular';
 import { OrderPage } from '../order/order'
 
 import { Store } from '@ngrx/store'
-import { State, getCount } from './reducers'
-import { IncrementAction, DecrementAction } from './home.action'
+import { State, getTodayStatistics } from './reducers'
+import { FetchTodayStatisticsAction } from './home.action'
+
 import { Observable } from 'rxjs/Observable';
 
 import { LocalService } from '../../app/services/local.service'
+import { DestroyService } from '../../app/services/destroy.service'
 
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [DestroyService]
 })
 export class HomePage {
 
@@ -60,16 +63,41 @@ export class HomePage {
     }
   ]
 
+  todayMerchantAmount: string
+  todayOrderCount: string
+
   constructor(
     public navCtrl: NavController,
     private store: Store<State>,
     private app: App,
-    private localService: LocalService
+    private localService: LocalService,
+    private destroyService: DestroyService
   ) {
 
   }
 
   ionViewDidLoad() {
+    this.store.dispatch(new FetchTodayStatisticsAction())
+
+    this.store.select(getTodayStatistics)
+    .takeUntil(this.destroyService)
+    .subscribe((todayStatistics) => {
+      const total = todayStatistics.map(e => ({
+        orderCount: Number(e.num.value),
+        merchantAmount: Number(e.merchantAmount.value)
+      }))
+      .reduce((accu, curr) => {
+        accu.orderCount += curr.orderCount
+        accu.merchantAmount += curr.merchantAmount
+        return accu
+      }, {
+        orderCount: 0,
+        merchantAmount: 0,
+      })
+
+      this.todayMerchantAmount = total.merchantAmount.toFixed(2)
+      this.todayOrderCount = String(total.orderCount)
+    })
   }
 
   toPage(pageName: string): void {
