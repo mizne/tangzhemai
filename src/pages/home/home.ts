@@ -36,7 +36,7 @@ export class HomePage {
     },
     {
       id: 2,
-      label: '销售订单',
+      label: '销售管理',
       value: 'sales',
       page: 'SalesorderManagementPage'
     },

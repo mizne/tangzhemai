@@ -1,0 +1,56 @@
+<!--
+  Generated template for the SelectGoodsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>选择商品</ion-title>
+
+    <ion-buttons end>
+      <button ion-button color="light" (click)="cancel()" strong>
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="select-goods-container">
+
+    <div class="goods-type">
+      <ion-list>
+        <ion-item *ngFor="let goodsType of allGoodsTypes$ | async" [class.selected]="(selectedGoodsType$ | async)?.id === goodsType.id"
+          (click)="selectGoodsType(goodsType)">
+          {{goodsType.name}}
+          <span class="count" *ngIf="goodsType.count > 0">{{goodsType.count}}</span>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div class="goods-items">
+      <ion-list>
+        <ion-item [hidden]="!goods.show" *ngFor="let goods of showGoods$ | async">
+          <ion-thumbnail item-start>
+            <img [src]="goods.listImageUrl">
+          </ion-thumbnail>
+          <h2>{{goods.name}}</h2>
+          <p color="primary">{{ '￥' + goods.price }}</p>
+          <ion-icon name="add-circle" class="increment" color="primary" (click)="increment(goods)"></ion-icon>
+          <span class="goods-count">{{goods.count}}</span>
+          <ion-icon name="remove-circle" class="decrement" color="primary" *ngIf="goods.count > 0" (click)="decrement(goods)"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-item>
+    <ion-label>{{'￥' + (totalPrice$ | async)}}</ion-label>
+    <button ion-button item-end (click)="chooseEnd()">选好了</button>
+  </ion-item>
+</ion-footer>

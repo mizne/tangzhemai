@@ -7,6 +7,8 @@ import { State } from './reducers'
 import { LogoutAction } from '../../app/app.action'
 import { FeedbackService } from '../../app/services/feedback.service'
 
+import { AboutPage } from './about/about'
+
 @Component({
   selector: 'page-mine',
   templateUrl: 'mine.html'
@@ -92,7 +94,7 @@ export class MinePage {
           .present()
         break
       case 'about':
-        this.app.getRootNav().push('AboutPage')
+        this.app.getRootNav().push(AboutPage)
         break
 
       default:

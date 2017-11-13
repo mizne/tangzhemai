@@ -25,14 +25,18 @@
     </ion-select>
   </ion-item>
 
-  <ion-list>
-    <ion-item *ngFor="let goods of goods$ | async">
-      <ion-thumbnail item-start>
-        <img [src]="goods.listImageUrl">
-      </ion-thumbnail>
-      <h2>{{goods.name}}</h2>
-      <p color="primary">{{ '￥' + goods.price }}</p>
-      <button ion-button clear item-end (click)="toGoodsDetail(goods.id)">查看</button>
-    </ion-item>
-  </ion-list>
+  <div *ngIf="goods$ | async as goods">
+    <ion-list>
+      <ion-item *ngFor="let goods of goods">
+        <ion-thumbnail item-start>
+          <img [src]="goods.listImageUrl">
+        </ion-thumbnail>
+        <h2>{{goods.name}}</h2>
+        <p color="primary">{{ '￥' + goods.price }}</p>
+        <button ion-button clear item-end (click)="toGoodsDetail(goods.id)">查看</button>
+      </ion-item>
+    </ion-list>
+    <p class="no-item" *ngIf="goods.length === 0">还没有商品</p>
+  </div>
+
 </ion-content>

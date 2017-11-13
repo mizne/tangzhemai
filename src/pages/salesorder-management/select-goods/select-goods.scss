@@ -1,0 +1,46 @@
+page-salesorder-select-goods {
+  .select-goods-container {
+    display: flex;
+    .item {
+      padding-right: 0;
+    }
+
+    .goods-type {
+      flex: 1;
+      .count {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        color: map-get($map: $colors, $key: danger);
+      }
+    }
+
+    .goods-items {
+      flex: 5;
+
+      &.selected {
+        color: map-get($map: $colors, $key: primary);
+      }
+
+      .goods-count,
+      .decrement {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  ion-footer {
+    .item {
+      padding-right: 0;
+      .item-inner {
+        padding-right: 0 !important;
+      }
+      .item-button {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 100% !important;
+        width: 100px !important;
+      }
+    }
+  }
+}

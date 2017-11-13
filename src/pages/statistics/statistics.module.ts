@@ -21,7 +21,6 @@ const effects = [
   ],
   imports: [
     SharedModule,
-    
     StoreModule.forFeature('statistics', reducers),
     EffectsModule.forFeature(effects),
     IonicPageModule.forChild(StatisticsPage),

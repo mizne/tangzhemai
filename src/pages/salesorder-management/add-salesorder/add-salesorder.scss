@@ -1,0 +1,37 @@
+page-add-salesorder {
+  ion-content {
+    .salesorder-item {
+      margin-top: 10px;
+    }
+
+    .row {
+      background-color: map-get($map: $colors, $key: bgWhite);
+      .col {
+        display: flex;
+        align-items: center;
+      }
+      &:not(:last-child) {
+        border-bottom: 1px solid map-get($map: $colors, $key: grey);
+      }
+    }
+
+    button {
+      color: map-get($map: $colors, $key: grey);
+    }
+  }
+
+  ion-footer {
+    .item {
+      padding-right: 0;
+      .item-inner {
+        padding-right: 0 !important;
+      }
+      .item-button {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 100% !important;
+        width: 100px !important;
+      }
+    }
+  }
+}

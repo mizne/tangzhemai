@@ -23,7 +23,6 @@ import { MinePageModule } from '../pages/mine/mine.module'
 import { OrderPageModule } from '../pages/order/order.module'
 import { CheckAccountPageModule } from '../pages/check-account/check-account.module'
 
-import { AboutPageModule } from '../pages/about/about.module'
 import { GoodsManagementPageModule } from '../pages/goods-management/goods-management.module'
 import { PurchaseManagementPageModule } from '../pages/purchase-management/purchase-management.module'
 import { SalesorderManagementPageModule } from '../pages/salesorder-management/salesorder-management.module'
@@ -35,6 +34,7 @@ import { NativeService } from './services/native.service'
 import { FeedbackService } from './services/feedback.service'
 import { LocalService } from './services/local.service'
 import { StatisticsService } from './services/statistics.service'
+import { GoodsService } from './services/goods.service'
 
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
@@ -65,7 +65,6 @@ import './rxjs-imports'
     OrderPageModule,
     CheckAccountPageModule,
 
-    AboutPageModule,
     GoodsManagementPageModule,
     PurchaseManagementPageModule,
     SalesorderManagementPageModule,
@@ -107,6 +106,7 @@ import './rxjs-imports'
     FeedbackService,
     LocalService,
     StatisticsService,
+    GoodsService,
   ]
 })
 export class AppModule {}

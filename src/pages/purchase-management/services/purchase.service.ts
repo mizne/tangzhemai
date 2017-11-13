@@ -2,31 +2,43 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
-import { APIResponse } from '../../app/interceptors/api-error-interceptor'
-import { Purchase, PurchaseResp } from './models/purchase.model'
+import { APIResponse } from '../../../app/interceptors/api-error-interceptor'
+import { Purchase, PurchaseResp } from '../models/purchase.model'
 
 import * as R from 'ramda'
+import { PurchaseFilter } from '../purchase-management.action'
 
 @Injectable()
 export class PurchaseService {
-  private goodsUrl = '/admin/food'
-  private goodsCountUrl = '/admin/foodByCount'
-  private goodsTypeUrl = '/admin/menus'
-  private goodsUnitUrl = '/admin/units'
+  private purchaseUrl = '/admin/inStock'
+
   constructor(private http: HttpClient) {}
 
   fetchPurchases(
     tenantId: string,
+    filter: PurchaseFilter
   ): Observable<Purchase[]> {
-    const query = `?tenantId=${tenantId}`
+    let query = `?tenantId=${tenantId}`
+    if (filter !== PurchaseFilter.DEFAULT) {
+      query += `&goodsStatus=${filter}`
+    }
     
     return this.http
-      .get(this.goodsUrl + query)
+      .get(this.purchaseUrl + query)
       .map(resp => (resp as APIResponse).result as PurchaseResp[])
       .map(result =>
         result.map(Purchase.convertFromResp)
       )
       .catch(this.handleError)
+  }
+
+  addPurchase(tenantId: string, purchase: Purchase) {
+    console.log('to add purchase ', purchase)
+    return this.http.post(this.purchaseUrl, {
+      ...purchase,
+      tenantId
+    })
+    .catch(this.handleError)
   }
 
   

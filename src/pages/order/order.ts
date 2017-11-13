@@ -7,9 +7,7 @@ import { FetchOrdersAction } from './order.action'
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-
 import { Order } from './models/order.model'
-
 import { DestroyService } from '../../app/services/destroy.service'
 
 

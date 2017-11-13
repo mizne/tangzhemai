@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
-import { Goods, GoodsResp } from './models/goods.model'
-import { GoodsType } from './models/goodsType.model'
-import { GoodsUnit } from './models/goodsUnit.model'
+import { Goods, GoodsResp } from '../../pages/goods-management/models/goods.model'
+import { GoodsType } from '../../pages/goods-management/models/goodsType.model'
+import { GoodsUnit } from '../../pages/goods-management/models/goodsUnit.model'
 
 import { APIResponse } from '../../app/interceptors/api-error-interceptor'
 

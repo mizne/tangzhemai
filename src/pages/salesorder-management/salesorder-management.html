@@ -8,11 +8,30 @@
 
   <ion-navbar>
     <ion-title>销售订单管理</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="toAddSalesOrder()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div *ngIf="salesOrders$ | async as salesOrders">
+    <ion-list>
+      <ion-item *ngFor="let order of salesOrders">
+        <ion-thumbnail item-start>
+          <img [src]="order.listImageUrl">
+        </ion-thumbnail>
+        <h2>{{order.name}}</h2>
+        <p color="primary">{{ '￥' + order.price }}</p>
+      </ion-item>
 
+
+    </ion-list>
+    <p class="no-item" *ngIf="salesOrders.length === 0">还没有销售单呢</p>
+  </div>
 </ion-content>

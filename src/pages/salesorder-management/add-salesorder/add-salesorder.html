@@ -1,0 +1,109 @@
+<!--
+  Generated template for the AddSalesorderPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button color="light" clickFeedback (click)="cancel()">取消</button>
+    </ion-buttons>
+    <ion-title>新增销售单</ion-title>
+
+    <ion-buttons end>
+      <button ion-button color="light" clickFeedback (click)="toSave()" strong>
+        <span>出售</span>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="salesOrderForm">
+      <ion-item class="salesorder-item">
+          <ion-label color="primary">客户</ion-label>
+          <ion-select formControlName="accountId" cancelText="取消" interface="action-sheet" placeholder="请选择">
+            <ion-option *ngFor="let account of allAccount$ | async" [value]="account.id">
+              {{account.name}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+
+    <ion-item class="salesorder-item">
+      <ion-label color="primary">仓库</ion-label>
+      <ion-select formControlName="stockId" cancelText="取消" interface="action-sheet" placeholder="请选择">
+        <ion-option *ngFor="let stock of allStocks$ | async" [value]="stock.id">
+          {{stock.name}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-item class="salesorder-item" (click)="toSelectGoods()">
+      <ion-label color="primary">选择商品</ion-label>
+      <ion-icon name="add" color="primary" item-end></ion-icon>
+    </ion-item>
+
+    <ion-grid>
+
+      <div *ngIf="selectedGoodses.length > 0">
+        <ion-row>
+          <ion-col col-4>
+            商品名称
+          </ion-col>
+          <ion-col col-4>
+            商品数量
+          </ion-col>
+          <ion-col col-4>
+            商品价格
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngFor="let goods of selectedGoodses">
+          <ion-col col-4>
+            {{goods.name}}
+          </ion-col>
+          <ion-col col-4>
+            {{goods.count}}
+          </ion-col>
+          <ion-col col-4>
+            {{goods.price}}
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <ion-row *ngIf="selectedGoodses.length > 0">
+        <ion-col col-6>
+          商品数量 {{totalNum}}
+        </ion-col>
+        <ion-col col-6>
+          金额 {{totalPrice}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item class="salesorder-item">
+      <ion-label color="primary">销售员</ion-label>
+      <ion-select formControlName="salerId" cancelText="取消" interface="action-sheet" placeholder="请选择">
+        <ion-option *ngFor="let saler of allSalers$ | async" [value]="saler.id">
+          {{saler.name}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="salesorder-item">
+      <ion-textarea formControlName="description" placeholder="填写销售单备注"></ion-textarea>
+    </ion-item>
+
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-item>
+    <ion-label>{{'￥' + (totalPrice)}}</ion-label>
+    <button ion-button item-end (click)="toSave()" [disabled]="selectedGoodses.length === 0">出售</button>
+  </ion-item>
+</ion-footer>

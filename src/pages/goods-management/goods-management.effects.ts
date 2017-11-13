@@ -5,7 +5,7 @@ import { Effect, Actions } from '@ngrx/effects'
 import { Observable } from 'rxjs/Observable'
 
 import * as fromGoods from './goods-management.action'
-import { GoodsService } from './goods.service'
+import { GoodsService } from '../../app/services/goods.service'
 
 import { Storage } from '@ionic/storage'
 import { LocalService } from '../../app/services/local.service'

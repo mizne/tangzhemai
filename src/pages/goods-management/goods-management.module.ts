@@ -12,8 +12,6 @@ import { EffectsModule } from '@ngrx/effects'
 import { reducers } from './reducers'
 import { GoodsEffects } from './goods-management.effects'
 
-import { GoodsService } from './goods.service'
-
 import { GoodsStatusPipe } from './pipes/goods-status.pipe'
 
 const effects = [
@@ -34,7 +32,7 @@ const effects = [
     EffectsModule.forFeature(effects),
     IonicPageModule.forChild(GoodsManagementPage),
   ],
-  providers: [GoodsService],
+  providers: [],
   entryComponents: [
     AddGoodsPage, 
     GoodsDetailPage, 

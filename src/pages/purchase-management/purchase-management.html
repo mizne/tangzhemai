@@ -8,11 +8,48 @@
 
   <ion-navbar #navbar [backFeedback]="navbar">
     <ion-title>进货管理</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="toAddPurchase()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [formControl]="statusCtrl">
+      <ion-segment-button [value]="3">
+        默认
+      </ion-segment-button>
+      <ion-segment-button [value]="0">
+        待进货
+      </ion-segment-button>
+      <ion-segment-button [value]="1">
+        部分进货
+      </ion-segment-button>
+      <ion-segment-button [value]="2">
+        已进货
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div *ngIf="purchases$ | async as purchases">
+    <ion-list>
+      <ion-item *ngFor="let goods of purchases">
+        <ion-thumbnail item-start>
+          <img [src]="goods.listImageUrl">
+        </ion-thumbnail>
+        <h2>{{goods.name}}</h2>
+        <p color="primary">{{ '￥' + goods.price }}</p>
+        <button ion-button clear item-end (click)="toGoodsDetail(goods.id)">查看</button>
+      </ion-item>
 
+
+    </ion-list>
+    <p class="no-item" *ngIf="purchases.length === 0">还没有采购单呢</p>
+  </div>
 </ion-content>

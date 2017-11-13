@@ -125,7 +125,19 @@ export class AddGoodsPage implements OnInit {
   }
 
   toSaveGoods() {
-    this.saveSub.next()
+    if (this.goodsForm.valid) {
+      this.saveSub.next()
+    } else {
+      this.toastCtrl.create({
+        message: '还没有填写',
+        duration: 3e3
+      }).present()
+
+      for (const ctrl of Object.keys(this.goodsForm.controls)) {
+        this.goodsForm.controls[ctrl].markAsDirty()
+      }
+    }
+    
   }
 
   takePhoto() {
