@@ -18,18 +18,16 @@
 
   <ion-toolbar no-border-top>
     <ion-segment [formControl]="statusCtrl">
-      <ion-segment-button [value]="3">
+      <ion-segment-button [value]="2">
         默认
       </ion-segment-button>
-      <!-- <ion-segment-button [value]="0">
-        待进货
+      <ion-segment-button [value]="0">
+        待入库
       </ion-segment-button>
       <ion-segment-button [value]="1">
-        部分进货
+        已采购
       </ion-segment-button>
-      <ion-segment-button [value]="2">
-        已进货
-      </ion-segment-button> -->
+      
     </ion-segment>
   </ion-toolbar>
 
@@ -45,7 +43,7 @@
       </div>
 
       <div class="right-area">
-        <div class="total-price">$ {{purchase.goods | orderPrice}}</div>
+        <div class="total-price">￥ {{purchase.totalPrice}}</div>
       </div>
     </div>
 

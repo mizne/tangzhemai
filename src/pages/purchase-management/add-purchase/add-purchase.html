@@ -88,7 +88,25 @@
           金额 {{totalPrice}}
         </ion-col>
       </ion-row>
+
+      <ion-row *ngIf="selectedGoodses.length > 0">
+        <ion-col col-6 (click)="toDiscountInput()">
+          <ion-icon name="remove" color="primary"></ion-icon>
+          <span class="ion-text">优惠金额</span>
+          <span class="amount">{{ '￥' + getFormControlValue('discount')}}</span>
+        </ion-col>
+        <ion-col col-6 (click)="toOtherFeeInput()">
+          <ion-icon name="add" color="primary"></ion-icon>
+          <span class="ion-text">其他费用</span>
+          <span class="amount">{{ '￥' + getFormControlValue('otherFee')}}</span>
+        </ion-col>
+      </ion-row>
     </ion-grid>
+
+    <ion-item class="purchase-item">
+      <ion-label color="primary">实付(元)</ion-label>
+      <ion-input type="number" formControlName="paidAmount"></ion-input>
+    </ion-item>
 
     <ion-item class="purchase-item">
       <ion-textarea formControlName="description" placeholder="填写采购单备注"></ion-textarea>

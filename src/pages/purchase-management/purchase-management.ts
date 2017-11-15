@@ -36,7 +36,7 @@ import { AddPurchasePage } from './add-purchase/add-purchase'
 })
 export class PurchaseManagementPage implements OnInit {
 
-  statusCtrl: FormControl = new FormControl(3)
+  statusCtrl: FormControl = new FormControl(2)
 
   loading$: Observable<boolean>
   purchases$: Observable<Purchase[]>
@@ -85,7 +85,7 @@ export class PurchaseManagementPage implements OnInit {
   }
 
   private initFetchPurchase(): void {
-    const statusChanges = this.statusCtrl.valueChanges.startWith(3)
+    const statusChanges: Observable<number> = this.statusCtrl.valueChanges.startWith(2)
 
     Observable.merge(
       this.ionViewEnterSub,

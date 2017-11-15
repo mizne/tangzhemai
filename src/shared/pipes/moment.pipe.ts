@@ -8,6 +8,7 @@ import fecha from 'fecha'
 
 export class MomentPipe implements PipeTransform {
   transform(value: string | Date, dateFormat: string = 'YYYY-MM-DD HH-mm'): string {
-    return fecha.format(value, dateFormat)
+    const date = typeof value === 'string' ? new Date(value) : value
+    return fecha.format(date, dateFormat)
   }
 }

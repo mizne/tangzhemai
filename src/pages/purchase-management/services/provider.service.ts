@@ -33,7 +33,8 @@ export class ProviderService {
 
   addProvider(tenantId: string, providerName: string): Observable<any> {
     return this.http.post(this.providerUrl, {
-      name: providerName
+      name: providerName,
+      tenantId
     })
     .map(resp => (resp as APIResponse).result)
     .catch(this.handleError)

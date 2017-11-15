@@ -25,7 +25,7 @@ export const FETCH_STOCK_SUCCESS = '[Purchase] Fetch Stock Success'
 export const FETCH_STOCK_FAILURE = '[Purchase] Fetch Stock Failure'
 
 export enum PurchaseFilter {
-  TODO, PART, DONE, DEFAULT
+  TODO, DONE, DEFAULT
 }
 export class FetchPurchasesAction implements Action {
   readonly type = FETCH_PURCHASES

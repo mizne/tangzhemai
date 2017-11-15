@@ -4,19 +4,16 @@ page-add-purchase {
       margin-top: 10px;
     }
 
-    .row {
-      background-color: map-get($map: $colors, $key: bgWhite);
-      .col {
-        display: flex;
-        align-items: center;
-      }
-      &:not(:last-child) {
-        border-bottom: 1px solid map-get($map: $colors, $key: grey);
-      }
-    }
-
     button {
       color: map-get($map: $colors, $key: grey);
+    }
+
+    .ion-text {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    .amount {
+      color: map-get($map: $colors, $key: primary);
     }
   }
 

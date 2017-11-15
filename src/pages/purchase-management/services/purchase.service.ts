@@ -36,18 +36,18 @@ export class PurchaseService {
   ): Observable<Purchase[]> {
     let query = `?tenantId=${tenantId}`
     if (filter !== PurchaseFilter.DEFAULT) {
-      query += `&goodsStatus=${filter}`
+      query += `&status=${filter}`
     }
     
-    // return this.http
-    //   .get(this.purchaseUrl + query)
-    //   .map(resp => (resp as APIResponse).result as PurchaseResp[])
-    //   .map(result =>
-    //     result.map(Purchase.convertFromResp)
-    //   )
-    //   .catch(this.handleError)
+    return this.http
+      .get(this.purchaseUrl + query)
+      .map(resp => (resp as APIResponse).result as PurchaseResp[])
+      .map(result =>
+        result.map(Purchase.convertFromResp)
+      )
+      .catch(this.handleError)
 
-      return Observable.fromPromise(this.storage.get('FAKE_PURCHASES').then(purchases => purchases || []))
+      // return Observable.fromPromise(this.storage.get('FAKE_PURCHASES').then(purchases => purchases || []))
   }
 
   addPurchase(tenantId: string, purchase: Purchase) {
@@ -58,19 +58,12 @@ export class PurchaseService {
     // })
     // .catch(this.handleError)
 
-    const providerName = allProviders.find(e => e.id === purchase.providerId).name
-    
-    return Observable.fromPromise(this.storage.get('FAKE_PURCHASES'))
-    .mergeMap((purchases) => {
-      purchases = purchases || []
-      purchases.push({
-        ...purchase,
-        providerName,
-        createdAt: new Date()
-      })
-
-      return this.storage.set('FAKE_PURCHASES', purchases)
+    return this.http.post(this.purchaseUrl, {
+      ...Purchase.convertFromModel(purchase),
+      tenantId
     })
+    .map(resp => (resp as APIResponse).result)
+    .catch(this.handleError)
   }
 
   

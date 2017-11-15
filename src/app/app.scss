@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -15,7 +14,10 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-.header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+.header-md::after,
+.tabs-md[tabsplacement='top'] > .tabbar::after,
+.footer-md::before,
+.tabs-md[tabsplacement='bottom'] > .tabbar::before {
   background-image: none !important;
 }
 
@@ -30,14 +32,12 @@
     color: map-get($colors, light);
   }
 
-  .show-back-button+.toolbar-content {
+  .show-back-button + .toolbar-content {
     .title {
       text-align: left;
     }
   }
 }
-
-
 
 .segment-button {
   color: map-get($map: $colors, $key: light) !important;
@@ -74,5 +74,20 @@
 
   .item-inner {
     border-bottom: none !important;
+  }
+}
+
+.grid {
+  padding: 0;
+
+  .row {
+    background-color: map-get($map: $colors, $key: bgWhite);
+    .col {
+      display: flex;
+      align-items: center;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid #dedede;
+    }
   }
 }

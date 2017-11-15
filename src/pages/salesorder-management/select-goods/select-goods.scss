@@ -1,8 +1,11 @@
 page-salesorder-select-goods {
   .select-goods-container {
     display: flex;
-    .item {
-      padding-right: 0;
+    .goods-items {
+      .item {
+        padding-right: 0;
+        padding-left: 0;
+      }
     }
 
     .goods-type {
@@ -24,7 +27,7 @@ page-salesorder-select-goods {
 
       .goods-count,
       .decrement {
-        margin-left: 5px;
+        margin-left: 10px;
       }
     }
   }

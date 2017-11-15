@@ -61,6 +61,9 @@ export class AddPurchasePage implements OnInit {
   selectGoodsSub: Subject<void> = new Subject<void>()
   addProviderSub: Subject<void> = new Subject<void>()
 
+  discountInputSub: Subject<void> = new Subject<void>()
+  otherFeeInputSub: Subject<void> = new Subject<void>()
+
   allProviders$: Observable<Provider[]>
   allStocks$: Observable<Stock[]>
 
@@ -101,12 +104,24 @@ export class AddPurchasePage implements OnInit {
     this.selectGoodsSub.next()
   }
 
+  toDiscountInput() {
+    this.discountInputSub.next()
+  }
+
+  toOtherFeeInput() {
+    this.otherFeeInputSub.next()
+  }
+
   cancel() {
     this.cancelCreateSub.next()
   }
 
   toSave() {
     this.saveSub.next()
+  }
+
+  getFormControlValue(key: string) {
+    return this.purchaseForm.controls[key].value
   }
 
   private initNavParams(): void {
@@ -121,7 +136,10 @@ export class AddPurchasePage implements OnInit {
     this.purchaseForm = this.fb.group({
       providerId: [null, Validators.required],
       stockId: [null, Validators.required],
-      description: [null]
+      description: [null],
+      discount: [0],
+      otherFee: [0],
+      paidAmount: [0]
     })
   }
 
@@ -134,12 +152,14 @@ export class AddPurchasePage implements OnInit {
     this.initFetchProvidersAndStocks()
     this.initForm()
 
-
     this.initAddProvider()
     this.initSelectGoods()
     this.initCancelCreate()
     this.initCreate()
     this.initCreateSuccess()
+
+    this.initDiscountInput()
+    this.initOtherFeeInput()
   }
 
   private initFetchProvidersAndStocks(): void {
@@ -177,18 +197,18 @@ export class AddPurchasePage implements OnInit {
 
   private initAddProvider(): void {
     this.addProviderSub
-    .asObservable()
-    .do(_ => this.feedbackService.feedback())
-    .switchMap(() => {
-      return this.createAlertToInput('供应商')
-    })
-    .takeUntil(this.destroyService)
-    .subscribe(providerName => {
-      this.store.dispatch(new AddProviderAction(providerName))
-    })
+      .asObservable()
+      .do(_ => this.feedbackService.feedback())
+      .switchMap(() => {
+        return this.createAlertToInput('供应商')
+      })
+      .takeUntil(this.destroyService)
+      .subscribe(providerName => {
+        this.store.dispatch(new AddProviderAction(providerName))
+      })
   }
 
-  private createAlertToInput(name): Observable<string> {
+  private createAlertToInput(name, inputType = 'text'): Observable<string> {
     return new Observable(observer => {
       this.alertCtrl
         .create({
@@ -196,7 +216,8 @@ export class AddPurchasePage implements OnInit {
           inputs: [
             {
               name: 'key',
-              placeholder: `${name}名称`
+              type: inputType,
+              placeholder: `请输入${name}`
             }
           ],
           buttons: [
@@ -209,7 +230,7 @@ export class AddPurchasePage implements OnInit {
               }
             },
             {
-              text: '新增',
+              text: '确定',
               handler: data => {
                 this.feedbackService.feedback()
                 if (data.key) {
@@ -218,7 +239,7 @@ export class AddPurchasePage implements OnInit {
                 } else {
                   this.toastCtrl
                     .create({
-                      message: `还没有填写${name}名称`,
+                      message: `还没有填写${name}`,
                       duration: 3e3
                     })
                     .present()
@@ -268,29 +289,36 @@ export class AddPurchasePage implements OnInit {
     this.cancelCreateSub
       .asObservable()
       .takeUntil(this.destroyService)
+      .switchMap(() => {
+        return new Observable(observer => {
+          this.alertCtrl
+            .create({
+              title: `放弃新增`,
+              message: `确定放弃这次新增采购单么?`,
+              buttons: [
+                {
+                  text: '取消',
+                  role: 'cancel',
+                  handler: () => {
+                    this.feedback()
+                    observer.complete()
+                  }
+                },
+                {
+                  text: '确定',
+                  handler: () => {
+                    this.feedback()
+                    observer.next()
+                    observer.complete()
+                  }
+                }
+              ]
+            })
+            .present()
+        }) as Observable<void>
+      })
       .subscribe(() => {
-        this.alertCtrl
-          .create({
-            title: `放弃新增`,
-            message: `确定放弃这次新增采购单么?`,
-            buttons: [
-              {
-                text: '取消',
-                role: 'cancel',
-                handler: () => {
-                  this.feedback()
-                }
-              },
-              {
-                text: '确定',
-                handler: () => {
-                  this.dismiss()
-                  this.feedback()
-                }
-              }
-            ]
-          })
-          .present()
+        this.dismiss()
       })
   }
 
@@ -323,6 +351,38 @@ export class AddPurchasePage implements OnInit {
       .subscribe(() => {
         console.log('create success to dismiss')
         this.dismiss()
+      })
+  }
+
+  private initDiscountInput(): void {
+    this.discountInputSub
+      .asObservable()
+      .do(_ => this.feedbackService.feedback())
+      .switchMap(() => {
+        return this.createAlertToInput('优惠金额', 'number')
+      })
+      .takeUntil(this.destroyService)
+      .subscribe(discount => {
+        console.log(discount)
+        this.purchaseForm.patchValue({
+          discount
+        })
+      })
+  }
+
+  private initOtherFeeInput(): void {
+    this.otherFeeInputSub
+      .asObservable()
+      .do(_ => this.feedbackService.feedback())
+      .switchMap(() => {
+        return this.createAlertToInput('其他费用', 'number')
+      })
+      .takeUntil(this.destroyService)
+      .subscribe(otherFee => {
+        console.log(otherFee)
+        this.purchaseForm.patchValue({
+          otherFee
+        })
       })
   }
 
