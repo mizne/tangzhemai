@@ -1,16 +1,15 @@
 import * as R from 'ramda'
 
-export interface PurchaseGoods {
-  id?: string
-  count?: number
-}
+import { OrderGoods } from '../../salesorder-management/models/salesorder.model'
 
 export class Purchase {
   uuid?: string
   id?: string
-  goods?: PurchaseGoods[]
+  goods?: OrderGoods[]
   providerId?: string
+  providerName?: string
   stockId?: string
+  createdAt?: string
 
   static convertFromResp(resp: PurchaseResp): Purchase {
     return R.reject(R.isNil, {

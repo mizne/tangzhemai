@@ -32,6 +32,14 @@ export class LocalService {
   getLoginName(): Promise<string> {
     return this.storage.get('LOGIN_NAME')
   }
+
+  setAliasName(value: string) {
+    this.storage.set('ALIAS_NAME', value)
+  }
+
+  getAliasName(): Promise<string> {
+    return this.storage.get('ALIAS_NAME')
+  }
   
 
   clear(): Promise<void> {

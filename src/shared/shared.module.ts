@@ -4,12 +4,17 @@ import { HttpClientModule } from '@angular/common/http'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts'
 
-import { TestPipe } from './pipes/test.pipe'
+import { MomentPipe } from './pipes/moment.pipe'
+import { OrderPricePipe } from './pipes/order-price.pipe'
+import { OrderStatusPipe } from './pipes/order-status.pipe'
+
 import { ClickFeedbackDirective } from './directives/click-feedback.directive'
 import { BackFeedbackDirective } from './directives/back-feedback.directive'
 
 const pipes = [
-  TestPipe
+  MomentPipe,
+  OrderPricePipe,
+  OrderStatusPipe,
 ]
 
 const components = [

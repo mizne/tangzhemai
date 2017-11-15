@@ -56,7 +56,10 @@ export class MyApp {
       // 真机
       if (this.nativeService.isIos() || this.nativeService.isAndroid()) {
         this.nativeService.checkNetwork()
+        this.nativeService.detectionUpgrade()
       }
+
+      // this.nativeService.detectionUpgrade()
     })
     .catch(e => {
       this.alertCtrl.create({

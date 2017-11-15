@@ -10,9 +10,58 @@
     <ion-title>订单</ion-title>
   </ion-navbar>
 
+  <ion-toolbar no-border-top>
+    <ion-segment [formControl]="orderTimeCtrl">
+      <ion-segment-button [value]="3">
+        今日订单
+      </ion-segment-button>
+      <!-- <ion-segment-button [value]="0">
+          待进货
+        </ion-segment-button>
+        <ion-segment-button [value]="1">
+          部分进货
+        </ion-segment-button>
+        <ion-segment-button [value]="2">
+          已进货
+        </ion-segment-button> -->
+    </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 
 
 <ion-content padding>
+  <div *ngIf="loading$ | async" class="spinner-container">
+    <ion-spinner name="bubbles" color="primary"></ion-spinner>
+  </div>
 
+  <!--<button ion-button block (click)="dispatch()">发送通知</button>-->
+  <ion-list>
+    <ion-item *ngFor="let item of (orders$ | async)">
+      <div class="order-item" (click)="goDetailOrder(item)" clickFeedback>
+        <div class="order-info">
+          <div class="order-date">时间：
+            <span class="text">
+              {{item.time}}
+            </span>
+          </div>
+          <div class="order-number">电话号码：
+            <span class="text">{{item.phone}}</span>
+          </div>
+        </div>
+        <div class="order-action">
+          <span>{{item.status | orderStatus:item}}</span>
+          <!-- <span *ngIf="needShowMerchantAmount(order)">{{order.merchantAmount}} 元</span>
+          <button class="item-button button-md" ion-button *ngIf="order.status === 0" (click)="delOrder($event, order.trade_no)">取消</button>
+          <button class="item-button button-md" ion-button *ngIf="order.status === 2" (click)="acceptOrder($event, order.trade_no)">待商家处理</button>
+          <button class="item-button button-md" ion-button *ngIf="order.status === 3" (click)="closeOrder($event, order.trade_no)">确认送达</button> -->
+        </div>
+      </div>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list-header [hidden]="(orders$ | async)?.length > 0 || (loading$ | async)">
+    今天还没有订单 : )
+  </ion-list-header>
 </ion-content>

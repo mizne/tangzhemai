@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title class="text-center">金二村酒店</ion-title>
+    <ion-title class="text-center">{{merchantName | async}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -22,12 +22,12 @@
     </div>
 
     <div class="today-statistics">
-      <div class="today-item shishou" clickFeedback>
+      <div class="today-item shishou" clickFeedback (click)="toPage('CheckAccountPage')">
         <span class="value">{{todayMerchantAmount}}</span>
         <span class="label">今日实收(元)</span>
       </div>
 
-      <div class="today-item order" clickFeedback>
+      <div class="today-item order" clickFeedback (click)="toPage('CheckAccountPage')">
         <span class="value">{{todayOrderCount}}</span>
         <span class="label">订单笔数(笔)</span>
       </div>
@@ -55,5 +55,17 @@
         </ion-row>
       </ion-grid>
     </div>
+
+    <div class="image-container">
+      <ion-slides [autoplay]="3000" [loop]="true">
+        <ion-slide>
+          <img src="./assets/imgs/slide_0.jpg" alt="酒店宣传图">
+        </ion-slide>
+        <ion-slide>
+          <img src="./assets/imgs/slide_1.jpg" alt="酒店业绩图">
+        </ion-slide>
+      </ion-slides>
+    </div>
+
   </div>
 </ion-content>

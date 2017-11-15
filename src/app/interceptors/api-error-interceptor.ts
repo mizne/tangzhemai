@@ -55,8 +55,8 @@ export class ApiErrorInterceptor implements HttpInterceptor {
           if (res.status >= 500) {
             const alertCtrl = this.injector.get(AlertController)
             alertCtrl.create({
-              title: '内部错误，请稍候重试',
-              subTitle: '小V宝 遇到了意外情况，无法完成您的请求',
+              title: '网络错误，请稍候重试',
+              subTitle: '躺着买 遇到了意外情况，无法完成您的请求',
               buttons: ['我知道了']
             }).present()
           }

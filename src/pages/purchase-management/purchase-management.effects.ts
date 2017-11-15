@@ -51,9 +51,12 @@ export class PurchaseEffects {
     ).mergeMap(tenantId =>
       this.purchaseService
         .addPurchase(tenantId, purchase)
-        .map(() => {
+        .concatMap(() => {
           load.dismiss()
-          return new fromPurchase.AddPurchaseSuccessAction(purchase.uuid)
+          return [
+            new fromPurchase.AddPurchaseSuccessAction(purchase.uuid),
+            new fromPurchase.FetchPurchasesAction(0)
+          ]
         })
         .catch(e => {
           load.dismiss()
@@ -98,6 +101,47 @@ export class PurchaseEffects {
             return Observable.of(new fromPurchase.FetchProvidersFailureAction())
           })
       )
+    })
+
+    @Effect()
+    addProvider$ = this.actions$.ofType(fromPurchase.ADD_PROVIDER)
+    .map((action: fromPurchase.AddProviderAction) => action.providerName)
+    .switchMap((providerName) => {
+      return Observable.fromPromise(
+        this.localService.getTenantId()
+      ).mergeMap(tenantId =>
+        this.providerService
+          .addProvider(tenantId, providerName)
+          .concatMap(() => {
+            return [
+              new fromPurchase.AddProviderSuccessAction(),
+              new fromPurchase.FetchProvidersAction()
+            ]
+          })
+          .catch(e => {
+            return Observable.of(new fromPurchase.AddProviderFailureAction())
+          })
+      )
+    })
+
+    @Effect({ dispatch: false })
+    addProviderSuccess$ = this.actions$.ofType(fromPurchase.ADD_PROVIDER_SUCCESS)
+    .do(() => {
+      this.toastCtrl.create({
+        message: '恭喜您 添加供应商成功！',
+        duration: 3e3,
+        position: 'top'
+      }).present()
+    })
+
+    @Effect({ dispatch: false })
+    addProviderFailure$ = this.actions$.ofType(fromPurchase.ADD_PROVIDER_FAILURE)
+    .do(() => {
+      this.toastCtrl.create({
+        message: '添加供应商失败！',
+        duration: 3e3,
+        position: 'top'
+      }).present()
     })
 
   @Effect()

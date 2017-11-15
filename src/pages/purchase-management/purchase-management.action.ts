@@ -16,6 +16,10 @@ export const FETCH_PROVIDERS = '[Purchase] Fetch Providers'
 export const FETCH_PROVIDERS_SUCCESS = '[Purchase] Fetch Providers Success'
 export const FETCH_PROVIDERS_FAILURE = '[Purchase] Fetch Providers Failure'
 
+export const ADD_PROVIDER = '[Purchase] Add Provider'
+export const ADD_PROVIDER_SUCCESS = '[Purchase] Add Provider Success'
+export const ADD_PROVIDER_FAILURE = '[Purchase] Add Provider Failure'
+
 export const FETCH_STOCK = '[Purchase] Fetch Stock'
 export const FETCH_STOCK_SUCCESS = '[Purchase] Fetch Stock Success'
 export const FETCH_STOCK_FAILURE = '[Purchase] Fetch Stock Failure'
@@ -61,6 +65,18 @@ export class FetchProvidersFailureAction implements Action {
 }
 
 
+export class AddProviderAction implements Action {
+  readonly type = ADD_PROVIDER
+  constructor(public providerName: string) {}
+}
+export class AddProviderSuccessAction implements Action {
+  readonly type = ADD_PROVIDER_SUCCESS
+}
+export class AddProviderFailureAction implements Action {
+  readonly type = ADD_PROVIDER_FAILURE
+}
+
+
 export class FetchStockAction implements Action {
   readonly type = FETCH_STOCK
 }
@@ -85,6 +101,10 @@ AddPurchaseFailureAction |
 FetchProvidersAction |
 FetchProvidersSuccessAction |
 FetchProvidersFailureAction |
+
+AddProviderAction |
+AddProviderSuccessAction |
+AddProviderFailureAction |
 
 FetchStockAction |
 FetchStockSuccessAction |

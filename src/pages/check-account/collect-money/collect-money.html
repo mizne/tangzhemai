@@ -1,0 +1,39 @@
+<!--
+  Generated template for the CollectMoneyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar #navabr [backFeedback]="navabr">
+    <ion-title>收款</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div class="collect-money-container" *ngIf="collectMoneyDesc$ | async as desc">
+    <div class="total1" padding>
+      <revenue-item title="收款实收" [number]="desc.revenueReceived" [help]="helpMap.revenueReceived" size="large"></revenue-item>
+    </div>
+
+    <div class="total2" padding>
+      <div class="row1">
+        <revenue-item title="收款订单金额" [number]="desc.receivedOrderAmount"></revenue-item>
+        <revenue-item title="商家优惠" [number]="desc.receivedOrderMerchantDiscount"></revenue-item>
+        <revenue-item title="收款实退金额" [number]="desc.receivedRefundAmount"></revenue-item>
+      </div>
+
+      <div class="row2">
+        <revenue-item title="收款订单笔数" [number]="desc.receivedOrderCount"></revenue-item>
+        <revenue-item title="退款笔数" [number]="desc.receivedOrderRefundCount"></revenue-item>
+      </div>
+
+      <div class="row3">
+        <revenue-item title="收款实收净额" [number]="desc.revenueReceivedNet" [help]="helpMap.revenueReceivedNet" size="large"></revenue-item>
+      </div>
+    </div>
+  </div>
+</ion-content>

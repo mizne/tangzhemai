@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar #navabr [backFeedback]="navabr">
     <ion-title>全部应用</ion-title>
   </ion-navbar>
 
@@ -14,5 +14,5 @@
 
 
 <ion-content padding>
-
+    <p class="no-item">还有更多应用正在上线中...</p>
 </ion-content>

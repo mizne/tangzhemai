@@ -76,28 +76,28 @@ export class StatisticsPage implements OnInit {
       unit: '元',
       field: 'merchantCouponFee'
     },
-    {
-      icon: 'apps',
-      label: '平台优惠',
-      value: {
-        今日: 0,
-        本月: 0,
-        本年: 0
-      },
-      unit: '元',
-      field: 'platformCouponFee'
-    },
-    {
-      icon: 'calculator',
-      label: '平台服务费',
-      value: {
-        今日: 0,
-        本月: 0,
-        本年: 0
-      },
-      unit: '元',
-      field: 'platformAmount'
-    }
+    // {
+    //   icon: 'apps',
+    //   label: '平台优惠',
+    //   value: {
+    //     今日: 0,
+    //     本月: 0,
+    //     本年: 0
+    //   },
+    //   unit: '元',
+    //   field: 'platformCouponFee'
+    // },
+    // {
+    //   icon: 'calculator',
+    //   label: '平台服务费',
+    //   value: {
+    //     今日: 0,
+    //     本月: 0,
+    //     本年: 0
+    //   },
+    //   unit: '元',
+    //   field: 'platformAmount'
+    // }
   ]
 
   barChartOptions: any = {

@@ -15,6 +15,7 @@ import { AddSalesOrderEffects } from './add-salesorder/add-salesorder.effects'
 
 import { SalesOrderService } from './salesorder.service'
 
+
 const effects = [
   SalesOrderEffects,
   SalesOrderSelectGoodsEffects,

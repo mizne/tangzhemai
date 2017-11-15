@@ -7,10 +7,13 @@ import { Network } from '@ionic-native/network'
 import { AppVersion } from '@ionic-native/app-version'
 import { File } from '@ionic-native/file'
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer'
+import { FileOpener } from '@ionic-native/file-opener'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
 
 import { Subscription } from 'rxjs/Subscription'
 import { environment } from '../../environments/environment'
+
+import { Observable } from 'rxjs/Observable'
 
 @Injectable()
 export class NativeService implements OnDestroy {
@@ -22,6 +25,7 @@ export class NativeService implements OnDestroy {
     private transfer: FileTransfer,
     private appVersion: AppVersion,
     private file: File,
+    private fileOpener: FileOpener,
     private inAppBrowser: InAppBrowser,
     private alertCtrl: AlertController,
     private http: HttpClient
@@ -33,22 +37,49 @@ export class NativeService implements OnDestroy {
   detectionUpgrade() {
     //这里连接后台获取app最新版本号,然后与当前app版本号(this.getVersionNumber())对比
     //版本号不一样就需要申请,不需要升级就return
-    this.http.get(environment.APP_VERSION).subscribe(version => {
-      console.log(version)
+    Observable.forkJoin(
+      this.http.get(environment.APP_VERSION),
+      this.getVersionNumber()
+    ).subscribe(([appVersion, currentVersionNumber]) => {
+      if ((appVersion as any).tangzhemai) {
+        if (
+          this.needUpgrade(currentVersionNumber, (appVersion as any).tangzhemai)
+        ) {
+          this.alertCtrl
+            .create({
+              title: '升级',
+              subTitle: '发现新版本, 是否立即升级？',
+              buttons: [
+                { text: '取消' },
+                {
+                  text: '确定',
+                  handler: () => {
+                    this.downloadApp()
+                  }
+                }
+              ]
+            })
+            .present()
+        }
+      }
     })
+    
+  }
 
-    // this.alertCtrl.create({
-    //   title: '升级',
-    //   subTitle: '发现新版本,是否立即升级？',
-    //   buttons: [{text: '取消'},
-    //     {
-    //       text: '确定',
-    //       handler: () => {
-    //         this.downloadApp();
-    //       }
-    //     }
-    //   ]
-    // }).present();
+  private needUpgrade(oldVersion: string, newVersion: string): boolean {
+    const [oldBig, oldMiddle, oldSmall] = oldVersion.split('.').map(Number)
+    const [newBig, newMiddle, newSmall] = newVersion.split('.').map(Number)
+    
+    if (newBig > oldBig) {
+      return true
+    }
+    if (newMiddle > oldMiddle) {
+      return true
+    }
+    if (newSmall > oldSmall) {
+      return true
+    }
+    return false
   }
 
   /**
@@ -67,8 +98,14 @@ export class NativeService implements OnDestroy {
       const apk = this.file.externalRootDirectory + 'tangzhemai.apk' //apk保存的目录
 
       fileTransfer.download(environment.APK_DOWNLOAD, apk).then(() => {
-        window['install'].install(apk.replace('file://', ''))
+        // window['install'].install(apk.replace('file://', ''))
+        return this.fileOpener.open(apk, 'application/vnd.android.package-archive')
       })
+      .catch(e => this.alertCtrl.create({
+        title: '打开安装文件失败',
+        enableBackdropDismiss: false,
+        buttons: ['朕知道了']
+      }).present())
 
       fileTransfer.onProgress((event: ProgressEvent) => {
         let num = Math.floor(event.loaded / event.total * 100)

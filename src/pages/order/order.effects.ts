@@ -14,22 +14,23 @@ export class OrderEffects {
   @Effect()
   fetchOrders$ = this.actions$
     .ofType(fromOrder.FETCH_ORDERS)
-    .switchMap(() => {
-      const load = this.loadCtrl.create({
-        content: '获取订单中'
-      })
-      load.present()
+    .map((action: fromOrder.FetchOrdersAction) => action.payload)
+    .switchMap(({ startTime, endTime }) => {
+      // const load = this.loadCtrl.create({
+      //   content: '获取订单中'
+      // })
+      // load.present()
       return Observable.fromPromise(
         this.localService.getTenantId()
       ).mergeMap(tenantId =>
         this.orderService
-          .fetchOrders(tenantId)
+          .fetchOrders(tenantId, startTime, endTime)
           .map(goods => {
-            load.dismiss()
+            // load.dismiss()
             return new fromOrder.FetchOrdersSuccessAction(goods)
           })
           .catch(e => {
-            load.dismiss()
+            // load.dismiss()
             return Observable.of(new fromOrder.FetchOrdersFailureAction())
           })
       )

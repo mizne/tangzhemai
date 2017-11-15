@@ -9,7 +9,28 @@ import { Account } from './models/account.model'
 
 import * as R from 'ramda'
 
-const fakeSalesOrders: SalesOrder[] = [
+import { Storage } from '@ionic/storage'
+
+const allSalers = [
+  {
+    id: '0',
+    name: '0号销售员'
+  },
+  {
+    id: '1',
+    name: '1号销售员'
+  }
+]
+
+const allAccounts = [
+  {
+    id: '0',
+    name: '客户0'
+  },
+  {
+    id: '1',
+    name: '客户1'
+  }
 ]
 
 @Injectable()
@@ -18,7 +39,10 @@ export class SalesOrderService {
   private goodsCountUrl = '/admin/foodByCount'
   private goodsTypeUrl = '/admin/menus'
   private goodsUnitUrl = '/admin/units'
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private storage: Storage
+  ) {}
 
   fetchSalesOrders(
     tenantId: string,
@@ -33,39 +57,31 @@ export class SalesOrderService {
     //   )
     //   .catch(this.handleError)
 
-    return Observable.of(fakeSalesOrders)
+    return Observable.fromPromise(this.storage.get('FAKE_SALES_ORDERS').then(salesOrders => salesOrders || []))
   }
 
   addSalesOrder(tenantId: string, salesOrder: SalesOrder): Observable<any> {
-    console.log('to add sales order ', salesOrder)
-    fakeSalesOrders.push(salesOrder)
-    return Observable.of('success')
+    const accountName = allAccounts.find(e => e.id === salesOrder.accountId).name
+    
+    return Observable.fromPromise(this.storage.get('FAKE_SALES_ORDERS'))
+    .mergeMap((salesOrders) => {
+      salesOrders = salesOrders || []
+      salesOrders.push({
+        ...salesOrder,
+        accountName,
+        createdAt: new Date()
+      })
+
+      return this.storage.set('FAKE_SALES_ORDERS', salesOrders)
+    })
   }
 
   fetchSalers(tenantId: string): Observable<Saler[]> {
-    return Observable.of([
-      {
-        id: '0',
-        name: '0号销售员'
-      },
-      {
-        id: '1',
-        name: '1号销售员'
-      }
-    ])
+    return Observable.of(allSalers)
   }
 
   fetchAccounts(tenantId: string): Observable<Account[]> {
-    return Observable.of([
-      {
-        id: '0',
-        name: '客户0'
-      },
-      {
-        id: '1',
-        name: '客户1'
-      }
-    ])
+    return Observable.of(allAccounts)
   }
 
   

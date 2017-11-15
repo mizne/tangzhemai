@@ -9,19 +9,20 @@ import * as R from 'ramda'
 
 @Injectable()
 export class OrderService {
-  private goodsUrl = '/admin/food'
-  private goodsCountUrl = '/admin/foodByCount'
-  private goodsTypeUrl = '/admin/menus'
-  private goodsUnitUrl = '/admin/units'
+  private orderUrl = '/admin/order'
   constructor(private http: HttpClient) {}
 
   fetchOrders(
     tenantId: string,
+    startTime: string,
+    endTime: string
   ): Observable<Order[]> {
-    const query = `?tenantId=${tenantId}`
-    
+    const query = `?tenantId=${tenantId}&startTime=${startTime}&endTime=${endTime}`
+
+    console.log(startTime)
+    console.log(endTime)
     return this.http
-      .get(this.goodsUrl + query)
+      .get(this.orderUrl + query)
       .map(resp => (resp as APIResponse).result as OrderResp[])
       .map(result =>
         result.map(Order.convertFromResp)

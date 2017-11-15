@@ -10,10 +10,10 @@
   <div class="mine-container">
     <div class="user-info">
       <div class="image-container">
-        <img src="assets/imgs/logo.png">
+        <img src="assets/imgs/icon.png">
       </div>
-      <div class="user-name">管靖</div>
-      <div class="phone">13721080281</div>
+      <div class="user-name">{{merchantName | async}}</div>
+      <!-- <div class="phone">13721080281</div> -->
     </div>
 
     <div *ngFor="let action of actionItems" [ngClass]="['list-item', action.icon]"

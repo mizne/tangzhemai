@@ -21,7 +21,7 @@
       <ion-segment-button [value]="3">
         默认
       </ion-segment-button>
-      <ion-segment-button [value]="0">
+      <!-- <ion-segment-button [value]="0">
         待进货
       </ion-segment-button>
       <ion-segment-button [value]="1">
@@ -29,7 +29,7 @@
       </ion-segment-button>
       <ion-segment-button [value]="2">
         已进货
-      </ion-segment-button>
+      </ion-segment-button> -->
     </ion-segment>
   </ion-toolbar>
 
@@ -38,18 +38,17 @@
 
 <ion-content padding>
   <div *ngIf="purchases$ | async as purchases">
-    <ion-list>
-      <ion-item *ngFor="let goods of purchases">
-        <ion-thumbnail item-start>
-          <img [src]="goods.listImageUrl">
-        </ion-thumbnail>
-        <h2>{{goods.name}}</h2>
-        <p color="primary">{{ '￥' + goods.price }}</p>
-        <button ion-button clear item-end (click)="toGoodsDetail(goods.id)">查看</button>
-      </ion-item>
+    <div class="purchase-item" *ngFor="let purchase of purchases">
+      <div class="left-area">
+        <div class="account-name">{{purchase.providerName}}</div>
+        <div class="created-at">{{purchase.createdAt | moment}}</div>
+      </div>
 
+      <div class="right-area">
+        <div class="total-price">$ {{purchase.goods | orderPrice}}</div>
+      </div>
+    </div>
 
-    </ion-list>
     <p class="no-item" *ngIf="purchases.length === 0">还没有采购单呢</p>
   </div>
 </ion-content>

@@ -29,11 +29,11 @@ export class StockService {
     return Observable.of([
       {
         id: '0',
-        name: '测试仓库0'
+        name: '仓库0'
       },
       {
         id: '1',
-        name: '测试仓库1'
+        name: '仓库1'
       }
     ])
   }

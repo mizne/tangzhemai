@@ -105,6 +105,7 @@ export class LoginPage implements OnInit, OnDestroy {
         this.localService.setTenantId(result.tenantId)
         this.localService.setToken(result.token)
         this.localService.setLoginName(result.name)
+        this.localService.setAliasName(result.aliasName)
 
         this.store.dispatch(new ToTabsPageAction())
 

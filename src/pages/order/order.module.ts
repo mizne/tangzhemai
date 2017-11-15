@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { OrderPage } from './order';
+import { OrderDetailPage } from './order-detail/order-detail'
 
 import { SharedModule } from '../../shared/shared.module'
 
@@ -18,6 +19,7 @@ const effects = [
 @NgModule({
   declarations: [
     OrderPage,
+    OrderDetailPage,
   ],
   imports: [
     SharedModule,
@@ -25,6 +27,9 @@ const effects = [
     EffectsModule.forFeature(effects),
     IonicPageModule.forChild(OrderPage),
   ],
-  providers: [OrderService]
+  providers: [OrderService],
+  entryComponents: [
+    OrderDetailPage
+  ]
 })
 export class OrderPageModule {}

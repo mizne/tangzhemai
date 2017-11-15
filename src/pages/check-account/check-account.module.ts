@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CheckAccountPage } from './check-account';
+import { GoodsWriteoffPage } from './goods-writeoff/goods-writeoff'
+import { CollectMoneyPage } from './collect-money/collect-money'
+import { RevenueItem } from './revenue-item/revenue-item'
 
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
@@ -18,6 +21,9 @@ const effects = [
 @NgModule({
   declarations: [
     CheckAccountPage,
+    GoodsWriteoffPage,
+    CollectMoneyPage,
+    RevenueItem,
   ],
   imports: [
     SharedModule,
@@ -25,6 +31,10 @@ const effects = [
     EffectsModule.forFeature(effects),
     IonicPageModule.forChild(CheckAccountPage),
   ],
-  providers: [CheckAccountService]
+  providers: [CheckAccountService],
+  entryComponents: [
+    GoodsWriteoffPage,
+    CollectMoneyPage,
+  ]
 })
 export class CheckAccountPageModule {}

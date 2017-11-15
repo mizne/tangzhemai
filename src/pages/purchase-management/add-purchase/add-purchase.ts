@@ -32,7 +32,8 @@ import {
 import {
   AddPurchaseAction,
   FetchProvidersAction,
-  FetchStockAction
+  FetchStockAction,
+  AddProviderAction
 } from '../purchase-management.action'
 
 import { SelectGoodsPage, ShowGoods } from '../select-goods/select-goods'
@@ -58,6 +59,7 @@ export class AddPurchasePage implements OnInit {
   cancelCreateSub: Subject<void> = new Subject<void>()
   saveSub: Subject<void> = new Subject<void>()
   selectGoodsSub: Subject<void> = new Subject<void>()
+  addProviderSub: Subject<void> = new Subject<void>()
 
   allProviders$: Observable<Provider[]>
   allStocks$: Observable<Stock[]>
@@ -91,7 +93,9 @@ export class AddPurchasePage implements OnInit {
     this.ionViewDidEnterSub.next()
   }
 
-  toAddProvider() {}
+  toAddProvider() {
+    this.addProviderSub.next()
+  }
 
   toSelectGoods() {
     this.selectGoodsSub.next()
@@ -130,6 +134,8 @@ export class AddPurchasePage implements OnInit {
     this.initFetchProvidersAndStocks()
     this.initForm()
 
+
+    this.initAddProvider()
     this.initSelectGoods()
     this.initCancelCreate()
     this.initCreate()
@@ -167,6 +173,64 @@ export class AddPurchasePage implements OnInit {
           stockId: stocks[0].id
         })
       })
+  }
+
+  private initAddProvider(): void {
+    this.addProviderSub
+    .asObservable()
+    .do(_ => this.feedbackService.feedback())
+    .switchMap(() => {
+      return this.createAlertToInput('供应商')
+    })
+    .takeUntil(this.destroyService)
+    .subscribe(providerName => {
+      this.store.dispatch(new AddProviderAction(providerName))
+    })
+  }
+
+  private createAlertToInput(name): Observable<string> {
+    return new Observable(observer => {
+      this.alertCtrl
+        .create({
+          title: `新增${name}`,
+          inputs: [
+            {
+              name: 'key',
+              placeholder: `${name}名称`
+            }
+          ],
+          buttons: [
+            {
+              text: '取消',
+              role: 'cancel',
+              handler: () => {
+                this.feedbackService.feedback()
+                observer.complete()
+              }
+            },
+            {
+              text: '新增',
+              handler: data => {
+                this.feedbackService.feedback()
+                if (data.key) {
+                  observer.next(data.key)
+                  observer.complete()
+                } else {
+                  this.toastCtrl
+                    .create({
+                      message: `还没有填写${name}名称`,
+                      duration: 3e3
+                    })
+                    .present()
+
+                  return false
+                }
+              }
+            }
+          ]
+        })
+        .present()
+    })
   }
 
   private initSelectGoods(): void {
@@ -242,7 +306,8 @@ export class AddPurchasePage implements OnInit {
             ...purchase,
             goods: this.selectedGoodses.map(e => ({
               id: e.id,
-              count: e.count
+              count: e.count,
+              price: e.price
             })),
             uuid: this.purchaseUUID
           })

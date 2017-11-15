@@ -40,21 +40,27 @@ export class HomePage {
       value: 'sales',
       page: 'SalesorderManagementPage'
     },
+    // {
+    //   id: 3,
+    //   label: '库存管理',
+    //   value: 'stock',
+    //   page: 'StockManagementPage'
+    // }
     {
       id: 3,
-      label: '库存管理',
-      value: 'stock',
-      page: 'StockManagementPage'
-    }
-  ]
-
-  appRow2 = [
-    {
-      id: 0,
       label: '统计管理',
       value: 'statistics',
       page: 'StatisticsPage'
     },
+  ]
+
+  appRow2 = [
+    // {
+    //   id: 0,
+    //   label: '统计管理',
+    //   value: 'statistics',
+    //   page: 'StatisticsPage'
+    // },
     {
       id: 1,
       label: '更多',
@@ -65,6 +71,8 @@ export class HomePage {
 
   todayMerchantAmount: string
   todayOrderCount: string
+
+  merchantName: Promise<string>
 
   constructor(
     public navCtrl: NavController,
@@ -77,6 +85,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+    this.merchantName = this.localService.getAliasName()
     this.store.dispatch(new FetchTodayStatisticsAction())
 
     this.store.select(getTodayStatistics)

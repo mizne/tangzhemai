@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { FormControl } from '@angular/forms'
+
 import { Store } from '@ngrx/store'
 import { State, getCurrentOrders, getOrderLoading } from './reducers'
 import { FetchOrdersAction } from './order.action'
@@ -10,6 +12,9 @@ import { Subject } from 'rxjs/Subject';
 import { Order } from './models/order.model'
 import { DestroyService } from '../../app/services/destroy.service'
 
+import { OrderDetailPage } from './order-detail/order-detail'
+
+import fecha from 'fecha'
 
 /**
  * Generated class for the OrderPage page.
@@ -25,6 +30,8 @@ import { DestroyService } from '../../app/services/destroy.service'
   providers: [DestroyService]
 })
 export class OrderPage implements OnInit {
+
+  orderTimeCtrl: FormControl = new FormControl(3)
 
   loading$: Observable<boolean>
   orders$: Observable<Order[]>
@@ -52,6 +59,12 @@ export class OrderPage implements OnInit {
     this.initSubscriber()
   }
 
+  goDetailOrder(order: Order) {
+    this.navCtrl.push(OrderDetailPage, {
+      order
+    })
+  }
+
   private initDataSource() {
     this.loading$ = this.store.select(getOrderLoading)
     this.orders$ = this.store.select(getCurrentOrders)
@@ -65,7 +78,11 @@ export class OrderPage implements OnInit {
     this.ionViewEnterSub.asObservable()
     .takeUntil(this.destroyService)
     .subscribe(() => {
-      this.store.dispatch(new FetchOrdersAction())
+      const today = fecha.format(new Date(), 'YYYY/MM/DD')
+      this.store.dispatch(new FetchOrdersAction({
+        startTime: today + ' 00:00:00',
+        endTime: today + ' 23:59:59'
+      }))
     })
   }
 

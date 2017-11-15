@@ -1,0 +1,58 @@
+page-order-detail {
+  .order-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: red;
+
+    .order-number {
+      font-weight: bold;
+    }
+  }
+
+  .title,
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .food-price-title,
+    .food-count-title,
+    .food-price,
+    .food-count {
+      flex: 1;
+    }
+
+    .food-name-title,
+    .food-name {
+      flex: 4;
+    }
+  }
+
+  .food-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .order-detail {
+    border-bottom: 1px solid #999;
+
+    .wrapper {
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .wrapper-item {
+        flex: 1;
+      }
+    }
+
+    .order-time-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}

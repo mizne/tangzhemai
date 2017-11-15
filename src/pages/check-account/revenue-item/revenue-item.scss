@@ -1,0 +1,21 @@
+.revenue-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title {
+    color: map-get($map: $colors, $key: grey);
+  }
+  .number {
+    margin-top: 10px;
+    color: map-get($map: $colors, $key: primary);
+  }
+
+  &.large {
+    .title {
+      font-size: 1.8rem;
+    }
+    .number {
+      font-size: 4rem;
+    }
+  }
+}

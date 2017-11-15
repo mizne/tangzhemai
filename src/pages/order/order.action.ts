@@ -7,9 +7,13 @@ export const FETCH_ORDERS_SUCCESS = '[Order] Fetch Orders Success'
 export const FETCH_ORDERS_FAILURE = '[Order] Fetch Orders Failure'
 
 
-
+export interface FetchOrdersParams {
+  startTime: string
+  endTime: string
+}
 export class FetchOrdersAction implements Action {
   readonly type = FETCH_ORDERS
+  constructor(public payload: FetchOrdersParams) {}
 }
 export class FetchOrdersSuccessAction implements Action {
   readonly type = FETCH_ORDERS_SUCCESS

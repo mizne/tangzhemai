@@ -13,6 +13,27 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <div class="check-account-container" *ngIf="checkAccountDesc$ | async as desc">
+    <div class="total1" padding>
+      <revenue-item title="商家总实收" [number]="desc.merchantTotalRevenue" [help]="helpMap.merchantTotalRevenue" size="large"></revenue-item> 
+    </div>
 
+    <div class="total2" padding>
+      <div class="row1">
+          <revenue-item title="收款实收" [number]="desc.revenueReceived" [toDetail]="true" (view)="toCollectMoney()"></revenue-item> 
+          <revenue-item title="商品核销实收" [number]="desc.goodsWriteoffRevenue" [toDetail]="true" (view)="toGoodsWriteoff()"></revenue-item> 
+      </div>
+
+      <div class="row2">
+          <revenue-item title="总实收净额" [number]="desc.totalRevenueNet" 
+          [help]="helpMap.totalRevenueNet" size="large"></revenue-item> 
+      </div>
+
+      <div class="row3">
+          <revenue-item title="收款实收净额" [number]="desc.revenueReceivedNet"></revenue-item> 
+          <revenue-item title="商品核销实收净额" [number]="desc.goodsWriteoffRevenueNet"></revenue-item> 
+      </div>
+    </div>
+  </div>
 </ion-content>

@@ -24,5 +24,17 @@ export const getCheckAccountLoading = createSelector(
   getCheckAccountIndexState,
   fromCheckAccount.getLoading
 )
+export const getCheckAccount = createSelector(
+  getCheckAccountIndexState,
+  fromCheckAccount.getCheckAccount
+)
+export const getGoodsWriteOff = createSelector(
+  getCheckAccountIndexState,
+  fromCheckAccount.getGoodsWriteOff
+)
+export const getCollectMoney = createSelector(
+  getCheckAccountIndexState,
+  fromCheckAccount.getCollectMoney
+)
 
 

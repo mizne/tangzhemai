@@ -9,7 +9,7 @@ import * as R from 'ramda'
 
 @Injectable()
 export class ProviderService {
-  private providerUrl = '/admin/food'
+  private providerUrl = '/admin/supplierManage'
 
   constructor(private http: HttpClient) {}
 
@@ -26,16 +26,17 @@ export class ProviderService {
     //   )
     //   .catch(this.handleError)
 
-      return Observable.of([
-        {
-          id: '0',
-          name: '测试供应商0'
-        },
-        {
-          id: '1',
-          name: '测试供应商1'
-        }
-      ])
+      return this.http.get(this.providerUrl + query)
+      .map(resp => (resp as APIResponse).result as Provider[])
+      .catch(this.handleError)
+  }
+
+  addProvider(tenantId: string, providerName: string): Observable<any> {
+    return this.http.post(this.providerUrl, {
+      name: providerName
+    })
+    .map(resp => (resp as APIResponse).result)
+    .catch(this.handleError)
   }
 
   

@@ -27,6 +27,7 @@
     "@ionic-native/device": "4.4.0",
     "@ionic-native/device-feedback": "^4.4.0",
     "@ionic-native/file": "^4.4.0",
+    "@ionic-native/file-opener": "^4.4.0",
     "@ionic-native/file-transfer": "^4.4.0",
     "@ionic-native/in-app-browser": "^4.4.0",
     "@ionic-native/network": "^4.4.0",
@@ -43,6 +44,7 @@
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.6",
     "cordova-plugin-file": "^5.0.0",
+    "cordova-plugin-file-opener2": "^2.0.19",
     "cordova-plugin-file-transfer": "^1.7.0",
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-ionic-webview": "^1.1.16",
@@ -81,7 +83,8 @@
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-file": {},
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-app-version": {}
+      "cordova-plugin-app-version": {},
+      "cordova-plugin-file-opener2": {}
     },
     "platforms": [
       "android"

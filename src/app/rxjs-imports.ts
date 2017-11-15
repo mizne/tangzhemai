@@ -1,4 +1,5 @@
 import 'rxjs/add/observable/combineLatest'
+import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/fromPromise'
 import 'rxjs/add/observable/interval'

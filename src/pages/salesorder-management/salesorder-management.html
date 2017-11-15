@@ -21,17 +21,17 @@
 
 <ion-content padding>
   <div *ngIf="salesOrders$ | async as salesOrders">
-    <ion-list>
-      <ion-item *ngFor="let order of salesOrders">
-        <ion-thumbnail item-start>
-          <img [src]="order.listImageUrl">
-        </ion-thumbnail>
-        <h2>{{order.name}}</h2>
-        <p color="primary">{{ '￥' + order.price }}</p>
-      </ion-item>
+      <div class="salesorder-item" *ngFor="let order of salesOrders">
+        <div class="left-area">
+          <div class="account-name">{{order.accountName}}</div>
+          <div class="created-at">{{order.createdAt | moment}}</div>
+        </div>
 
+        <div class="right-area">
+            <div class="total-price">$ {{order.goods | orderPrice}}</div>
+          </div>
+      </div>
 
-    </ion-list>
     <p class="no-item" *ngIf="salesOrders.length === 0">还没有销售单呢</p>
   </div>
 </ion-content>

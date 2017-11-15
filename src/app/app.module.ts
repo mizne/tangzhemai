@@ -47,6 +47,7 @@ import { Network } from '@ionic-native/network'
 import { FileTransfer } from '@ionic-native/file-transfer'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
 import { AppVersion } from '@ionic-native/app-version'
+import { FileOpener } from '@ionic-native/file-opener'
 
 import './rxjs-imports'
 
@@ -98,6 +99,7 @@ import './rxjs-imports'
     FileTransfer,
     InAppBrowser,
     AppVersion,
+    FileOpener,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

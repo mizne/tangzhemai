@@ -1,0 +1,32 @@
+page-goods-writeoff {
+  .goods-writeoff-container {
+    .total1 {
+      height: calc(40vh - 28px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid map-get($map: $colors, $key: primary);
+    }
+
+    .total2 {
+      height: calc(60vh - 28px);
+
+      .row1,
+      .row2 {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .row3 {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .row2 {
+        margin-top: 20px;
+      }
+    }
+  }
+}

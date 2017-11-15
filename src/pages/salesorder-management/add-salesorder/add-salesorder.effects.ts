@@ -5,6 +5,7 @@ import { Effect, Actions } from '@ngrx/effects'
 import { Observable } from 'rxjs/Observable'
 
 import * as fromAddSalesOrder from './add-salesorder.action'
+import * as fromSalesOrderManagement from '../salesorder-management.action'
 
 import { LocalService } from '../../../app/services/local.service'
 import { SalesOrderService } from '../salesorder.service'
@@ -82,10 +83,13 @@ export class AddSalesOrderEffects {
       ).mergeMap(tenantId =>
         this.salesOrderService
           .addSalesOrder(tenantId, salesOrder)
-          .map(() => {
-            return new fromAddSalesOrder.AddSalesOrderSuccessAction(
-              salesOrder.uuid
-            )
+          .concatMap(() => {
+            return [
+              new fromAddSalesOrder.AddSalesOrderSuccessAction(
+                salesOrder.uuid
+              ),
+              new fromSalesOrderManagement.FetchSalesOrderAction()
+            ]
           })
           .catch(e => {
             return Observable.of(

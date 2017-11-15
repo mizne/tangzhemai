@@ -260,7 +260,8 @@ export class AddSalesorderPage implements OnInit {
             ...purchase,
             goods: this.selectedGoodses.map(e => ({
               id: e.id,
-              count: e.count
+              count: e.count,
+              price: e.price
             })),
             uuid: this.salesOrderUUID
           })

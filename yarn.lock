@@ -86,6 +86,10 @@
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/device/-/device-4.4.0.tgz#20b56f1ddb4c4548e9c87e11446f19e03a4c4a49"
 
+"@ionic-native/file-opener@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/file-opener/-/file-opener-4.4.0.tgz#86f709241e21cd40df2a5fe5fccf42dbd97cb456"
+
 "@ionic-native/file-transfer@^4.4.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/file-transfer/-/file-transfer-4.4.0.tgz#a93a78dbdfbf0c1b0e5e6b42c7fb9e4f87d2d600"
@@ -818,6 +822,10 @@ cordova-plugin-compat@^1.2.0:
 cordova-plugin-device@^1.1.6:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/cordova-plugin-device/-/cordova-plugin-device-1.1.7.tgz#fc94111be6932628c66868938ddf3dc82c9fbfe6"
+
+cordova-plugin-file-opener2@^2.0.19:
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-file-opener2/-/cordova-plugin-file-opener2-2.0.19.tgz#ca3ae1225395b77ab1fe5b20accbfecc688e2493"
 
 cordova-plugin-file-transfer@^1.7.0:
   version "1.7.0"
