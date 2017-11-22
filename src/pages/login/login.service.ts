@@ -56,14 +56,14 @@ export class LoginService {
       .post(this.url, {
         userName: name,
         password,
-        mode: 'mobile'
+        loginMode: 'mobile'
       })
       .map(result => {
         const r = result as any
         if (r.resCode !== 0) {
-          throw new Error(r.result)
+          throw new Error(r.resMsg)
         } else {
-          return r.result
+          return r.result[0]
         }
       })
       .catch(this.handleError.bind(this, 'login'))

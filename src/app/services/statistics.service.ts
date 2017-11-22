@@ -15,7 +15,7 @@ import fecha from 'fecha'
 */
 @Injectable()
 export class StatisticsService {
-  private url = 'http://deal.xiaovbao.cn/api/test/admin/echats/orderStatisticByTime'
+  private url = '/admin/echats/orderStatisticByTime'
 
   constructor(
     public http: HttpClient,
