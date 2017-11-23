@@ -13,8 +13,10 @@ import { FetchSalesOrderAction } from './salesorder-management.action'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 
-import { SalesOrder } from './models/salesorder.model'
 import { AddSalesorderPage } from './add-salesorder/add-salesorder'
+import { OrderDetailPage } from '../order/order-detail/order-detail'
+
+import { Order } from '../order/models/order.model'
 
 import { DestroyService } from '../../app/services/destroy.service'
 
@@ -33,7 +35,7 @@ import { DestroyService } from '../../app/services/destroy.service'
 })
 export class SalesorderManagementPage implements OnInit {
   loading$: Observable<boolean>
-  salesOrders$: Observable<SalesOrder[]>
+  salesOrders$: Observable<Order[]>
 
   ionViewEnterSub: Subject<void> = new Subject<void>()
   addSalesOrderSub: Subject<void> = new Subject<void>()
@@ -61,6 +63,12 @@ export class SalesorderManagementPage implements OnInit {
     this.addSalesOrderSub.next()
   }
 
+  goDetailOrder(order: Order): void {
+    this.navCtrl.push(OrderDetailPage, {
+      order
+    })
+  }
+
   private initDataSource(): void {
     this.loading$ = this.store.select(getSalesOrderLoading)
     this.salesOrders$ = this.store.select(getCurrentSalesOrders)
@@ -75,6 +83,7 @@ export class SalesorderManagementPage implements OnInit {
   private initFetchSalesOrders(): void {
     this.ionViewEnterSub
       .asObservable()
+      .first()
       .takeUntil(this.destroyService)
       .subscribe(() => {
         this.store.dispatch(new FetchSalesOrderAction())

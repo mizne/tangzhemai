@@ -74,30 +74,30 @@ export class AddSalesOrderEffects {
     })
 
   @Effect()
-  addSalesOrder$ = this.actions$
-    .ofType(fromAddSalesOrder.ADD_SALESORDER)
-    .map((action: fromAddSalesOrder.AddSalesOrderAction) => action.salesOrder)
-    .switchMap(salesOrder => {
-      return Observable.fromPromise(
-        this.localService.getTenantId()
-      ).mergeMap(tenantId =>
-        this.salesOrderService
-          .addSalesOrder(tenantId, salesOrder)
-          .concatMap(() => {
-            return [
-              new fromAddSalesOrder.AddSalesOrderSuccessAction(
-                salesOrder.uuid
-              ),
-              new fromSalesOrderManagement.FetchSalesOrderAction()
-            ]
-          })
-          .catch(e => {
-            return Observable.of(
-              new fromAddSalesOrder.AddSalesOrderFailureAction()
-            )
-          })
-      )
-    })
+  // addSalesOrder$ = this.actions$
+  //   .ofType(fromAddSalesOrder.ADD_SALESORDER)
+  //   .map((action: fromAddSalesOrder.AddSalesOrderAction) => action.salesOrder)
+  //   .switchMap(salesOrder => {
+  //     return Observable.fromPromise(
+  //       this.localService.getTenantId()
+  //     ).mergeMap(tenantId =>
+  //       this.salesOrderService
+  //         .addSalesOrder(tenantId, salesOrder)
+  //         .concatMap(() => {
+  //           return [
+  //             new fromAddSalesOrder.AddSalesOrderSuccessAction(
+  //               salesOrder.uuid
+  //             ),
+  //             new fromSalesOrderManagement.FetchSalesOrderAction()
+  //           ]
+  //         })
+  //         .catch(e => {
+  //           return Observable.of(
+  //             new fromAddSalesOrder.AddSalesOrderFailureAction()
+  //           )
+  //         })
+  //     )
+  //   })
 
   @Effect({ dispatch: false })
   addSalesOrderSuccess$ = this.actions$

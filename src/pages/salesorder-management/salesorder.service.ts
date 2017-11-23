@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable'
 
 import { APIResponse } from '../../app/interceptors/api-error-interceptor'
 import { SalesOrder, SalesOrderResp } from './models/salesorder.model'
+
+import { Order, OrderResp } from '../order/models/order.model'
 import { Saler } from './models/saler.model'
 import { Account } from './models/account.model'
 
@@ -35,10 +37,8 @@ const allAccounts = [
 
 @Injectable()
 export class SalesOrderService {
-  private goodsUrl = '/admin/food'
-  private goodsCountUrl = '/admin/foodByCount'
-  private goodsTypeUrl = '/admin/menus'
-  private goodsUnitUrl = '/admin/units'
+  private orderUrl = '/admin/order'
+
   constructor(
     private http: HttpClient,
     private storage: Storage
@@ -46,35 +46,34 @@ export class SalesOrderService {
 
   fetchSalesOrders(
     tenantId: string,
-  ): Observable<SalesOrder[]> {
+  ): Observable<Order[]> {
     const query = `?tenantId=${tenantId}`
     
-    // return this.http
-    //   .get(this.goodsUrl + query)
-    //   .map(resp => (resp as APIResponse).result as SalesOrderResp[])
-    //   .map(result =>
-    //     result.map(SalesOrder.convertFromResp)
-    //   )
-    //   .catch(this.handleError)
+    return this.http
+      .get(this.orderUrl + query)
+      .map(resp => (resp as APIResponse).result as OrderResp[])
+      .map(result =>
+        result.map(Order.convertFromResp)
+      )
+      .catch(this.handleError)
 
-    return Observable.fromPromise(this.storage.get('FAKE_SALES_ORDERS').then(salesOrders => salesOrders || []))
   }
 
-  addSalesOrder(tenantId: string, salesOrder: SalesOrder): Observable<any> {
-    const accountName = allAccounts.find(e => e.id === salesOrder.accountId).name
+  // addSalesOrder(tenantId: string, salesOrder: SalesOrder): Observable<any> {
+  //   const accountName = allAccounts.find(e => e.id === salesOrder.accountId).name
     
-    return Observable.fromPromise(this.storage.get('FAKE_SALES_ORDERS'))
-    .mergeMap((salesOrders) => {
-      salesOrders = salesOrders || []
-      salesOrders.push({
-        ...salesOrder,
-        accountName,
-        createdAt: new Date()
-      })
+  //   return Observable.fromPromise(this.storage.get('FAKE_SALES_ORDERS'))
+  //   .mergeMap((salesOrders) => {
+  //     salesOrders = salesOrders || []
+  //     salesOrders.push({
+  //       ...salesOrder,
+  //       accountName,
+  //       createdAt: new Date()
+  //     })
 
-      return this.storage.set('FAKE_SALES_ORDERS', salesOrders)
-    })
-  }
+  //     return this.storage.set('FAKE_SALES_ORDERS', salesOrders)
+  //   })
+  // }
 
   fetchSalers(tenantId: string): Observable<Saler[]> {
     return Observable.of(allSalers)

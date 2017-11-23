@@ -21,7 +21,7 @@ export const getOrderLoading = createSelector(
   getOrderIndexState,
   fromOrderIndex.getLoading
 )
-export const getCurrentOrders = createSelector(
+export const getTodayOrders = createSelector(
   getOrderIndexState,
-  fromOrderIndex.getOrders
+  fromOrderIndex.getTodayOrders
 )

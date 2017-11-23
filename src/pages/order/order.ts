@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormControl } from '@angular/forms'
 
 import { Store } from '@ngrx/store'
-import { State, getCurrentOrders, getOrderLoading } from './reducers'
+import { State, getTodayOrders, getOrderLoading } from './reducers'
 import { FetchOrdersAction } from './order.action'
 
 import { Observable } from 'rxjs/Observable';
@@ -55,7 +55,6 @@ export class OrderPage implements OnInit {
 
   ngOnInit() {
     this.initDataSource()
-
     this.initSubscriber()
   }
 
@@ -67,7 +66,7 @@ export class OrderPage implements OnInit {
 
   private initDataSource() {
     this.loading$ = this.store.select(getOrderLoading)
-    this.orders$ = this.store.select(getCurrentOrders)
+    this.orders$ = this.store.select(getTodayOrders)
   }
 
   private initSubscriber(): void {

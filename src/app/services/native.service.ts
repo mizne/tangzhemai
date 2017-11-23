@@ -54,7 +54,7 @@ export class NativeService implements OnDestroy {
                 {
                   text: '确定',
                   handler: () => {
-                    this.downloadApp()
+                    this.downloadApp(appVersion as string)
                   }
                 }
               ]
@@ -85,7 +85,7 @@ export class NativeService implements OnDestroy {
   /**
    * 下载安装app
    */
-  downloadApp() {
+  downloadApp(version: string) {
     if (this.isAndroid()) {
       let alert = this.alertCtrl.create({
         title: '下载进度：0%',
@@ -95,14 +95,21 @@ export class NativeService implements OnDestroy {
       alert.present()
 
       const fileTransfer: FileTransferObject = this.transfer.create()
-      const apk = this.file.externalRootDirectory + 'tangzhemai.apk' //apk保存的目录
+      const apk = this.file.dataDirectory + `tangzhemai_${version}.apk` //apk保存的目录
+
 
       fileTransfer.download(environment.APK_DOWNLOAD, apk).then(() => {
         // window['install'].install(apk.replace('file://', ''))
         return this.fileOpener.open(apk, 'application/vnd.android.package-archive')
+      }, () => {
+        this.alertCtrl.create({
+          title: `下载失败`,
+          enableBackdropDismiss: false,
+          buttons: ['朕知道了']
+        }).present()
       })
       .catch(e => this.alertCtrl.create({
-        title: '打开安装文件失败',
+        title: `打开安装文件失败`,
         enableBackdropDismiss: false,
         buttons: ['朕知道了']
       }).present())

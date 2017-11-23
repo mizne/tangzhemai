@@ -9,13 +9,11 @@ export interface OrderGoods {
 export class SalesOrder {
   uuid?: string
   id?: string
-  accountId?: string
-  accountName?: string
-  salerId?: string
-  description?: string
-  goods?: OrderGoods[]
-  stockId?: string
+  tradeNo?: string
   createdAt?: Date
+  time?: string
+  phone?: string
+  status?: number
 
   static convertFromResp(resp: SalesOrderResp): SalesOrder {
     return R.reject(R.isNil, {
@@ -25,5 +23,7 @@ export class SalesOrder {
 }
 
 export interface SalesOrderResp {
-  
+  id?: string
+  tradeNo?: string
+
 }

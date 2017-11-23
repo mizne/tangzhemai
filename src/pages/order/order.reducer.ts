@@ -38,4 +38,4 @@ export function reducer(
 }
 
 export const getLoading = (state: State) => state.loading
-export const getOrders = (state: State) => state.orders
+export const getTodayOrders = (state: State) => state.orders

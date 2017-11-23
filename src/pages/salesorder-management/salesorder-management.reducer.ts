@@ -1,9 +1,11 @@
 import * as fromSalesOrder from './salesorder-management.action'
 import { SalesOrder } from './models/salesorder.model'
 
+import { Order } from '../order/models/order.model'
+
 export interface State {
   loading: boolean
-  salesOrders: SalesOrder[]
+  salesOrders: Order[]
 }
 
 const initialState: State = {

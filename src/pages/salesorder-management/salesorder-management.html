@@ -9,28 +9,43 @@
   <ion-navbar>
     <ion-title>销售订单管理</ion-title>
 
-    <ion-buttons end>
+    <!-- <ion-buttons end>
       <button ion-button icon-only color="light" (click)="toAddSalesOrder()">
         <ion-icon name="add"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <div *ngIf="salesOrders$ | async as salesOrders">
-      <div class="salesorder-item" *ngFor="let order of salesOrders">
-        <div class="left-area">
-          <div class="account-name">{{order.accountName}}</div>
-          <div class="created-at">{{order.createdAt | moment}}</div>
-        </div>
+  <div *ngIf="loading$ | async" class="spinner-container">
+    <ion-spinner name="bubbles" color="primary"></ion-spinner>
+  </div>
 
-        <div class="right-area">
-            <div class="total-price">$ {{order.goods | orderPrice}}</div>
+  <div *ngIf="salesOrders$ | async as salesOrders">
+    <ion-item *ngFor="let item of salesOrders">
+      <div class="order-item" (click)="goDetailOrder(item)" clickFeedback>
+        <div class="order-info">
+          <div class="order-date">时间：
+            <span class="text">
+              {{item.time}}
+            </span>
           </div>
+          <div class="order-number">电话号码：
+            <span class="text">{{item.phone}}</span>
+          </div>
+        </div>
+        <div class="order-action">
+          <span>{{item.status | orderStatus:item}}</span>
+          <!-- <span *ngIf="needShowMerchantAmount(order)">{{order.merchantAmount}} 元</span>
+            <button class="item-button button-md" ion-button *ngIf="order.status === 0" (click)="delOrder($event, order.trade_no)">取消</button>
+            <button class="item-button button-md" ion-button *ngIf="order.status === 2" (click)="acceptOrder($event, order.trade_no)">待商家处理</button>
+            <button class="item-button button-md" ion-button *ngIf="order.status === 3" (click)="closeOrder($event, order.trade_no)">确认送达</button> -->
+        </div>
       </div>
+    </ion-item>
 
     <p class="no-item" *ngIf="salesOrders.length === 0">还没有销售单呢</p>
   </div>

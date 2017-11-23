@@ -129,7 +129,7 @@ export class LoginPage implements OnInit, OnDestroy {
         loading.dismiss()
         let alert = this.alertCtrl.create({
           title: '登录错误',
-          subTitle: err.message,
+          subTitle: '用户名密码不匹配',
           buttons: ['我知道了']
         })
 

@@ -1,32 +1,64 @@
 page-salesorder-management {
-  .salesorder-item {
+  // .salesorder-item {
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   padding: 10px;
+  //   height: 70px;
+  //   border-bottom: 1px solid map-get($map: $colors, $key: grey);
+  //   background-color: map-get($map: $colors, $key: bgWhite);
+
+  //   .left-area,
+  //   .right-area {
+  //     display: flex;
+  //     flex-direction: column;
+  //     align-items: center;
+  //   }
+
+  //   .left-area {
+  //     flex: 3;
+  //     align-items: flex-start;
+  //     .created-at {
+  //       margin-top: 10px;
+  //       color: map-get($map: $colors, $key: grey);
+  //     }
+  //   }
+
+  //   .right-area {
+  //     flex: 1;
+  //     color: map-get($map: $colors, $key: primary);
+  //   }
+  // }
+
+  .spinner-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 10px;
-    height: 70px;
-    border-bottom: 1px solid map-get($map: $colors, $key: grey);
-    background-color: map-get($map: $colors, $key: bgWhite);
+  }
 
-    .left-area,
-    .right-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .left-area {
+  .order-item {
+    display: flex;
+    .order-info {
       flex: 3;
-      align-items: flex-start;
-      .created-at {
-        margin-top: 10px;
-        color: map-get($map: $colors, $key: grey);
+
+      .order-date,
+      .order-number {
+        .text {
+          // color: red;
+        }
+      }
+
+      .order-number {
+        margin-top: 30px;
       }
     }
 
-    .right-area {
+    .order-action {
       flex: 1;
-      color: map-get($map: $colors, $key: primary);
+      margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
