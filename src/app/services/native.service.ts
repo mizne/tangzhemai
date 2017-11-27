@@ -95,12 +95,12 @@ export class NativeService implements OnDestroy {
       alert.present()
 
       const fileTransfer: FileTransferObject = this.transfer.create()
-      const apk = this.file.dataDirectory + `tangzhemai_${version}.apk` //apk保存的目录
+      const storeApkPath = this.file.externalDataDirectory + `tangzhemai_${version}.apk` //apk保存的目录
 
 
-      fileTransfer.download(environment.APK_DOWNLOAD, apk).then(() => {
+      fileTransfer.download(environment.APK_DOWNLOAD, storeApkPath).then((entry) => {
         // window['install'].install(apk.replace('file://', ''))
-        return this.fileOpener.open(apk, 'application/vnd.android.package-archive')
+        return this.fileOpener.open(storeApkPath, 'application/vnd.android.package-archive')
       }, () => {
         this.alertCtrl.create({
           title: `下载失败`,

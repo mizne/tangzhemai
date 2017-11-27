@@ -9,32 +9,32 @@ export class LocalService {
     private storage: Storage
   ) { }
 
-  setToken(value: string) {
-    this.storage.set('TOKEN', value)
+  setToken(value: string): Promise<any> {
+    return this.storage.set('TOKEN', value)
   }
 
   getToken(): Promise<string> {
     return this.storage.get('TOKEN')
   }
 
-  setTenantId(value: string) {
-    this.storage.set('TENANT_ID', value)
+  setTenantId(value: string): Promise<any> {
+    return this.storage.set('TENANT_ID', value)
   }
 
   getTenantId(): Promise<string> {
     return this.storage.get('TENANT_ID')
   }
 
-  setLoginName(value: string) {
-    this.storage.set('LOGIN_NAME', value)
+  setLoginName(value: string): Promise<any> {
+    return this.storage.set('LOGIN_NAME', value)
   }
 
   getLoginName(): Promise<string> {
     return this.storage.get('LOGIN_NAME')
   }
 
-  setAliasName(value: string) {
-    this.storage.set('ALIAS_NAME', value)
+  setAliasName(value: string): Promise<any> {
+    return this.storage.set('ALIAS_NAME', value)
   }
 
   getAliasName(): Promise<string> {

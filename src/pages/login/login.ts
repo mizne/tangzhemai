@@ -102,12 +102,16 @@ export class LoginPage implements OnInit, OnDestroy {
     this.subscription = this.loginService.login(this.myForm.value)
       .subscribe(result => {
         loading.dismiss()
-        this.localService.setTenantId(result.tenantId)
-        this.localService.setToken(result.token)
-        this.localService.setLoginName(result.name)
-        this.localService.setAliasName(result.aliasName)
-
-        this.store.dispatch(new ToTabsPageAction())
+        Observable.forkJoin(
+          this.localService.setTenantId(result.tenantId),
+          this.localService.setToken(result.token),
+          this.localService.setLoginName(result.name),
+          this.localService.setAliasName(result.aliasName),
+        )
+        .toPromise()
+        .then(() => {
+          this.store.dispatch(new ToTabsPageAction())
+        })
 
         // 真机或模拟器运行
         // if (this.device.platform) {

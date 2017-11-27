@@ -73,12 +73,12 @@
 
         <div class="paymode-wrapper wrapper" *ngIf="order.status === 2" style="font-weight: bold;">
           <span class="paymode-label">总计小价: </span>
-          <span class="paymode">{{order.total_amount}}元</span>
+          <span class="paymode">{{order.totalPrice}}元</span>
         </div>
 
         <div class="paymode-wrapper wrapper" *ngIf="order.status === 2">
           <span class="paymode-label">本单顾客实际支付: </span>
-          <span class="paymode">{{order.total_amount}}元</span>
+          <span class="paymode">{{order.totalPrice}}元</span>
         </div>
 
         <div class="paymode-wrapper wrapper" *ngIf="order.status === 2">
