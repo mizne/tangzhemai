@@ -3,7 +3,6 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
 import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/observable/zip'
 import { Store } from '@ngrx/store'
 import { Subscription } from 'rxjs/Subscription'
 

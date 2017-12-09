@@ -1,13 +1,7 @@
-import 'rxjs/add/operator/catch'
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/do'
-import 'rxjs/add/operator/zip'
-import 'rxjs/add/operator/switchMap'
 import { Injectable } from '@angular/core'
 import { Effect, Actions } from '@ngrx/effects'
 import { Action } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
-import { of } from 'rxjs/observable/of'
 
 import { StatisticsService } from '../../../app/services/statistics.service'
 import * as fromOrderStatistics from './order-statistics.action'
@@ -40,7 +34,7 @@ export class OrderStatisticsEffects {
         .map((statisticsItems: StatisticsItem[]) => {
           return new fromOrderStatistics.LoadSuccessOrdersOfTodayAction(statisticsItems)
         })
-        .catch(() => of(new fromOrderStatistics.LoadFailureOrdersOfTodayAction()))
+        .catch(() => Observable.of(new fromOrderStatistics.LoadFailureOrdersOfTodayAction()))
     })
 
   @Effect()
@@ -52,7 +46,7 @@ export class OrderStatisticsEffects {
         .map((statisticsItems: StatisticsItem[]) => {
           return new fromOrderStatistics.LoadSuccessOrdersOfThisMonthAction(statisticsItems)
         })
-        .catch(() => of(new fromOrderStatistics.LoadFailureOrdersOfThisMonthAction()))
+        .catch(() => Observable.of(new fromOrderStatistics.LoadFailureOrdersOfThisMonthAction()))
     })
 
   @Effect()
@@ -64,7 +58,7 @@ export class OrderStatisticsEffects {
         .map((statisticsItems: StatisticsItem[]) => {
           return new fromOrderStatistics.LoadSuccessOrdersOfThisYearAction(statisticsItems)
         })
-        .catch(() => of(new fromOrderStatistics.LoadFailureOrdersOfThisYearAction()))
+        .catch(() => Observable.of(new fromOrderStatistics.LoadFailureOrdersOfThisYearAction()))
     })
   constructor(
     private actions$: Actions,

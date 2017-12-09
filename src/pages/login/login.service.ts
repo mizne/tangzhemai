@@ -1,12 +1,5 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/catch'
-import 'rxjs/add/operator/do'
-import 'rxjs/add/operator/retryWhen'
-import 'rxjs/add/operator/delay'
-import 'rxjs/add/operator/scan'
-
 import { Observable } from 'rxjs/Observable'
 // import { LoggerService } from '../../app/services/logger.service'
 
@@ -23,7 +16,7 @@ export class LoginService {
   private url = '/admin/login'
 
   constructor(
-    public http: HttpClient, 
+    public http: HttpClient,
     // private logger: LoggerService
   ) {}
 

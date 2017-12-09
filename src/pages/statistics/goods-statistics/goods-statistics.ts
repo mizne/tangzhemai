@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
 import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/observable/zip'
 import { Store } from '@ngrx/store'
 import { Subscription } from 'rxjs/Subscription'
 
@@ -41,9 +40,9 @@ export class GoodsStatisticsPage implements OnInit {
   )
 
   chartType = 'doughnut'
-  goodsCountOfToday$: Observable<number[]>
-  goodsNameOfToday$: Observable<string[]>
-  goodsAmountOfToday$: Observable<number[]>
+  goodsCountOfToday$: Observable<number[]> = Observable.of([])
+  goodsNameOfToday$: Observable<string[]> = Observable.of([])
+  goodsAmountOfToday$: Observable<number[]> = Observable.of([])
 
   goodsCountOfThisMonth$: Observable<number[]>
   goodsNameOfThisMonth$: Observable<string[]>
@@ -66,10 +65,6 @@ export class GoodsStatisticsPage implements OnInit {
 
   ngOnInit(): void {
     this.initDataSource()
-
-    this.goodsNameOfToday$.subscribe(e => {
-      console.log(e)
-    })
   }
 
   ionViewDidEnter(): void {
@@ -89,7 +84,7 @@ export class GoodsStatisticsPage implements OnInit {
   }
 
   private initDataSource(): void {
-    this.initTodayData()
+    // this.initTodayData()
     this.initThisMonthData()
     this.initThisYearData()
 
@@ -107,8 +102,6 @@ export class GoodsStatisticsPage implements OnInit {
     this.goodsCountOfToday$ = this.store
       .select(getGoodsStatisticsOfToday)
       .map(e => e.map(f => f.num))
-
-
   }
 
   private initThisMonthData(): void {

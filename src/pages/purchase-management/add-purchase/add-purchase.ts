@@ -16,7 +16,6 @@ import { DestroyService } from '../../../app/services/destroy.service'
 
 import { Subject } from 'rxjs/Subject'
 import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/operator/finally'
 
 import { Purchase } from '../models/purchase.model'
 import { Provider } from '../models/provider.model'

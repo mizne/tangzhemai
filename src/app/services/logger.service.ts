@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import 'rxjs/add/operator/map';
 import { LocalService } from '../services/local.service'
 import { Device } from '@ionic-native/device'
 
@@ -29,9 +28,9 @@ export class LoggerService {
 
   /**
    * info 级别日志记录
-   * 
-   * @param {ErrorInfo} error 
-   * @returns {Promise<any>} 
+   *
+   * @param {ErrorInfo} error
+   * @returns {Promise<any>}
    * @memberof LoggerProvider
    */
   info(error: ErrorInfo): Promise<any> {
@@ -40,9 +39,9 @@ export class LoggerService {
 
   /**
    * error 级别日志记录
-   * 
-   * @param {ErrorInfo} error 
-   * @returns {Promise<any>} 
+   *
+   * @param {ErrorInfo} error
+   * @returns {Promise<any>}
    * @memberof LoggerProvider
    */
   error(error: ErrorInfo): Promise<any> {
@@ -51,13 +50,13 @@ export class LoggerService {
 
   /**
    * 日志记录
-   * 
+   *
    * @private
-   * @param {any} module 
-   * @param {any} level 
-   * @param {any} method 
-   * @param {any} description 
-   * @returns {Promise<any>} 
+   * @param {any} module
+   * @param {any} level
+   * @param {any} method
+   * @param {any} description
+   * @returns {Promise<any>}
    * @memberof LoggerProvider
    */
   private postErrorMessage(module, level, method, description): Promise<any> {
@@ -78,19 +77,19 @@ export class LoggerService {
       .toPromise()
       .catch(this.handleError)
     })
-    
+
   }
 
   /**
    * http 错误处理
-   * 
+   *
    * @private
-   * @param {*} error 
-   * @returns {Promise<any>} 
+   * @param {*} error
+   * @returns {Promise<any>}
    * @memberof LoggerProvider
    */
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error)
     return Promise.reject(error.message || error)
-  } 
+  }
 }

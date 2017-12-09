@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 import { Effect, Actions } from '@ngrx/effects'
 import { Action } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
-import { of } from 'rxjs/observable/of'
 
 import { StatisticsService } from '../../app/services/statistics.service'
 import {
@@ -40,7 +39,7 @@ export class HomeEffects {
         .map((statisticsItems: StatisticsItem[]) => {
           return new FetchTodayStatisticsSuccessAction(statisticsItems)
         })
-        .catch(() => of(new FetchTodayStatisticsFailureAction()))
+        .catch(() => Observable.of(new FetchTodayStatisticsFailureAction()))
     })
 
   constructor(

@@ -143,9 +143,6 @@ export class StatisticsService {
       })
       .map(resp => (resp as any).result)
       .map(results => results.map(GoodsStatistics.convertFromResp))
-      .do(e => {
-        console.log(e)
-      })
       .catch(this.handleError.bind(this, '_fetchGoodsStatistics'))
   }
 

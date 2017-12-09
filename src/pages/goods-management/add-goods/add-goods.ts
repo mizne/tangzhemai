@@ -19,7 +19,6 @@ import { DestroyService } from '../../../app/services/destroy.service'
 
 import { Subject } from 'rxjs/Subject'
 import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/operator/finally'
 
 import { GoodsType } from '../models/goodsType.model'
 import { GoodsUnit } from '../models/goodsUnit.model'
@@ -137,7 +136,7 @@ export class AddGoodsPage implements OnInit {
         this.goodsForm.controls[ctrl].markAsDirty()
       }
     }
-    
+
   }
 
   takePhoto() {
