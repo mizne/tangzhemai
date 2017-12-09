@@ -12,7 +12,6 @@ import { Observable } from 'rxjs/Observable';
 import { LocalService } from '../../app/services/local.service'
 import { DestroyService } from '../../app/services/destroy.service'
 
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -40,12 +39,6 @@ export class HomePage {
       value: 'sales',
       page: 'SalesorderManagementPage'
     },
-    // {
-    //   id: 3,
-    //   label: '库存管理',
-    //   value: 'stock',
-    //   page: 'StockManagementPage'
-    // }
     {
       id: 3,
       label: '统计管理',
@@ -55,14 +48,8 @@ export class HomePage {
   ]
 
   appRow2 = [
-    // {
-    //   id: 0,
-    //   label: '统计管理',
-    //   value: 'statistics',
-    //   page: 'StatisticsPage'
-    // },
     {
-      id: 1,
+      id: 0,
       label: '更多',
       value: 'more',
       page: 'MoreAppsPage'
@@ -81,7 +68,6 @@ export class HomePage {
     private localService: LocalService,
     private destroyService: DestroyService
   ) {
-
   }
 
   ionViewDidLoad() {

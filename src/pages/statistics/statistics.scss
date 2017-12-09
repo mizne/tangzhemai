@@ -1,18 +1,41 @@
 page-statistics {
   .scroll-content {
     padding: 0 !important;
-  }
-  .chart-area {
-    padding: 16px;
-    .doughnut {
-      width: 50%;
-    }
-  }
 
-  .statistics-list {
-    ion-label {
-      display: flex;
-      justify-content: space-between;
+    .main-apps {
+      margin-top: 10px;
+      background-color: map-get($map: $colors, $key: bgWhite);
+      .main-app {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+
+        &.active {
+          background-color: map-get($map: $colors, $key: bgFeedback);
+        }
+
+        .icon-wrapper {
+          @include flexCenter;
+          width: 35px;
+          height: 35px;
+          border-radius: 12px;
+          background-color: map-get($colors, primary);
+          color: map-get($colors, light);
+          margin-bottom: 5px;
+
+          i {
+            font-size: 2rem;
+          }
+
+          &.goods {
+            background-color: #fea52d;
+          }
+          &.sales {
+            background-color: #25b4e7;
+          }
+        }
+      }
     }
   }
 }

@@ -6,7 +6,7 @@ page-home {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      
+
       height: 100px;
       background-color: map-get($colors, primary);
       color: map-get($colors, light);
@@ -53,6 +53,9 @@ page-home {
     .main-apps {
       margin-top: 10px;
       background-color: map-get($map: $colors, $key: bgWhite);
+      .row {
+        border: none;
+      }
       .second-row {
         margin-top: 10px;
       }

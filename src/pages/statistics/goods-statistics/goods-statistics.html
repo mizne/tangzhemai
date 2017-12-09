@@ -1,0 +1,85 @@
+<!--
+  Generated template for the StatisticsManage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar #navabr [backFeedback]="navabr">
+    <ion-title class="text-center">商品统计</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [formControl]="dateTypeCtrl" (ionChange)="segmentChanged($event)">
+      <ion-segment-button [value]="0">
+        今日
+      </ion-segment-button>
+      <!-- <ion-segment-button value="本周">
+          本周
+        </ion-segment-button> -->
+      <ion-segment-button [value]="1">
+        本月
+      </ion-segment-button>
+      <ion-segment-button [value]="2">
+        本年
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="chart-area">
+    <div [ngSwitch]="dateType$ | async">
+      <div *ngSwitchCase="0">
+        <p class="text-center">商品销售量</p>
+        <canvas baseChart width="400" height="300"
+        [data]="goodsCountOfToday$ | async" [labels]="goodsNameOfToday$ | async"
+        [chartType]="chartType"></canvas>
+        <p class="text-center">商品销售额</p>
+        <canvas baseChart width="400" height="300"
+        [data]="goodsAmountOfToday$ | async"
+        [labels]="goodsNameOfToday$ | async"
+        [chartType]="chartType"></canvas>
+      </div>
+
+      <div *ngSwitchCase="1">
+          <p class="text-center">商品销售量</p>
+          <canvas baseChart width="400" height="300"
+          [data]="goodsCountOfThisMonth$ | async" [labels]="goodsNameOfThisMonth$ | async"
+          [chartType]="chartType"></canvas>
+          <p class="text-center">商品销售额</p>
+          <canvas baseChart width="400" height="300"
+          [data]="goodsAmountOfThisMonth$ | async"
+          [labels]="goodsNameOfThisMonth$ | async"
+          [chartType]="chartType"></canvas>
+      </div>
+
+      <div *ngSwitchCase="2">
+          <p class="text-center">商品销售量</p>
+          <canvas baseChart width="400" height="300"
+          [data]="goodsCountOfThisYear$ | async" [labels]="goodsNameOfThisYear$ | async"
+          [chartType]="chartType"></canvas>
+          <p class="text-center">商品销售额</p>
+          <canvas baseChart width="400" height="300"
+          [data]="goodsAmountOfThisYear$ | async"
+          [labels]="goodsNameOfThisYear$ | async"
+          [chartType]="chartType"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <ion-list class="statistics-list">
+    <ion-item>
+      <ion-icon name="add-circle" item-start></ion-icon>
+      <span>商品总销量</span>
+      <span>{{ goodsTotalCount$ | async }} 个</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="add-circle" item-start></ion-icon>
+      <span>商品总销售额</span>
+      <span>{{ goodsTotalAmount$ | async }} 元</span>
+    </ion-item>
+  </ion-list>
+</ion-content>

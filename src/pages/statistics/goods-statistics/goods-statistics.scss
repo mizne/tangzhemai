@@ -1,0 +1,18 @@
+page-goods-statistics {
+  .scroll-content {
+    padding: 0 !important;
+  }
+  .chart-area {
+    padding: 16px;
+    .doughnut {
+      width: 50%;
+    }
+  }
+
+  .statistics-list {
+    ion-label {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

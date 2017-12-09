@@ -1,23 +1,29 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { StatisticsPage } from './statistics';
+import { GoodsStatisticsPage } from './goods-statistics/goods-statistics'
+import { OrderStatisticsPage } from './order-statistics/order-statistics'
 
 import { SharedModule } from '../../shared/shared.module'
 
 import { StoreModule } from '@ngrx/store'
 import { reducers } from './reducers'
 import { EffectsModule } from '@ngrx/effects'
-import { StatisticsEffects } from './statistics.effects'
+import { OrderStatisticsEffects } from './order-statistics/order-statistics.effects'
+import { GoodsStatisticsEffects } from './goods-statistics/goods-statistics.effects'
 
 import { ChartsModule } from 'ng2-charts'
 
 const effects = [
-  StatisticsEffects
+  OrderStatisticsEffects,
+  GoodsStatisticsEffects,
 ]
 
 @NgModule({
   declarations: [
     StatisticsPage,
+    GoodsStatisticsPage,
+    OrderStatisticsPage,
   ],
   imports: [
     SharedModule,
@@ -26,6 +32,10 @@ const effects = [
     IonicPageModule.forChild(StatisticsPage),
     ChartsModule,
   ],
-  providers: []
+  providers: [],
+  entryComponents: [
+    GoodsStatisticsPage,
+    OrderStatisticsPage,
+  ]
 })
 export class StatisticsPageModule {}

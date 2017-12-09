@@ -2185,6 +2185,10 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
+mx.ferreyra.callnumber@~0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/mx.ferreyra.callnumber/-/mx.ferreyra.callnumber-0.0.2.tgz#dda64ced1d5a19e801d5c64f17f02bcd0599cb63"
+
 nan@^2.3.0, nan@^2.3.2:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
@@ -2636,6 +2640,10 @@ querystring-es3@^0.2.0:
 querystring@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
+
+quick-utils@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/quick-utils/-/quick-utils-0.0.2.tgz#97bfb9dd87022a0ce78ec118154dd2382782e858"
 
 ramda@^0.25.0:
   version "0.25.0"

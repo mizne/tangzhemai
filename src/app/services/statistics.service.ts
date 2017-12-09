@@ -4,8 +4,9 @@ import { Observable } from 'rxjs/Observable'
 import { Storage } from '@ionic/storage'
 import fecha from 'fecha'
 
-// import { LoggerService } from '../../app/services/logger.service'
+import { GoodsStatistics } from '../../pages/statistics/models/statistics.model'
 
+// import { LoggerService } from '../../app/services/logger.service'
 
 /*
   Generated class for the OrderProvider provider.
@@ -16,6 +17,7 @@ import fecha from 'fecha'
 @Injectable()
 export class StatisticsService {
   private url = '/admin/echats/orderStatisticByTime'
+  private goodsUrl = '/admin/echats/foodsEchats'
 
   constructor(
     public http: HttpClient,
@@ -25,24 +27,28 @@ export class StatisticsService {
 
   /**
    * 获取 当天 所有订单统计信息
-   * 
-   * @returns {Observable<Array<any>>} 
+   *
+   * @returns {Observable<Array<any>>}
    * @memberof StatisticsProvider
    */
   fetchOrderStatisticsOfToday(): Observable<Array<any>> {
-
     const now = new Date()
     const nextDay = new Date(now.getTime() + 24 * 60 * 60 * 1000)
 
     const startTime = fecha.format(now, 'YYYY-M-DD')
     const endTime = fecha.format(nextDay, 'YYYY-M-DD')
-    return this._fetchOrderStatistics({ startTime, endTime, type: 1, status: 3 })
+    return this._fetchOrderStatistics({
+      startTime,
+      endTime,
+      type: 1,
+      status: 3
+    })
   }
 
   /**
    * 获取 当月 所有订单统计信息
-   * 
-   * @returns {Observable<Array<any>>} 
+   *
+   * @returns {Observable<Array<any>>}
    * @memberof StatisticsProvider
    */
   fetchOrderStatisticsOfThisMonth(): Observable<Array<any>> {
@@ -68,8 +74,8 @@ export class StatisticsService {
 
   /**
    * 获取 当年 所有订单统计信息
-   * 
-   * @returns {Observable<Array<any>>} 
+   *
+   * @returns {Observable<Array<any>>}
    * @memberof StatisticsProvider
    */
   fetchOrderStatisticsOfThisYear(): Observable<Array<any>> {
@@ -86,28 +92,70 @@ export class StatisticsService {
 
   /**
    * 获取 统计信息
-   * 
+   *
    * @private
-   * @param {any} { startTime, endTime, type, status } 
-   * @returns {Observable<Array<any>>} 
+   * @param {any} { startTime, endTime, type, status }
+   * @returns {Observable<Array<any>>}
    * @memberof StatisticsProvider
    */
-  private _fetchOrderStatistics({ startTime, endTime, type, status }): Observable<Array<any>> {
+  private _fetchOrderStatistics({
+    startTime,
+    endTime,
+    type,
+    status
+  }): Observable<Array<any>> {
     return Observable.fromPromise(this.storage.get('TENANT_ID'))
       .mergeMap(tenantId => {
-        return this.http.post(this.url, { tenantId, startTime, endTime, type, status })
+        return this.http.post(this.url, {
+          tenantId,
+          startTime,
+          endTime,
+          type,
+          status
+        })
       })
       .map(resp => (resp as any).result)
       .catch(this.handleError.bind(this, '_fetchOrderStatistics'))
   }
 
+  fetchGoodsStatisticsOfToday(): Observable<GoodsStatistics[]> {
+    const now = new Date()
+    const startTime = fecha.format(now, 'YYYY-M-DD')
+    return this._fetchGoodsStatistics({ startTime, type: 1 })
+  }
+
+  fetchGoodsStatisticsOfThisMonth(): Observable<GoodsStatistics[]> {
+    const now = new Date()
+    const startTime = fecha.format(now, 'YYYY-M')
+    return this._fetchGoodsStatistics({ startTime, type: 3 })
+  }
+
+  fetchGoodsStatisticsOfThisYear(): Observable<GoodsStatistics[]> {
+    const now = new Date()
+    const startTime = fecha.format(now, 'YYYY')
+    return this._fetchGoodsStatistics({ startTime, type: 4 })
+  }
+
+  private _fetchGoodsStatistics({ startTime, type }): Observable<GoodsStatistics[]> {
+    return Observable.fromPromise(this.storage.get('TENANT_ID'))
+      .mergeMap(tenantId => {
+        return this.http.post(this.goodsUrl, { tenantId, startTime, type })
+      })
+      .map(resp => (resp as any).result)
+      .map(results => results.map(GoodsStatistics.convertFromResp))
+      .do(e => {
+        console.log(e)
+      })
+      .catch(this.handleError.bind(this, '_fetchGoodsStatistics'))
+  }
+
   /**
    * http 错误处理
-   * 
+   *
    * @private
-   * @param {string} method 
-   * @param {*} error 
-   * @returns {Observable<any>} 
+   * @param {string} method
+   * @param {*} error
+   * @returns {Observable<any>}
    * @memberof StatisticsProvider
    */
   private handleError(method: string, error: any): Observable<any> {

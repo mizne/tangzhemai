@@ -1,9 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import * as fromStatisticsIndex from '../statistics.reducer'
+import * as fromOrderStatistics from '../order-statistics/order-statistics.reducer'
+import * as fromGoodsStatistics from '../goods-statistics/goods-statistics.reducer'
 import * as fromRoot from '../../../app/reducers'
 
 export interface StatisticsState {
-  statisticsIndex: fromStatisticsIndex.State
+  orderStatistics: fromOrderStatistics.State
+  goodsStatistics: fromGoodsStatistics.State
 }
 
 export interface State extends fromRoot.State {
@@ -11,29 +13,52 @@ export interface State extends fromRoot.State {
 }
 
 export const reducers = {
-  statisticsIndex: fromStatisticsIndex.reducer
+  orderStatistics: fromOrderStatistics.reducer,
+  goodsStatistics: fromGoodsStatistics.reducer
 }
 
-export const getStatisticsModuleState = createFeatureSelector<StatisticsState>('statistics')
+export const getStatisticsModuleState = createFeatureSelector<StatisticsState>(
+  'statistics'
+)
 
-export const getStatisticsIndexState = createSelector(
-  getStatisticsModuleState, 
-  (state: StatisticsState) => state.statisticsIndex)
-
+export const getOrderStatisticsState = createSelector(
+  getStatisticsModuleState,
+  (state: StatisticsState) => state.orderStatistics
+)
+export const getOrderStatisticsLoading = createSelector(
+  getOrderStatisticsState,
+  fromOrderStatistics.getLoading
+)
 export const getOrdersStatisticsOfToday = createSelector(
-  getStatisticsIndexState,
-  fromStatisticsIndex.getOrdersStatisticsOfToday
+  getOrderStatisticsState,
+  fromOrderStatistics.getOrdersStatisticsOfToday
 )
 export const getOrdersStatisticsOfThisMonth = createSelector(
-  getStatisticsIndexState,
-  fromStatisticsIndex.getOrdersStatisticsOfThisMonth
+  getOrderStatisticsState,
+  fromOrderStatistics.getOrdersStatisticsOfThisMonth
 )
 export const getOrdersStatisticsOfThisYear = createSelector(
-  getStatisticsIndexState,
-  fromStatisticsIndex.getOrdersStatisticsOfThisYear
-)
-export const getStatisticsLoading = createSelector(
-  getStatisticsIndexState,
-  fromStatisticsIndex.getLoading
+  getOrderStatisticsState,
+  fromOrderStatistics.getOrdersStatisticsOfThisYear
 )
 
+export const getGoodsStatisticsState = createSelector(
+  getStatisticsModuleState,
+  (state: StatisticsState) => state.goodsStatistics
+)
+export const getGoodStatisticsLoading = createSelector(
+  getGoodsStatisticsState,
+  fromGoodsStatistics.getLoading
+)
+export const getGoodsStatisticsOfToday = createSelector(
+  getGoodsStatisticsState,
+  fromGoodsStatistics.getGoodsStatisticsOfToday
+)
+export const getGoodsStatisticsOfThisMonth = createSelector(
+  getGoodsStatisticsState,
+  fromGoodsStatistics.getGoodsStatisticsOfThisMonth
+)
+export const getGoodsStatisticsOfThisYear = createSelector(
+  getGoodsStatisticsState,
+  fromGoodsStatistics.getGoodsStatisticsOfThisYear
+)
