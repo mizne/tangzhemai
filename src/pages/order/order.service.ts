@@ -19,8 +19,6 @@ export class OrderService {
   ): Observable<Order[]> {
     const query = `?tenantId=${tenantId}&startTime=${startTime}&endTime=${endTime}`
 
-    console.log(startTime)
-    console.log(endTime)
     return this.http
       .get(this.orderUrl + query)
       .map(resp => (resp as APIResponse).result as OrderResp[])
@@ -30,7 +28,7 @@ export class OrderService {
       .catch(this.handleError)
   }
 
-  
+
   private handleError(error: any) {
     const errMsg = error.message
       ? error.message

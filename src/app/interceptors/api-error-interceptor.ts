@@ -38,16 +38,13 @@ export class ApiErrorInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse) {
           if (this.requestWithSelf(event.url)) {
             if (event.body && event.body.resCode !== 0) {
-              console.error(`API Error; ${event.body.resMsg}`)
               throw new Error(event.body.resCode)
             }
           }
         }
       })
       .catch(res => {
-        console.log(res)
         if (res instanceof HttpErrorResponse) {
-          console.log('resp status: ' + res.status)
           if (res.status === 401) {
             this.store.dispatch(new ToLoginPageAction())
           }

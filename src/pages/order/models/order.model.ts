@@ -9,7 +9,7 @@ export class Order {
   id?: string
   /**
    * 实际支付金额
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -17,7 +17,7 @@ export class Order {
 
   /**
    * 业务类型 deal 点餐; eshop 代售
-   * 
+   *
    * @type {('deal' | 'eshop')}
    * @memberof Order
    */
@@ -25,7 +25,7 @@ export class Order {
 
   /**
    * 代售商名称
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -34,7 +34,7 @@ export class Order {
   /**
    * amount/discount/reduce
    * 优惠券类型
-   * 
+   *
    * @type {CouponType}
    * @memberof Order
    */
@@ -42,7 +42,7 @@ export class Order {
 
   /**
    * 优惠券数值
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -50,7 +50,7 @@ export class Order {
 
   /**
    * 配送费
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -58,7 +58,7 @@ export class Order {
 
   /**
    * 就餐人数
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -66,7 +66,7 @@ export class Order {
 
   /**
    * 订单上商品
-   * 
+   *
    * @type {Food[]}
    * @memberof Order
    */
@@ -74,7 +74,7 @@ export class Order {
 
   /**
    * 订单上备注信息
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -82,7 +82,7 @@ export class Order {
 
   /**
    * 是否vip 所下订单
-   * 
+   *
    * @type {boolean}
    * @memberof Order
    */
@@ -90,7 +90,7 @@ export class Order {
 
   /**
    * 商家实收金额
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -98,7 +98,7 @@ export class Order {
 
   /**
    * 商家优惠
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -106,7 +106,7 @@ export class Order {
 
   /**
    * 下订单的支付方式
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -114,7 +114,7 @@ export class Order {
 
   /**
    * 下订单人的 手机号码
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -122,7 +122,7 @@ export class Order {
 
   /**
    * 平台服务费
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -130,7 +130,7 @@ export class Order {
 
   /**
    * 平台优惠
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -138,7 +138,7 @@ export class Order {
 
   /**
    * 退款金额
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -146,7 +146,7 @@ export class Order {
 
   /**
    * 退款原因
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -156,17 +156,16 @@ export class Order {
    * 0 未支付订单
    * 1 待支付订单
    * 2 已支付订单
-   * 3 已接单订单
-   * 4 已送达订单
-   * 
-   * @type {(0 | 1 | 2 | 3 | 4)}
+   * 3 已核销状态订单
+   *
+   * @type {(0 | 1 | 2 | 3)}
    * @memberof Order
    */
-  status: 0 | 1 | 2 | 3 | 4
+  status: 0 | 1 | 2 | 3
 
   /**
    * 下订单 桌号
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -174,7 +173,7 @@ export class Order {
 
   /**
    * 小票文本信息
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -182,7 +181,7 @@ export class Order {
 
   /**
    * 下订单时间
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -190,7 +189,7 @@ export class Order {
 
   /**
    * TODO
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -198,7 +197,7 @@ export class Order {
 
   /**
    * 订单商品总个数
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -206,7 +205,7 @@ export class Order {
 
   /**
    * 订单商品总价
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -214,7 +213,7 @@ export class Order {
 
   /**
    * 订单商品 会员总价
-   * 
+   *
    * @type {number}
    * @memberof Order
    */
@@ -222,7 +221,7 @@ export class Order {
 
   /**
    * 订单号
-   * 
+   *
    * @type {string}
    * @memberof Order
    */
@@ -246,8 +245,7 @@ export class Order {
     '0': '未支付',
     '1': '待支付',
     '2': '已支付',
-    '3': '已接单',
-    '4': '已送达'
+    '3': '核销状态'
   }
 
   static convertFromResp(resp: OrderResp): Order {
@@ -282,7 +280,7 @@ export class Order {
       trade_no: resp.trade_no,
     }
   }
-  
+
 }
 
 export interface OrderResp {
@@ -305,7 +303,7 @@ export interface OrderResp {
   platformCouponFee?: number
   refund_amount?: number
   refund_reason?: string
-  status?: 0 | 1 | 2 | 3 | 4
+  status?: 0 | 1 | 2 | 3
   tableName?: string
   ticketText?: string
   time?: string
