@@ -84,13 +84,19 @@
     <ion-item>
       <ion-icon name="paper" item-start></ion-icon>
       <span>商品总销量</span>
-      <span>{{ goodsTotalCount$ | async }} 个</span>
+      <span>
+        <span countUp [endVal]="goodsTotalCount$ | async" [decimal]="0"></span>
+        <span>个</span>
+      </span>
     </ion-item>
 
     <ion-item>
       <ion-icon name="pie" item-start></ion-icon>
       <span>商品总销售额</span>
-      <span>{{ goodsTotalAmount$ | async }} 元</span>
+      <span>
+        <span countUp [endVal]="goodsTotalAmount$ | async"></span>
+        <span>元</span>
+      </span>
     </ion-item>
   </ion-list>
 </ion-content>
