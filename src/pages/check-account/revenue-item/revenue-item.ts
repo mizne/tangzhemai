@@ -1,5 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core'
 import { AlertController } from 'ionic-angular'
+
+
 
 import { FeedbackService } from '../../../app/services/feedback.service'
 
@@ -14,9 +16,16 @@ import { FeedbackService } from '../../../app/services/feedback.service'
   selector: 'revenue-item',
   templateUrl: 'revenue-item.html'
 })
-export class RevenueItem {
+export class RevenueItem implements OnInit {
+  unit: string
+  count: number
+
   @Input() title: string
-  @Input() number: string
+  @Input()
+  set number(v: string) {
+    this.unit = v.slice(-1)
+    this.count = Number(v.slice(0, -1))
+  }
   @Input() size: string
   @Input() help: string
   @Input() toDetail: boolean
@@ -26,7 +35,12 @@ export class RevenueItem {
   constructor(
     private alertCtrl: AlertController,
     private feedbackService: FeedbackService
-  ) {}
+  ) {
+  }
+
+  ngOnInit() {
+
+  }
 
   handleClick() {
     if (this.help) {

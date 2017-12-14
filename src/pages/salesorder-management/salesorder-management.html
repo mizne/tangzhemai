@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="order-action">
-          <span>{{item.status | orderStatus:item}}</span>
+          <span>{{item.status | orderStatus}}</span>
           <!-- <span *ngIf="needShowMerchantAmount(order)">{{order.merchantAmount}} 元</span>
             <button class="item-button button-md" ion-button *ngIf="order.status === 0" (click)="delOrder($event, order.trade_no)">取消</button>
             <button class="item-button button-md" ion-button *ngIf="order.status === 2" (click)="acceptOrder($event, order.trade_no)">待商家处理</button>

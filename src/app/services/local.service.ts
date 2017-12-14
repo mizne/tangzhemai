@@ -17,6 +17,14 @@ export class LocalService {
     return this.storage.get('TOKEN')
   }
 
+  setJPushID(id: string): Promise<any> {
+    return this.storage.set('JPUSH_ID', id)
+  }
+
+  getJPushID(): Promise<string> {
+    return this.storage.get('JPUSH_ID')
+  }
+
   setTenantId(value: string): Promise<any> {
     return this.storage.set('TENANT_ID', value)
   }
@@ -40,7 +48,7 @@ export class LocalService {
   getAliasName(): Promise<string> {
     return this.storage.get('ALIAS_NAME')
   }
-  
+
 
   clear(): Promise<void> {
     return this.storage.clear()

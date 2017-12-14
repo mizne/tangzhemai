@@ -843,6 +843,10 @@ cordova-plugin-ionic-webview@^1.1.16:
   version "1.1.16"
   resolved "https://registry.yarnpkg.com/cordova-plugin-ionic-webview/-/cordova-plugin-ionic-webview-1.1.16.tgz#92d5f2e4a5a829f91b487b1761848765a31c9f1e"
 
+cordova-plugin-jcore@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-jcore/-/cordova-plugin-jcore-1.1.10.tgz#313d598eb3d3b81088afa3f78da509f179b43a11"
+
 cordova-plugin-network-information@^1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/cordova-plugin-network-information/-/cordova-plugin-network-information-1.3.4.tgz#28f426cc2659174dc622a07180f9ba0d855f7383"
@@ -866,6 +870,10 @@ cordova-registry-mapper@^1.1.8:
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
+
+countup.js@^1.9.3:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/countup.js/-/countup.js-1.9.3.tgz#ce3e50cd7160441e478f07da31895edcc0f1c9dd"
 
 create-ecdh@^4.0.0:
   version "4.0.0"
@@ -1724,6 +1732,10 @@ ionic-plugin-keyboard@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ionic-plugin-keyboard/-/ionic-plugin-keyboard-2.2.1.tgz#f2a9e169bbe9b5522400347c9fd6d3467ee3fa12"
 
+ionic3-jpush@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/ionic3-jpush/-/ionic3-jpush-1.2.0.tgz#c678cf12ff3c29eb19c2f289683d2104c0747723"
+
 ionicons@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ionicons/-/ionicons-3.0.0.tgz#40b8daf4fd7a31150bd002160f66496e22a98c3c"
@@ -1849,6 +1861,10 @@ isobject@^2.0.0:
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
+
+jpush-phonegap-plugin@^3.2.12:
+  version "3.2.12"
+  resolved "https://registry.yarnpkg.com/jpush-phonegap-plugin/-/jpush-phonegap-plugin-3.2.12.tgz#9b093f6c5b8b9af679ea29f2c8555e98d48d9203"
 
 js-base64@^2.1.8:
   version "2.3.2"
@@ -2640,10 +2656,6 @@ querystring-es3@^0.2.0:
 querystring@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
-
-quick-utils@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/quick-utils/-/quick-utils-0.0.2.tgz#97bfb9dd87022a0ce78ec118154dd2382782e858"
 
 ramda@^0.25.0:
   version "0.25.0"

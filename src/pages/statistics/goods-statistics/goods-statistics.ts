@@ -84,7 +84,7 @@ export class GoodsStatisticsPage implements OnInit {
   }
 
   private initDataSource(): void {
-    // this.initTodayData()
+    this.initTodayData()
     this.initThisMonthData()
     this.initThisYearData()
 
@@ -129,29 +129,26 @@ export class GoodsStatisticsPage implements OnInit {
   }
 
   private initGoodsTotalCount(): void {
-    const todayGoodsCount$: Observable<number> = this.dateType$
-      .filter(e => e === DateType.TODAY)
-      .withLatestFrom(
-        this.store.select(getGoodsStatisticsOfToday),
-        (_, items) =>
-          items.reduce((accu, curr) => ((accu += curr.num), accu), 0)
-      )
+    const todayGoodsCount$: Observable<number> = Observable.combineLatest(
+      this.dateType$.filter(e => e === DateType.TODAY),
+      this.store.select(getGoodsStatisticsOfToday)
+    ).map(([_, items]) => {
+      return items.reduce((accu, curr) => ((accu += curr.num), accu), 0)
+    })
 
-    const thisMonthGoodsCount$: Observable<number> = this.dateType$
-      .filter(e => e === DateType.THIS_MONTH)
-      .withLatestFrom(
-        this.store.select(getGoodsStatisticsOfThisMonth),
-        (_, items) =>
-          items.reduce((accu, curr) => ((accu += curr.num), accu), 0)
-      )
+    const thisMonthGoodsCount$: Observable<number> = Observable.combineLatest(
+      this.dateType$.filter(e => e === DateType.THIS_MONTH),
+      this.store.select(getGoodsStatisticsOfThisMonth)
+    ).map(([_, items]) => {
+      return items.reduce((accu, curr) => ((accu += curr.num), accu), 0)
+    })
 
-    const thisYearGoodsCount$: Observable<number> = this.dateType$
-      .filter(e => e === DateType.THIS_YEAR)
-      .withLatestFrom(
-        this.store.select(getGoodsStatisticsOfThisYear),
-        (_, items) =>
-          items.reduce((accu, curr) => ((accu += curr.num), accu), 0)
-      )
+    const thisYearGoodsCount$: Observable<number> = Observable.combineLatest(
+      this.dateType$.filter(e => e === DateType.THIS_YEAR),
+      this.store.select(getGoodsStatisticsOfThisYear)
+    ).map(([_, items]) => {
+      return items.reduce((accu, curr) => ((accu += curr.num), accu), 0)
+    })
 
     this.goodsTotalCount$ = Observable.merge(
       todayGoodsCount$,
@@ -161,29 +158,26 @@ export class GoodsStatisticsPage implements OnInit {
   }
 
   private initGoodsTotalAmount(): void {
-    const todayGoodsAmount$: Observable<number> = this.dateType$
-      .filter(e => e === DateType.TODAY)
-      .withLatestFrom(
-        this.store.select(getGoodsStatisticsOfToday),
-        (_, items) =>
-          items.reduce((accu, curr) => ((accu += curr.amount), accu), 0)
-      )
+    const todayGoodsAmount$: Observable<number> = Observable.combineLatest(
+      this.dateType$.filter(e => e === DateType.TODAY),
+      this.store.select(getGoodsStatisticsOfToday)
+    ).map(([_, items]) => {
+      return items.reduce((accu, curr) => ((accu += curr.amount), accu), 0)
+    })
 
-    const thisMonthGoodsAmount$: Observable<number> = this.dateType$
-      .filter(e => e === DateType.THIS_MONTH)
-      .withLatestFrom(
-        this.store.select(getGoodsStatisticsOfThisMonth),
-        (_, items) =>
-          items.reduce((accu, curr) => ((accu += curr.amount), accu), 0)
-      )
+    const thisMonthGoodsAmount$: Observable<number> = Observable.combineLatest(
+      this.dateType$.filter(e => e === DateType.THIS_MONTH),
+      this.store.select(getGoodsStatisticsOfThisMonth)
+    ).map(([_, items]) => {
+      return items.reduce((accu, curr) => ((accu += curr.amount), accu), 0)
+    })
 
-    const thisYearGoodsAmount$: Observable<number> = this.dateType$
-      .filter(e => e === DateType.THIS_YEAR)
-      .withLatestFrom(
-        this.store.select(getGoodsStatisticsOfThisYear),
-        (_, items) =>
-          items.reduce((accu, curr) => ((accu += curr.amount), accu), 0)
-      )
+    const thisYearGoodsAmount$: Observable<number> = Observable.combineLatest(
+      this.dateType$.filter(e => e === DateType.THIS_YEAR),
+      this.store.select(getGoodsStatisticsOfThisYear)
+    ).map(([_, items]) => {
+      return items.reduce((accu, curr) => ((accu += curr.amount), accu), 0)
+    })
 
     this.goodsTotalAmount$ = Observable.merge(
       todayGoodsAmount$,

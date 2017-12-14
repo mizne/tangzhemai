@@ -23,12 +23,12 @@
 
     <div class="today-statistics">
       <div class="today-item shishou" clickFeedback (click)="toPage('CheckAccountPage')">
-        <span class="value">{{todayMerchantAmount}}</span>
+        <span class="value" countUp [endVal]="todayMerchantAmount"></span>
         <span class="label">今日实收(元)</span>
       </div>
 
       <div class="today-item order" clickFeedback (click)="toPage('CheckAccountPage')">
-        <span class="value">{{todayOrderCount}}</span>
+        <span class="value" countUp [endVal]="todayOrderCount" [decimal]="0"></span>
         <span class="label">订单笔数(笔)</span>
       </div>
     </div>

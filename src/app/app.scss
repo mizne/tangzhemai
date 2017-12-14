@@ -14,6 +14,13 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.content {
+  color: #333;
+}
+.item {
+  color: #333;
+}
+
 .header-md::after,
 .tabs-md[tabsplacement='top'] > .tabbar::after,
 .footer-md::before,

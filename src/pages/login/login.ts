@@ -6,7 +6,7 @@ import {
   NavController,
   NavParams
 } from 'ionic-angular'
-import { FormGroup, FormBuilder, Validators } from "@angular/forms"
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Device } from '@ionic-native/device'
 import { Store } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
@@ -19,6 +19,8 @@ import { LoggerService } from '../../app/services/logger.service'
 
 import { FeedbackService } from '../../app/services/feedback.service'
 import { LocalService } from '../../app/services/local.service'
+
+declare const JPush: any
 
 // declare var JPush: any
 /**
@@ -33,7 +35,6 @@ import { LocalService } from '../../app/services/local.service'
   templateUrl: 'login.html'
 })
 export class LoginPage implements OnInit, OnDestroy {
-
   myForm: FormGroup
 
   subscription: Subscription
@@ -50,11 +51,9 @@ export class LoginPage implements OnInit, OnDestroy {
     private device: Device,
     private feedbackService: FeedbackService,
     private localService: LocalService
-  ) {
-  }
+  ) {}
 
-  ionViewDidLoad(): void {
-  }
+  ionViewDidLoad(): void {}
 
   ngOnInit(): void {
     this.buildForm()
@@ -73,17 +72,12 @@ export class LoginPage implements OnInit, OnDestroy {
    */
   buildForm(): void {
     this.myForm = this.formBuilder.group({
-      name: ['', [
-        Validators.required
-      ]],
-      password: ['', [
-        Validators.required
-      ]]
+      name: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     })
 
     // this.myForm.valueChanges.subscribe(data => this.onValueChanged(data))
   }
-
 
   /**
    * 登录 并 存储信息 跳转 tabPage
@@ -92,44 +86,43 @@ export class LoginPage implements OnInit, OnDestroy {
    */
   onLogin(): void {
     let loading = this.loadingCtrl.create({
-      content: '登录中...',
+      content: '登录中...'
     })
 
     loading.present()
 
     this.feedbackService.feedback()
 
-    this.subscription = this.loginService.login(this.myForm.value)
-      .subscribe(result => {
+    this.subscription = this.loginService.login(this.myForm.value).subscribe(
+      result => {
         loading.dismiss()
         Observable.forkJoin(
           this.localService.setTenantId(result.tenantId),
           this.localService.setToken(result.token),
           this.localService.setLoginName(result.name),
-          this.localService.setAliasName(result.aliasName),
+          this.localService.setAliasName(result.aliasName)
         )
-        .toPromise()
-        .then(() => {
-          this.store.dispatch(new ToTabsPageAction())
-        })
-
-        // 真机或模拟器运行
-        // if (this.device.platform) {
-          // JPush.setAlias(tenantId, () => {
-          //   this.logger.info({
-          //     module: 'login',
-          //     method: 'onLogin',
-          //     description: `set alias success; alias: ${tenantId}`
-          //   })
-          // }, (errMsg) => {
-          //   this.logger.error({
-          //     module: 'login',
-          //     method: 'onLogin',
-          //     description: `set alias failed; err: ${errMsg}`
-          //   })
-          // })
-        // }
-      }, err => {
+          .toPromise()
+          .then(() => {
+            this.store.dispatch(new ToTabsPageAction())
+            // 真机或模拟器运行
+            if (this.device.platform) {
+              JPush.setAlias(
+                {
+                  sequence: 1,
+                  alias: result.tenantId
+                },
+                () => {
+                  // window.alert(`set alias success; alias: ${this.myForm.value.name}`)
+                },
+                errMsg => {
+                  // window.alert(`set alias failed; err: ${errMsg}`)
+                }
+              )
+            }
+          })
+      },
+      err => {
         loading.dismiss()
         let alert = this.alertCtrl.create({
           title: '登录错误',
@@ -138,8 +131,9 @@ export class LoginPage implements OnInit, OnDestroy {
         })
 
         alert.present()
-      })
-    }
+      }
+    )
+  }
   /**
    * 跳转 注册页面
    *
@@ -148,5 +142,4 @@ export class LoginPage implements OnInit, OnDestroy {
   onSignup(): void {
     // this.navCtrl.push(SignupPage)
   }
-
 }

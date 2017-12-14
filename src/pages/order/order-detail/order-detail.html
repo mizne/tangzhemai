@@ -21,8 +21,8 @@
         <span class="order-status-label">状态</span>
       </div>
       <div class="order-info">
-        <span class="order-number">{{order.trade_no}}</span>
-        <span class="order-status">{{order.status | orderStatus:order}}</span>
+        <span class="order-number">{{order.tradeNo}}</span>
+        <span class="order-status">{{order.status | orderStatus}}</span>
       </div>
     </ion-item>
     <ion-item>
@@ -32,7 +32,7 @@
     </ion-item>
     <ion-item>
       <div class="order-remark">
-        <span class="label">{{order.info}}</span>
+        <span class="label">{{order.remark}}</span>
       </div>
     </ion-item>
     <ion-item>
@@ -52,79 +52,30 @@
 
     <ion-item>
       <div class="order-detail">
-        <div class="seat-wrapper wrapper">
-          <span class="seat-label wrapper-item">桌号: </span>
-          <span class="seat wrapper-item">{{order.tableName}}</span>
-          <span class="people-number-label wrapper-item">人数: </span>
-          <span class="people-number wrapper-item">{{order.dinersNum}}人</span>
-        </div>
 
-        <div class="paid-amount-wrapper wrapper">
-          <span class="paid-amount-label wrapper-item">退款金额: </span>
-          <span class="paid-amount wrapper-item">{{order.refund_amount}}</span>
-          <span class="paid-amount-label wrapper-item">退款原因: </span>
-          <span class="paid-amount wrapper-item">{{order.refund_reason}}</span>
-        </div>
-
-        <div class="paymode-wrapper wrapper" *ngIf="order.deliveryFee">
-          <span class="paymode-label">配送费: </span>
-          <span class="paymode">{{order.deliveryFee}} 元</span>
-        </div>
-
-        <div class="paymode-wrapper wrapper" *ngIf="order.status === 2" style="font-weight: bold;">
-          <span class="paymode-label">总计小价: </span>
+        <div class="paymode-wrapper wrapper" style="font-weight: bold;">
+          <span class="paymode-label">总价: </span>
           <span class="paymode">{{order.totalPrice}}元</span>
         </div>
-
-        <div class="paymode-wrapper wrapper" *ngIf="order.status === 2">
-          <span class="paymode-label">本单顾客实际支付: </span>
-          <span class="paymode">{{order.totalPrice}}元</span>
-        </div>
-
-        <div class="paymode-wrapper wrapper" *ngIf="order.status === 2">
-          <span class="paymode-label">商家实际收入: </span>
-          <span class="paymode">{{order.merchantCouponFee}}元</span>
-        </div>
-
-        <!-- <div class="paymode-wrapper wrapper" *ngIf="order.status === 2">
-          <span class="paymode-label">平台服务费: </span>
-          <span class="paymode">-{{order.platformAmount}}元</span>
-        </div> -->
-
-        <!-- <div class="paymode-wrapper wrapper" *ngIf="order.status === 2">
-          <span class="paymode-label">代售点服务费: </span>
-          <span class="paymode">-{{order.consigneeAmount}}元</span>
-        </div> -->
-
-        <div class="paymode-wrapper wrapper" *ngIf="order.status === 2">
-          <span class="paymode-label">平台服务费: </span>
-          <span class="paymode">{{order.platformCouponFee}}元</span>
-        </div>
-
-        <!-- <div class="paymode-wrapper wrapper" *ngIf="order.status === 2" style="font-weight: bold;">
-          <span class="paymode-label">商家实收所得: </span>
-          <span class="paymode">{{order.merchantAmount}}元</span>
-        </div> -->
 
         <div class="paymode-wrapper wrapper">
+          <span class="paymode-label">房间号: </span>
+          <span class="paymode">{{order.roomNo}}</span>
+        </div>
+
+        <div class="paymode-wrapper wrapper" *ngIf="order.phone">
           <span class="paymode-label">电话号码: </span>
           <span class="paymode">{{order.phone}}</span>
         </div>
 
-        <div class="paymode-wrapper wrapper">
+        <div class="paymode-wrapper wrapper" *ngIf="order.payMode">
           <span class="paymode-label">付款方式: </span>
-          <span class="paymode">{{order.paymentMethod}}</span>
+          <span class="paymode">{{order.payMode}}</span>
         </div>
-
-        <!-- <div class="paymode-wrapper wrapper" *ngIf="order.couponType">
-          <span class="paymode-label">使用优惠券: </span>
-          <span class="paymode">{{order.couponType}}</span>
-        </div> -->
 
         <div class="order-time-wrapper wrapper">
           <span class="order-time-label">下单时间: </span>
-          <span class="order-time">{{order.time}}</span>
-          <!-- <ion-icon name="print" (click)="print(order)"></ion-icon>  -->
+          <span class="order-time">{{order.orderTime}}</span>
         </div>
       </div>
     </ion-item>

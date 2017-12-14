@@ -42,7 +42,7 @@
         <div class="order-info">
           <div class="order-date">时间：
             <span class="text">
-              {{item.time}}
+              {{item.orderTime}}
             </span>
           </div>
           <div class="order-number">电话号码：
@@ -50,7 +50,7 @@
           </div>
         </div>
         <div class="order-action">
-          <span>{{item.status | orderStatus:item}}</span>
+          <span>{{item.status | orderStatus}}</span>
         </div>
       </div>
     </ion-item>

@@ -15,6 +15,7 @@ import { LocalService } from '../../app/services/local.service'
 
 import { AboutPage } from './about/about'
 import { HelpCenterPage } from './help-center/help-center'
+import { DeliveryPage } from './delivery/delivery'
 
 @Component({
   selector: 'page-mine',
@@ -22,12 +23,12 @@ import { HelpCenterPage } from './help-center/help-center'
 })
 export class MinePage {
   actionItems = [
-    // {
-    //   id: 0,
-    //   label: '员工管理',
-    //   icon: 'employee',
-    //   command: 'employee'
-    // },
+    {
+      id: 0,
+      label: '配送时间',
+      icon: 'timer',
+      command: 'deliveryTime'
+    },
     {
       id: 1,
       label: '帮助中心',
@@ -75,8 +76,8 @@ export class MinePage {
 
   executeAction(command: string) {
     switch (command) {
-      case 'employee':
-        this.handleEmployee()
+      case 'deliveryTime':
+        this.handleDeliveryTime()
         break
       case 'help':
         this.handleHelp()
@@ -97,7 +98,6 @@ export class MinePage {
 
   logout(): void {
     this.feedbackService.feedback()
-
     this.alertCtrl
       .create({
         title: '退出',
@@ -119,7 +119,9 @@ export class MinePage {
       .present()
   }
 
-  private handleEmployee(): void {}
+  private handleDeliveryTime(): void {
+    this.app.getRootNav().push(DeliveryPage)
+  }
 
   private handleHelp(): void {
     this.app.getRootNav().push(HelpCenterPage)

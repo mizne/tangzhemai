@@ -10,6 +10,7 @@ import { OrderStatusPipe } from './pipes/order-status.pipe'
 
 import { ClickFeedbackDirective } from './directives/click-feedback.directive'
 import { BackFeedbackDirective } from './directives/back-feedback.directive'
+import { CountUpDirective } from './directives/count-up.directive'
 
 const pipes = [
   MomentPipe,
@@ -22,7 +23,8 @@ const components = [
 
 const directives = [
   ClickFeedbackDirective,
-  BackFeedbackDirective
+  BackFeedbackDirective,
+  CountUpDirective,
 ]
 
 @NgModule({

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { IonicStorageModule } from '@ionic/storage'
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular'
+
 import { MyApp } from './app.component'
 
 import { StoreModule } from '@ngrx/store'

@@ -42,6 +42,7 @@ page-home {
         }
         .value {
           font-size: 1.5rem;
+          color: map-get($map: $colors, $key: primary);
         }
         .label {
           margin-top: 5px;

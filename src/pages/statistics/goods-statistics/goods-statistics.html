@@ -32,52 +32,63 @@
   <div class="chart-area">
     <div [ngSwitch]="dateType$ | async">
       <div *ngSwitchCase="0">
-        <p class="text-center">商品销售量</p>
-        <canvas baseChart width="400" height="300"
-        [data]="goodsCountOfToday$ | async" [labels]="goodsNameOfToday$ | async"
-        [chartType]="chartType"></canvas>
-        <p class="text-center">商品销售额</p>
-        <canvas baseChart width="400" height="300"
-        [data]="goodsAmountOfToday$ | async"
-        [labels]="goodsNameOfToday$ | async"
-        [chartType]="chartType"></canvas>
+        <div *ngIf="(goodsNameOfToday$ | async).length > 0; else noData;">
+          <p class="text-center">商品销售量</p>
+          <canvas baseChart width="400" height="300" [data]="goodsCountOfToday$ | async" [labels]="goodsNameOfToday$ | async" [chartType]="chartType"></canvas>
+          <p class="text-center">商品销售额</p>
+          <canvas baseChart width="400" height="300" [data]="goodsAmountOfToday$ | async" [labels]="goodsNameOfToday$ | async" [chartType]="chartType"></canvas>
+        </div>
+
+        <ng-template #noData>
+          <div class="no-data">
+            今天还没有销售商品
+          </div>
+        </ng-template>
       </div>
 
       <div *ngSwitchCase="1">
+        <div *ngIf="(goodsNameOfThisMonth$ | async).length > 0; else noData;">
           <p class="text-center">商品销售量</p>
-          <canvas baseChart width="400" height="300"
-          [data]="goodsCountOfThisMonth$ | async" [labels]="goodsNameOfThisMonth$ | async"
-          [chartType]="chartType"></canvas>
+          <canvas baseChart width="400" height="300" [data]="goodsCountOfThisMonth$ | async" [labels]="goodsNameOfThisMonth$ | async"
+            [chartType]="chartType"></canvas>
           <p class="text-center">商品销售额</p>
-          <canvas baseChart width="400" height="300"
-          [data]="goodsAmountOfThisMonth$ | async"
-          [labels]="goodsNameOfThisMonth$ | async"
-          [chartType]="chartType"></canvas>
+          <canvas baseChart width="400" height="300" [data]="goodsAmountOfThisMonth$ | async" [labels]="goodsNameOfThisMonth$ | async"
+            [chartType]="chartType"></canvas>
+        </div>
+        <ng-template #noData>
+          <div class="no-data">
+            本月还没有销售商品
+          </div>
+        </ng-template>
       </div>
 
       <div *ngSwitchCase="2">
+        <div *ngIf="(goodsNameOfThisYear$ | async).length > 0; else noData;">
           <p class="text-center">商品销售量</p>
-          <canvas baseChart width="400" height="300"
-          [data]="goodsCountOfThisYear$ | async" [labels]="goodsNameOfThisYear$ | async"
-          [chartType]="chartType"></canvas>
+          <canvas baseChart width="400" height="300" [data]="goodsCountOfThisYear$ | async" [labels]="goodsNameOfThisYear$ | async"
+            [chartType]="chartType"></canvas>
           <p class="text-center">商品销售额</p>
-          <canvas baseChart width="400" height="300"
-          [data]="goodsAmountOfThisYear$ | async"
-          [labels]="goodsNameOfThisYear$ | async"
-          [chartType]="chartType"></canvas>
+          <canvas baseChart width="400" height="300" [data]="goodsAmountOfThisYear$ | async" [labels]="goodsNameOfThisYear$ | async"
+            [chartType]="chartType"></canvas>
+        </div>
+        <ng-template #noData>
+          <div class="no-data">
+            本年还没有销售商品
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>
 
   <ion-list class="statistics-list">
     <ion-item>
-      <ion-icon name="add-circle" item-start></ion-icon>
+      <ion-icon name="paper" item-start></ion-icon>
       <span>商品总销量</span>
       <span>{{ goodsTotalCount$ | async }} 个</span>
     </ion-item>
 
     <ion-item>
-      <ion-icon name="add-circle" item-start></ion-icon>
+      <ion-icon name="pie" item-start></ion-icon>
       <span>商品总销售额</span>
       <span>{{ goodsTotalAmount$ | async }} 元</span>
     </ion-item>

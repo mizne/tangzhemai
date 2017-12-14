@@ -1,0 +1,19 @@
+page-about {
+  .about-container {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    img {
+      width: 50%;
+      height: auto;
+    }
+
+    .version {
+      margin-top: 10px;
+      color: map-get($map: $colors, $key: grey);
+    }
+  }
+}

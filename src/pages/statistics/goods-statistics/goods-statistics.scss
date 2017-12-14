@@ -7,6 +7,12 @@ page-goods-statistics {
     .doughnut {
       width: 50%;
     }
+
+    .no-data {
+      margin: 20px auto;
+      text-align: center;
+      font-size: 1.5rem;
+    }
   }
 
   .statistics-list {

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable'
 
 import { APIResponse } from '../../app/interceptors/api-error-interceptor'
 
-import { CheckAccount } from './models/check-account.model' 
+import { CheckAccount } from './models/check-account.model'
 import { GoodsWriteOff } from './models/goods-writeoff.model'
 import { CollectMoney } from './models/collect-money.model'
 
@@ -24,7 +24,7 @@ export class CheckAccountService {
   constructor(private http: HttpClient) {}
 
   fetchCheckAccount(tenantId: string, startTime: string, endTime: string): Observable<FetchCheckAccountResp> {
-    
+
     return Observable.forkJoin(
       this.fetchGoodsWriteOff(tenantId, startTime, endTime),
       this.fetchRevenueReceived(tenantId, startTime, endTime)
@@ -46,7 +46,6 @@ export class CheckAccountService {
         goodsWriteOff: goodsWriteOff,
         collectMoney: revenueReceived
       }
-      console.log(result)
       return result
     })
   }
