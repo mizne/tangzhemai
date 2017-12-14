@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { Effect, Actions } from '@ngrx/effects'
 import { Action } from '@ngrx/store'
 import { Observable } from 'rxjs/Observable'
+import { ToastController } from 'ionic-angular'
 
 import { MerchantInfoService } from '../services/merchant-info.service'
 import { LocalService } from '../../../app/services/local.service'
@@ -59,7 +60,9 @@ export class DeliveryEffects {
               deliveryStartTime: startTime
             })
             .map(() => {
-              return new fromDelivery.EditDeliveryStartTimeSuccessAction(startTime)
+              return new fromDelivery.EditDeliveryStartTimeSuccessAction(
+                startTime
+              )
             })
             .catch(() =>
               Observable.of(
@@ -68,6 +71,32 @@ export class DeliveryEffects {
             )
         }
       )
+    })
+
+  @Effect({ dispatch: false })
+  editDeliveryStartTimeSuccess$ = this.actions$
+    .ofType(fromDelivery.EDIT_DELIVERY_START_TIME_SUCCESS)
+    .do(() => {
+      this.toastCtrl
+        .create({
+          message: '设置开始时间成功',
+          duration: 3e3,
+          position: 'top'
+        })
+        .present()
+    })
+
+  @Effect({ dispatch: false })
+  editDeliveryStartTimeFailure$ = this.actions$
+    .ofType(fromDelivery.EDIT_DELIVERY_START_TIME_FAILURE)
+    .do(() => {
+      this.toastCtrl
+        .create({
+          message: '设置开始时间失败',
+          duration: 3e3,
+          position: 'top'
+        })
+        .present()
     })
 
   @Effect()
@@ -91,9 +120,36 @@ export class DeliveryEffects {
       )
     })
 
+  @Effect({ dispatch: false })
+  editDeliveryEndTimeSuccess$ = this.actions$
+    .ofType(fromDelivery.EDIT_DELIVERY_END_TIME_SUCCESS)
+    .do(() => {
+      this.toastCtrl
+        .create({
+          message: '设置结束时间成功',
+          duration: 3e3,
+          position: 'top'
+        })
+        .present()
+    })
+
+  @Effect({ dispatch: false })
+  editDeliveryEndTimeFailure$ = this.actions$
+    .ofType(fromDelivery.EDIT_DELIVERY_END_TIME_FAILURE)
+    .do(() => {
+      this.toastCtrl
+        .create({
+          message: '设置结束时间失败',
+          duration: 3e3,
+          position: 'top'
+        })
+        .present()
+    })
+
   constructor(
     private actions$: Actions,
     private merchantInfoService: MerchantInfoService,
-    private localService: LocalService
+    private localService: LocalService,
+    private toastCtrl: ToastController
   ) {}
 }
