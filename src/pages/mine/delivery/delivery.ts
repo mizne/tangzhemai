@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnDestroy } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
 import { FormControl } from '@angular/forms'
@@ -13,6 +13,8 @@ import {
 
 import { Observable } from 'rxjs/Observable'
 import { DestroyService } from '../../../app/services/destroy.service'
+
+import * as R from 'ramda'
 
 /**
  * Generated class for the AboutPage page.
@@ -38,30 +40,38 @@ export class DeliveryPage {
   ) {}
 
   ionViewDidLoad() {
-    this.store.dispatch(new FetchMerchantInfoAction())
     this.initDataSource()
     this.initSubscriber()
+  }
+
+  ionViewDidEnter() {
+    this.store.dispatch(new FetchMerchantInfoAction())
   }
 
   private initDataSource(): void {
     this.store
       .select(getDeliveryStartTime)
+      .filter(R.complement(R.isEmpty))
       .takeUntil(this.destroyService)
       .subscribe(startTime => {
-        this.startTimeCtrl.patchValue(startTime)
+        this.startTimeCtrl.patchValue(startTime, {
+          emitEvent: false
+        })
       })
 
     this.store
       .select(getDeliveryEndTime)
+      .filter(R.complement(R.isEmpty))
       .takeUntil(this.destroyService)
       .subscribe(endTime => {
-        this.endTimeCtrl.patchValue(endTime)
+        this.endTimeCtrl.patchValue(endTime, {
+          emitEvent: false
+        })
       })
   }
 
   private initSubscriber(): void {
     this.startTimeCtrl.valueChanges
-      .skip(1)
       .debounceTime(3e2)
       .distinctUntilChanged()
       .takeUntil(this.destroyService)
@@ -70,7 +80,6 @@ export class DeliveryPage {
       })
 
     this.endTimeCtrl.valueChanges
-      .skip(1)
       .debounceTime(3e2)
       .distinctUntilChanged()
       .takeUntil(this.destroyService)
