@@ -1,11 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
 import { APIResponse } from '../../app/interceptors/api-error-interceptor'
 import { Order, OrderResp } from './models/order.model'
-
-import * as R from 'ramda'
 
 @Injectable()
 export class OrderService {

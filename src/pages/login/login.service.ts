@@ -27,7 +27,7 @@ export class LoginService {
    * @type {number}
    * @memberof LoginServiceProvider
    */
-  private MAX_RETRY_COUNT: number = 3
+  // private MAX_RETRY_COUNT: number = 3
   /**
    * http请求错误 重试间隔时间
    *
@@ -35,7 +35,7 @@ export class LoginService {
    * @type {number}
    * @memberof LoginServiceProvider
    */
-  private RETRY_DELAY: number = 5e2
+  // private RETRY_DELAY: number = 5e2
 
   /**
    * 登录操作
@@ -72,11 +72,7 @@ export class LoginService {
    * @memberof LoginProvider
    */
   private handleError(method: string, error: any): Observable<any> {
-    // this.logger.error({
-    //   module: 'loginService',
-    //   method: 'login',
-    //   description: error.message || '用户名或密码错误'
-    // })
+    console.error(method, error)
     return Observable.throw(new Error(error.message || '用户名或密码错误!'))
   }
 }

@@ -161,6 +161,7 @@ export class StatisticsService {
     //   method,
     //   description: error.message || `${method} failed`
     // })
+    console.error(method, error)
     return Observable.throw([])
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { GoodsWriteoffPage } from './goods-writeoff/goods-writeoff'
 import { CollectMoneyPage } from './collect-money/collect-money'
@@ -9,8 +9,6 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store'
 import { State, getCheckAccount } from './reducers'
 import { FetchCheckAccountAction } from './check-account.action'
-
-import { CheckAccount } from './models/check-account.model'
 
 import { FeedbackService } from '../../app/services/feedback.service'
 
@@ -44,9 +42,8 @@ export class CheckAccountPage {
   }
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
-    private alertCtrl: AlertController,
     private store: Store<State>,
     private feedbackService: FeedbackService
   ) {
@@ -84,6 +81,6 @@ export class CheckAccountPage {
       revenueReceivedNet: checkAccount.revenueReceivedNet.toFixed(2) + '元',
       goodsWriteoffRevenueNet: checkAccount.goodsWriteoffRevenueNet.toFixed(2) + '元'
     }))
-    
+
   }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
@@ -7,8 +7,6 @@ import { APIResponse } from '../../app/interceptors/api-error-interceptor'
 import { CheckAccount } from './models/check-account.model'
 import { GoodsWriteOff } from './models/goods-writeoff.model'
 import { CollectMoney } from './models/collect-money.model'
-
-import * as R from 'ramda'
 
 export interface FetchCheckAccountResp {
   checkAccount: CheckAccount,
@@ -48,6 +46,7 @@ export class CheckAccountService {
       }
       return result
     })
+    .catch(this.handleError)
   }
 
   fetchGoodsWriteOff(tenantId: string, startTime: string, endTime: string): Observable<GoodsWriteOff[]> {
@@ -56,6 +55,7 @@ export class CheckAccountService {
     return this.http
       .get(this.goodsWriteOffUrl + query)
       .map(resp => (resp as APIResponse).result)
+      .catch(this.handleError)
   }
 
   fetchRevenueReceived(tenantId: string, startTime: string, endTime: string): Observable<CollectMoney[]> {
@@ -64,6 +64,7 @@ export class CheckAccountService {
     return this.http
       .get(this.revenueReceivedUrl + query)
       .map(resp => (resp as APIResponse).result)
+      .catch(this.handleError)
   }
 
   private handleError(error: any) {

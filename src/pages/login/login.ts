@@ -15,7 +15,6 @@ import { Subscription } from 'rxjs/Subscription'
 import { State } from '../../app/reducers'
 import { ToTabsPageAction } from '../../app/app.action'
 import { LoginService } from './login.service'
-import { LoggerService } from '../../app/services/logger.service'
 
 import { FeedbackService } from '../../app/services/feedback.service'
 import { LocalService } from '../../app/services/local.service'
@@ -43,7 +42,6 @@ export class LoginPage implements OnInit, OnDestroy {
     private alertCtrl: AlertController,
     private formBuilder: FormBuilder,
     private loadingCtrl: LoadingController,
-    private logger: LoggerService,
     private loginService: LoginService,
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -115,14 +113,14 @@ export class LoginPage implements OnInit, OnDestroy {
                 () => {
                   // window.alert(`set alias success; alias: ${this.myForm.value.name}`)
                 },
-                errMsg => {
+                () => {
                   // window.alert(`set alias failed; err: ${errMsg}`)
                 }
               )
             }
           })
       },
-      err => {
+      () => {
         loading.dismiss()
         let alert = this.alertCtrl.create({
           title: '登录错误',

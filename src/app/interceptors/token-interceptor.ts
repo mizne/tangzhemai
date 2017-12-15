@@ -1,12 +1,10 @@
-import { Injectable, Injector } from '@angular/core'
+import { Injectable } from '@angular/core'
 import {
   HttpEvent,
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HttpResponse,
   HttpHeaders,
-  HttpErrorResponse
 } from '@angular/common/http'
 
 import { Observable } from 'rxjs/Observable'
@@ -18,7 +16,7 @@ import { LocalService } from '../services/local.service'
 export class TokenInterceptor implements HttpInterceptor {
   private url = `${environment.SERVER_URL}/api/test`
 
-  constructor(private localService: LocalService, private injector: Injector) {}
+  constructor(private localService: LocalService) {}
 
   intercept(
     req: HttpRequest<any>,

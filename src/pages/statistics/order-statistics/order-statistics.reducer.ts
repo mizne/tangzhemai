@@ -1,4 +1,4 @@
-import { StatisticsItem, GoodsStatistics } from '../models/statistics.model'
+import { StatisticsItem } from '../models/statistics.model'
 
 import * as fromStatistics from './order-statistics.action'
 

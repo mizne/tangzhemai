@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core'
-import { Platform, AlertController, ToastController, App } from 'ionic-angular'
+import { Platform, AlertController, App } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { Device } from '@ionic-native/device'
@@ -9,13 +9,10 @@ import { ToLoginPageAction, ToTabsPageAction } from './app.action'
 import { State, getRootPageState } from './reducers'
 
 import { Observable } from 'rxjs/Observable'
-import { TabsPage } from '../pages/tabs/tabs'
 import { OrderPage } from '../pages/order/order'
 
 import { NativeService } from './services/native.service'
 import { LocalService } from './services/local.service'
-
-import { environment } from '../environments/environment'
 
 declare const JPush: any
 
@@ -37,7 +34,6 @@ export class MyApp {
     private device: Device,
     private nativeService: NativeService,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
     private localService: LocalService,
     private app: App,
     private zone: NgZone
@@ -73,7 +69,7 @@ export class MyApp {
                   () => {
                     // window.alert(`set alias success; alias: ${tenantId}`)
                   },
-                  errMsg => {
+                  () => {
                     // window.alert(`set alias failed; err: ${errMsg}`)
                   }
                 )
@@ -99,7 +95,7 @@ export class MyApp {
           return this.fetchRegistrationID()
         }
       })
-      .then(id => {
+      .then(() => {
         // window.alert(`fetch jpush id success: ${id}`)
         this.initEventListeners()
       })
@@ -157,17 +153,17 @@ export class MyApp {
   }
 
   private initEventListeners(): void {
-    this.onOpenNotification = event => {
+    this.onOpenNotification = () => {
       this.app.getRootNav().push(OrderPage)
     }
 
-    this.onReceiveNotification = event => {
-      let content
-      if (this.device.platform == 'Android') {
-        content = event.alert
-      } else {
-        content = event.aps.alert
-      }
+    this.onReceiveNotification = () => {
+      // let content
+      // if (this.device.platform == 'Android') {
+      //   content = event.alert
+      // } else {
+      //   content = event.aps.alert
+      // }
       // window.alert(`received notification; content: ${content}`)
 
       // 主动change detect(由于jpush plugin触发事件, 默认检查不到)

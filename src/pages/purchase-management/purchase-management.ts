@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { 
-  IonicPage, 
-  NavController, 
+import {
+  IonicPage,
+  NavController,
   NavParams,
-  ModalController 
+  ModalController
 } from 'ionic-angular';
 import { FormControl } from '@angular/forms'
 
@@ -45,7 +45,7 @@ export class PurchaseManagementPage implements OnInit {
   addPurchaseSub: Subject<void> = new Subject<void>()
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private modalCtrl: ModalController,
     private store: Store<State>,
@@ -106,7 +106,7 @@ export class PurchaseManagementPage implements OnInit {
       this.feedbackService.feedback()
     })
     .takeUntil(this.destroyService)
-    .subscribe(data => {
+    .subscribe(() => {
       this.modalCtrl.create(AddPurchasePage).present()
     })
   }

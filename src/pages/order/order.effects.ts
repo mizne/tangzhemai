@@ -1,5 +1,3 @@
-import { ToastController, LoadingController } from 'ionic-angular'
-
 import { Injectable } from '@angular/core'
 import { Effect, Actions } from '@ngrx/effects'
 import { Observable } from 'rxjs/Observable'
@@ -29,19 +27,17 @@ export class OrderEffects {
             // load.dismiss()
             return new fromOrder.FetchOrdersSuccessAction(goods)
           })
-          .catch(e => {
+          .catch(() => {
             // load.dismiss()
             return Observable.of(new fromOrder.FetchOrdersFailureAction())
           })
       )
     })
 
-  
+
   constructor(
     private actions$: Actions,
     private orderService: OrderService,
     private localService: LocalService,
-    private toastCtrl: ToastController,
-    private loadCtrl: LoadingController
   ) {}
 }

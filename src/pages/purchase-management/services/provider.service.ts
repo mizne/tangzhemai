@@ -1,11 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
 import { APIResponse } from '../../../app/interceptors/api-error-interceptor'
-import { Provider, ProviderResp } from '../models/provider.model'
-
-import * as R from 'ramda'
+import { Provider } from '../models/provider.model'
 
 @Injectable()
 export class ProviderService {
@@ -17,7 +15,7 @@ export class ProviderService {
     tenantId: string,
   ): Observable<Provider[]> {
     const query = `?tenantId=${tenantId}`
-    
+
     // return this.http
     //   .get(this.providerUrl + query)
     //   .map(resp => (resp as APIResponse).result as ProviderResp[])
@@ -40,7 +38,7 @@ export class ProviderService {
     .catch(this.handleError)
   }
 
-  
+
   private handleError(error: any) {
     const errMsg = error.message
       ? error.message

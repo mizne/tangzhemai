@@ -1,10 +1,7 @@
 import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams, App } from 'ionic-angular'
 
-import { Observable } from 'rxjs/Observable'
-
 import { DestroyService } from '../../app/services/destroy.service'
-import { FeedbackService } from '../../app/services/feedback.service'
 
 import { OrderStatisticsPage } from './order-statistics/order-statistics'
 import { GoodsStatisticsPage } from './goods-statistics/goods-statistics'
@@ -41,8 +38,6 @@ export class StatisticsPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private app: App,
-    private destroyService: DestroyService,
-    private feedbackService: FeedbackService
   ) {}
 
 

@@ -1,11 +1,10 @@
 import { Directive, Input, OnInit } from '@angular/core';
-import { Navbar, NavController } from 'ionic-angular'
+import { Navbar } from 'ionic-angular'
 import { FeedbackService } from '../../app/services/feedback.service'
 
 @Directive({ selector: '[backFeedback]' })
 export class BackFeedbackDirective implements OnInit {
   constructor(
-    private navCtrl: NavController,
     private feedbackService: FeedbackService
   ) {
   }

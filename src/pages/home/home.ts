@@ -1,13 +1,9 @@
-import { Component, ViewChild } from '@angular/core'
+import { Component } from '@angular/core'
 import { NavController, App } from 'ionic-angular'
-
-import { OrderPage } from '../order/order'
 
 import { Store } from '@ngrx/store'
 import { State, getTodayStatistics } from './reducers'
 import { FetchTodayStatisticsAction } from './home.action'
-
-import { Observable } from 'rxjs/Observable'
 
 import { LocalService } from '../../app/services/local.service'
 import { DestroyService } from '../../app/services/destroy.service'

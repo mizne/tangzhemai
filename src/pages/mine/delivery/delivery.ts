@@ -1,5 +1,5 @@
-import { Component, OnDestroy } from '@angular/core'
-import { IonicPage, NavController, NavParams } from 'ionic-angular'
+import { Component } from '@angular/core'
+import { NavController, NavParams } from 'ionic-angular'
 
 import { FormControl } from '@angular/forms'
 
@@ -11,7 +11,6 @@ import {
   EditDeliveryStartTimeAction
 } from './delivery.action'
 
-import { Observable } from 'rxjs/Observable'
 import { DestroyService } from '../../../app/services/destroy.service'
 
 import * as R from 'ramda'

@@ -1,7 +1,5 @@
 import { Action } from '@ngrx/store'
 
-import { GoodsStatistics } from '../models/statistics.model'
-
 export const FETCH_GOODS_STATISTICS_OF_TODAY = '[Statistics] FetchGoodsStatisticsOfToday'
 export const LOAD_SUCCESS_GOODS_OF_TODAY = '[Statistics] LoadSuccessGoodsOfToday'
 export const LOAD_FAILURE_GOODS_OF_TODAY = '[Statistics] LoadFailureGoodsOfToday'

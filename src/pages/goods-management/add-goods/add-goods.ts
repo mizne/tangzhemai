@@ -1,11 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import {
-  NavController,
   NavParams,
   ViewController,
   AlertController,
-  ModalController,
   ToastController,
   Loading,
   LoadingController
@@ -13,7 +11,7 @@ import {
 import { Camera } from '@ionic-native/camera'
 import { File, FileEntry } from '@ionic-native/file'
 
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
+import { Validators, FormGroup, FormBuilder } from '@angular/forms'
 import { FeedbackService } from '../../../app/services/feedback.service'
 import { DestroyService } from '../../../app/services/destroy.service'
 
@@ -27,7 +25,6 @@ import { Goods } from '../models/goods.model'
 import { Store } from '@ngrx/store'
 import {
   State,
-  getCurrentGoods,
   getAllGoodsTypes,
   getAllGoodsUnits,
   getSaveSuccessGoodsUUID
@@ -85,11 +82,9 @@ export class AddGoodsPage implements OnInit {
 
   constructor(
     private alertCtrl: AlertController,
-    private navCtrl: NavController,
     private navParams: NavParams,
     private viewCtrl: ViewController,
     private feedbackService: FeedbackService,
-    private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     private fb: FormBuilder,
     private store: Store<State>,
@@ -153,7 +148,7 @@ export class AddGoodsPage implements OnInit {
           // this.myPhoto = imageData
           this.uploadPhoto(imageData)
         },
-        error => {
+        () => {
           this.toastCtrl
             .create({
               message: '取消拍照',
@@ -178,7 +173,7 @@ export class AddGoodsPage implements OnInit {
           // this.myPhoto = imageData
           this.uploadPhoto(imageData)
         },
-        error => {
+        () => {
           this.toastCtrl
             .create({
               message: '取消选择照片',

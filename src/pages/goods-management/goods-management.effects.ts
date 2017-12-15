@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable'
 import * as fromGoods from './goods-management.action'
 import { GoodsService } from '../../app/services/goods.service'
 
-import { Storage } from '@ionic/storage'
 import { LocalService } from '../../app/services/local.service'
 
 @Injectable()
@@ -37,7 +36,7 @@ export class GoodsEffects {
             load.dismiss()
             return new fromGoods.FetchGoodsSuccessAction(goods)
           })
-          .catch(e => {
+          .catch(() => {
             load.dismiss()
             return Observable.of(new fromGoods.FetchGoodsFailureAction())
           })
@@ -55,7 +54,7 @@ export class GoodsEffects {
         this.goodsService
           .fetchGoodsCount(tenantId, goodsName, goodsType, isActive)
           .map(count => new fromGoods.FetchGoodsCountSuccessAction(count))
-          .catch(e =>
+          .catch(() =>
             Observable.of(new fromGoods.FetchGoodsCountFailureAction())
           )
       )
@@ -64,7 +63,7 @@ export class GoodsEffects {
   @Effect()
   fetchAllGoodsTypes$ = this.actions$
     .ofType(fromGoods.FETCH_GOODS_TYPES)
-    .switchMap(tenantId => {
+    .switchMap(() => {
       return Observable.fromPromise(
         this.localService.getTenantId()
       ).mergeMap(tenantId =>
@@ -73,7 +72,7 @@ export class GoodsEffects {
           .map(
             goodsTypes => new fromGoods.FetchGoodsTypesSuccessAction(goodsTypes)
           )
-          .catch(e =>
+          .catch(() =>
             Observable.of(new fromGoods.FetchGoodsTypesFailureAction())
           )
       )
@@ -164,7 +163,7 @@ export class GoodsEffects {
   @Effect({ dispatch: false })
   addGoodsSuccess$ = this.actions$
     .ofType(fromGoods.ADD_GOODS_SUCCESS)
-    .do(goodsName => {
+    .do(() => {
       this.toastCtrl
         .create({
           message: `添加商品成功！`,
@@ -177,7 +176,7 @@ export class GoodsEffects {
   @Effect({ dispatch: false })
   addGoodsFailure$ = this.actions$
     .ofType(fromGoods.ADD_GOODS_FAILURE)
-    .do(goodsName => {
+    .do(() => {
       this.toastCtrl
         .create({
           message: `添加商品失败！`,
@@ -199,7 +198,7 @@ export class GoodsEffects {
           .map(
             goodsUnits => new fromGoods.FetchGoodsUnitsSuccessAction(goodsUnits)
           )
-          .catch(e =>
+          .catch(() =>
             Observable.of(new fromGoods.FetchGoodsUnitsFailureAction())
           )
       )
@@ -215,11 +214,11 @@ export class GoodsEffects {
       ).mergeMap(tenantId =>
         this.goodsService
           .addGoodsUnit(tenantId, goodsUnit)
-          .concatMap(e => [
+          .concatMap(() => [
             new fromGoods.AddGoodsUnitSuccessAction(goodsUnit),
             new fromGoods.FetchGoodsUnitsAction()
           ])
-          .catch(e =>
+          .catch(() =>
             Observable.of(new fromGoods.AddGoodsUnitFailureAction(goodsUnit))
           )
       )
@@ -268,14 +267,14 @@ export class GoodsEffects {
       ).mergeMap(tenantId =>
         this.goodsService
           .offShelfGoods(tenantId, goodsId)
-          .concatMap(e => {
+          .concatMap(() => {
             load.dismiss()
             return [
               new fromGoods.OffShelfGoodsSuccessAction(),
               new fromGoods.FetchGoodsAction()
             ]
           })
-          .catch(e => {
+          .catch(() => {
             load.dismiss()
             return Observable.of(new fromGoods.OffShelfGoodsFailureAction())
           })
@@ -321,14 +320,14 @@ export class GoodsEffects {
       ).mergeMap(tenantId =>
         this.goodsService
           .onShelfGoods(tenantId, goodsId)
-          .concatMap(e => {
+          .concatMap(() => {
             load.dismiss()
             return [
               new fromGoods.OnShelfGoodsSuccessAction(),
               new fromGoods.FetchGoodsAction()
             ]
           })
-          .catch(e => {
+          .catch(() => {
             load.dismiss()
             return Observable.of(new fromGoods.OnShelfGoodsFailureAction())
           })
@@ -381,7 +380,7 @@ export class GoodsEffects {
               new fromGoods.FetchGoodsAction()
             ]
           })
-          .catch(e => Observable.of(new fromGoods.EditGoodsFailureAction()))
+          .catch(() => Observable.of(new fromGoods.EditGoodsFailureAction()))
       })
     })
 

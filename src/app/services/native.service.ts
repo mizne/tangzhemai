@@ -63,13 +63,13 @@ export class NativeService implements OnDestroy {
         }
       }
     })
-    
+
   }
 
   private needUpgrade(oldVersion: string, newVersion: string): boolean {
     const [oldBig, oldMiddle, oldSmall] = oldVersion.split('.').map(Number)
     const [newBig, newMiddle, newSmall] = newVersion.split('.').map(Number)
-    
+
     if (newBig > oldBig) {
       return true
     }
@@ -98,7 +98,7 @@ export class NativeService implements OnDestroy {
       const storeApkPath = this.file.externalDataDirectory + `tangzhemai_${version}.apk` //apk保存的目录
 
 
-      fileTransfer.download(environment.APK_DOWNLOAD, storeApkPath).then((entry) => {
+      fileTransfer.download(environment.APK_DOWNLOAD, storeApkPath).then(() => {
         // window['install'].install(apk.replace('file://', ''))
         return this.fileOpener.open(storeApkPath, 'application/vnd.android.package-archive')
       }, () => {
@@ -108,7 +108,7 @@ export class NativeService implements OnDestroy {
           buttons: ['朕知道了']
         }).present()
       })
-      .catch(e => this.alertCtrl.create({
+      .catch(() => this.alertCtrl.create({
         title: `打开安装文件失败`,
         enableBackdropDismiss: false,
         buttons: ['朕知道了']
@@ -120,7 +120,9 @@ export class NativeService implements OnDestroy {
           alert.dismiss()
         } else {
           let title = document.getElementsByClassName('alert-title')[0]
-          title && (title.innerHTML = '下载进度：' + num + '%')
+          if (title) {
+            title.innerHTML = '下载进度：' + num + '%'
+          }
         }
       })
     }
@@ -156,8 +158,8 @@ export class NativeService implements OnDestroy {
 
   /**
    * 是否真机环境
-   * 
-   * @returns {boolean} 
+   *
+   * @returns {boolean}
    * @memberof NativeServiceProvider
    */
   isMobile(): boolean {
@@ -166,8 +168,8 @@ export class NativeService implements OnDestroy {
 
   /**
    * 是否android真机环境
-   * 
-   * @returns {boolean} 
+   *
+   * @returns {boolean}
    * @memberof NativeServiceProvider
    */
   isAndroid(): boolean {
@@ -176,8 +178,8 @@ export class NativeService implements OnDestroy {
 
   /**
    * 是否ios真机环境
-   * 
-   * @returns {boolean} 
+   *
+   * @returns {boolean}
    * @memberof NativeServiceProvider
    */
   isIos(): boolean {

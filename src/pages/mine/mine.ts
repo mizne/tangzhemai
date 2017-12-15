@@ -141,7 +141,7 @@ export class MinePage {
           {
             text: '取消',
             role: 'cancel',
-            handler: data => {
+            handler: () => {
               console.log('Cancel clicked')
             }
           },
@@ -187,7 +187,7 @@ export class MinePage {
           {
             text: '拨打',
             handler: () => {
-              this.callNumber.callNumber('02586662644', true).catch(e =>
+              this.callNumber.callNumber('02586662644', true).catch(() =>
                 this.alertCtrl.create({
                   title: '打电话失败',
                   message: '拨打电话失败',

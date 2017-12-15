@@ -1,5 +1,3 @@
-import { ToastController, LoadingController } from 'ionic-angular'
-
 import { Injectable } from '@angular/core'
 import { Effect, Actions } from '@ngrx/effects'
 import { Observable } from 'rxjs/Observable'
@@ -29,7 +27,7 @@ export class CheckEffects {
             // load.dismiss()
             return new fromCheckAccount.FetchCheckAccountSuccessAction(resp)
           })
-          .catch(e => {
+          .catch(() => {
             // load.dismiss()
             return Observable.of(
               new fromCheckAccount.FetchCheckAccountFailureAction()
@@ -42,7 +40,5 @@ export class CheckEffects {
     private actions$: Actions,
     private checkAccountService: CheckAccountService,
     private localService: LocalService,
-    private toastCtrl: ToastController,
-    private loadCtrl: LoadingController
   ) {}
 }

@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ChartsModule } from 'ng2-charts'
+// import { ChartsModule } from 'ng2-charts'
 
 import { MomentPipe } from './pipes/moment.pipe'
 import { OrderPricePipe } from './pipes/order-price.pipe'

@@ -1,15 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { Component, OnInit } from '@angular/core'
 import {
-  NavController,
-  NavParams,
   ViewController,
   AlertController,
   ModalController,
   ToastController
 } from 'ionic-angular'
 
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
+import { Validators, FormGroup, FormBuilder } from '@angular/forms'
 
 import { FeedbackService } from '../../../app/services/feedback.service'
 import { DestroyService } from '../../../app/services/destroy.service'
@@ -17,7 +14,6 @@ import { DestroyService } from '../../../app/services/destroy.service'
 import { Subject } from 'rxjs/Subject'
 import { Observable } from 'rxjs/Observable'
 
-import { Purchase } from '../models/purchase.model'
 import { Provider } from '../models/provider.model'
 import { Stock } from '../models/stock.model'
 
@@ -73,8 +69,6 @@ export class AddPurchasePage implements OnInit {
 
   constructor(
     private alertCtrl: AlertController,
-    private navCtrl: NavController,
-    private navParams: NavParams,
     private viewCtrl: ViewController,
     private feedbackService: FeedbackService,
     private modalCtrl: ModalController,

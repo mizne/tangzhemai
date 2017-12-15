@@ -1,9 +1,7 @@
 import { Food } from './food.model'
-import { Coupon, CouponType } from './coupon.model'
-import { EscCommand } from './esc-command.model'
-import { PrintTime } from './printer-setting.model'
-
-import * as R from 'ramda'
+// import { Coupon, CouponType } from './coupon.model'
+// import { EscCommand } from './esc-command.model'
+// import { PrintTime } from './printer-setting.model'
 
 export class Order {
   id?: string

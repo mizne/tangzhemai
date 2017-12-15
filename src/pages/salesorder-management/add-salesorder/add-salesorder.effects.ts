@@ -1,77 +1,77 @@
-import { ToastController, LoadingController } from 'ionic-angular'
+import { ToastController } from 'ionic-angular'
 
 import { Injectable } from '@angular/core'
 import { Effect, Actions } from '@ngrx/effects'
-import { Observable } from 'rxjs/Observable'
+// import { Observable } from 'rxjs/Observable'
 
 import * as fromAddSalesOrder from './add-salesorder.action'
-import * as fromSalesOrderManagement from '../salesorder-management.action'
+// import * as fromSalesOrderManagement from '../salesorder-management.action'
 
-import { LocalService } from '../../../app/services/local.service'
-import { SalesOrderService } from '../salesorder.service'
-import { StockService } from '../../purchase-management/services/stock.service'
+// import { LocalService } from '../../../app/services/local.service'
+// import { SalesOrderService } from '../salesorder.service'
+// import { StockService } from '../../purchase-management/services/stock.service'
 
 @Injectable()
 export class AddSalesOrderEffects {
-  @Effect()
-  fetchStocks$ = this.actions$
-    .ofType(fromAddSalesOrder.FETCH_STOCKS)
-    .switchMap(() => {
-      return Observable.fromPromise(
-        this.localService.getTenantId()
-      ).mergeMap(tenantId =>
-        this.stockService
-          .fetchStocks(tenantId)
-          .map(stocks => {
-            return new fromAddSalesOrder.FetchStocksSuccessAction(stocks)
-          })
-          .catch(e => {
-            return Observable.of(
-              new fromAddSalesOrder.FetchStocksFailureAction()
-            )
-          })
-      )
-    })
+  // @Effect()
+  // fetchStocks$ = this.actions$
+  //   .ofType(fromAddSalesOrder.FETCH_STOCKS)
+  //   .switchMap(() => {
+  //     return Observable.fromPromise(
+  //       this.localService.getTenantId()
+  //     ).mergeMap(tenantId =>
+  //       this.stockService
+  //         .fetchStocks(tenantId)
+  //         .map(stocks => {
+  //           return new fromAddSalesOrder.FetchStocksSuccessAction(stocks)
+  //         })
+  //         .catch(e => {
+  //           return Observable.of(
+  //             new fromAddSalesOrder.FetchStocksFailureAction()
+  //           )
+  //         })
+  //     )
+  //   })
 
-  @Effect()
-  fetchSalers$ = this.actions$
-    .ofType(fromAddSalesOrder.FETCH_SALER)
-    .switchMap(() => {
-      return Observable.fromPromise(
-        this.localService.getTenantId()
-      ).mergeMap(tenantId =>
-        this.salesOrderService
-          .fetchSalers(tenantId)
-          .map(salers => {
-            return new fromAddSalesOrder.FetchSalerSuccessAction(salers)
-          })
-          .catch(e => {
-            return Observable.of(
-              new fromAddSalesOrder.FetchSalerFailureAction()
-            )
-          })
-      )
-    })
+  // @Effect()
+  // fetchSalers$ = this.actions$
+  //   .ofType(fromAddSalesOrder.FETCH_SALER)
+  //   .switchMap(() => {
+  //     return Observable.fromPromise(
+  //       this.localService.getTenantId()
+  //     ).mergeMap(tenantId =>
+  //       this.salesOrderService
+  //         .fetchSalers(tenantId)
+  //         .map(salers => {
+  //           return new fromAddSalesOrder.FetchSalerSuccessAction(salers)
+  //         })
+  //         .catch(() => {
+  //           return Observable.of(
+  //             new fromAddSalesOrder.FetchSalerFailureAction()
+  //           )
+  //         })
+  //     )
+  //   })
 
-  @Effect()
-  fetchAccounts$ = this.actions$
-    .ofType(fromAddSalesOrder.FETCH_ACCOUNT)
-    .switchMap(() => {
-      return Observable.fromPromise(
-        this.localService.getTenantId()
-      ).mergeMap(tenantId =>
-        this.salesOrderService
-          .fetchAccounts(tenantId)
-          .map(accounts => {
-            return new fromAddSalesOrder.FetchAccountSuccessAction(accounts)
-          })
-          .catch(e => {
-            return Observable.of(
-              new fromAddSalesOrder.FetchAccountFailureAction()
-            )
-          })
-      )
-    })
+  // @Effect()
+  // fetchAccounts$ = this.actions$
+  //   .ofType(fromAddSalesOrder.FETCH_ACCOUNT)
+  //   .switchMap(() => {
+  //     return Observable.fromPromise(
+  //       this.localService.getTenantId()
+  //     ).mergeMap(tenantId =>
+  //       this.salesOrderService
+  //         .fetchAccounts(tenantId)
+  //         .map(accounts => {
+  //           return new fromAddSalesOrder.FetchAccountSuccessAction(accounts)
+  //         })
+  //         .catch(() => {
+  //           return Observable.of(
+  //             new fromAddSalesOrder.FetchAccountFailureAction()
+  //           )
+  //         })
+  //     )
+  //   })
 
   @Effect()
   // addSalesOrder$ = this.actions$
@@ -127,9 +127,9 @@ export class AddSalesOrderEffects {
 
   constructor(
     private actions$: Actions,
-    private salesOrderService: SalesOrderService,
-    private localService: LocalService,
-    private stockService: StockService,
+    // private salesOrderService: SalesOrderService,
+    // private localService: LocalService,
+    // private stockService: StockService,
     private toastCtrl: ToastController
   ) {}
 }

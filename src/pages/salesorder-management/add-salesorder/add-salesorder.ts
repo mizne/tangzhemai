@@ -5,10 +5,9 @@ import {
   ViewController,
   AlertController,
   ModalController,
-  ToastController
 } from 'ionic-angular'
 
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
+import { Validators, FormGroup, FormBuilder } from '@angular/forms'
 
 import { FeedbackService } from '../../../app/services/feedback.service'
 import { DestroyService } from '../../../app/services/destroy.service'
@@ -16,7 +15,7 @@ import { DestroyService } from '../../../app/services/destroy.service'
 import { Subject } from 'rxjs/Subject'
 import { Observable } from 'rxjs/Observable'
 
-import { SalesOrder } from '../models/salesorder.model'
+// import { SalesOrder } from '../models/salesorder.model'
 import { Stock } from '../../purchase-management/models/stock.model'
 import { Saler } from '../models/saler.model'
 import { Account } from '../models/account.model'
@@ -76,7 +75,6 @@ export class AddSalesorderPage implements OnInit {
     private viewCtrl: ViewController,
     private feedbackService: FeedbackService,
     private modalCtrl: ModalController,
-    private toastCtrl: ToastController,
     private fb: FormBuilder,
     private store: Store<State>,
     private destroyService: DestroyService

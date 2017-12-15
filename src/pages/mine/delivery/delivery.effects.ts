@@ -8,8 +8,6 @@ import { MerchantInfoService } from '../services/merchant-info.service'
 import { LocalService } from '../../../app/services/local.service'
 import * as fromDelivery from './delivery.action'
 
-import { MerchantInfo } from '../models/merchant-info.model'
-
 /**
  * Effects offer a way to isolate and easily test side-effects within your
  * application.

@@ -1,5 +1,3 @@
-import { ToastController, LoadingController } from 'ionic-angular'
-
 import { Injectable } from '@angular/core'
 import { Effect, Actions } from '@ngrx/effects'
 import { Observable } from 'rxjs/Observable'
@@ -23,7 +21,7 @@ export class SalesOrderSelectGoodsEffects {
           .map(goodses => {
             return new fromSelectGoods.FetchGoodsSuccessAction(goodses)
           })
-          .catch(e => {
+          .catch(() => {
             return Observable.of(new fromSelectGoods.FetchGoodsFailureAction())
           })
       })
@@ -41,7 +39,7 @@ export class SalesOrderSelectGoodsEffects {
           .map(goodsTypes => {
             return new fromSelectGoods.FetchGoodsTypesSuccessAction(goodsTypes)
           })
-          .catch(e => {
+          .catch(() => {
             return Observable.of(
               new fromSelectGoods.FetchGoodsTypesFailureAction()
             )

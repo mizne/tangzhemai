@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { IonicPage, NavController, NavParams } from 'ionic-angular'
+import { NavController, NavParams } from 'ionic-angular'
 
 import { Observable } from 'rxjs/Observable'
 import { Store } from '@ngrx/store'
-import { Subscription } from 'rxjs/Subscription'
 
 import {
   State,
@@ -59,7 +58,6 @@ export class GoodsStatisticsPage implements OnInit {
     public navCtrl: NavController,
     public navParams: NavParams,
     private store: Store<State>,
-    private destroyService: DestroyService,
     private feedbackService: FeedbackService
   ) {}
 

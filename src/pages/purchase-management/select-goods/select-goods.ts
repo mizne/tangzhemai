@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { NavController, NavParams, ViewController } from 'ionic-angular'
+import { NavParams, ViewController } from 'ionic-angular'
 
 import { Store } from '@ngrx/store'
 import { State, getAllGoods, getAllGoodsTypes } from '../reducers'
@@ -67,7 +67,6 @@ export class SelectGoodsPage implements OnInit {
   totalPrice$: Observable<string>
 
   constructor(
-    private navCtrl: NavController,
     private navParams: NavParams,
     private viewCtrl: ViewController,
     private store: Store<State>,
@@ -280,7 +279,7 @@ export class SelectGoodsPage implements OnInit {
     .startWith('0.00')
   }
 
- 
+
 
   private initFetchData(): void {
     this.ionViewEnterSub

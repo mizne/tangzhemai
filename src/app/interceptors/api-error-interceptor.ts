@@ -5,23 +5,19 @@ import {
   HttpHandler,
   HttpRequest,
   HttpResponse,
-  HttpHeaders,
   HttpErrorResponse
 } from '@angular/common/http'
 
-import { AlertController, NavController } from 'ionic-angular'
+import { AlertController } from 'ionic-angular'
 import { Observable } from 'rxjs/Observable'
 
 import { environment } from '../../environments/environment'
-import { LoginPage } from '../../pages/login/login'
 import { Store } from '@ngrx/store'
 import { State } from '../reducers'
 import { ToLoginPageAction } from '../app.action'
 
 @Injectable()
 export class ApiErrorInterceptor implements HttpInterceptor {
-  private url = `${environment.SERVER_URL}/api/test`
-
   constructor(
     private injector: Injector,
     private store: Store<State>

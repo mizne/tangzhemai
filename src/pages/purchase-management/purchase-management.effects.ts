@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable'
 import * as fromPurchase from './purchase-management.action'
 import { PurchaseService } from './services/purchase.service'
 import { ProviderService } from './services/provider.service'
-import { StockService } from './services/stock.service'
+// import { StockService } from './services/stock.service'
 
 import { LocalService } from '../../app/services/local.service'
 
@@ -31,7 +31,7 @@ export class PurchaseEffects {
             load.dismiss()
             return new fromPurchase.FetchPurchasesSuccessAction(purchases)
           })
-          .catch(e => {
+          .catch(() => {
             load.dismiss()
             return Observable.of(new fromPurchase.FetchPurchasesFailureAction())
           })
@@ -58,7 +58,7 @@ export class PurchaseEffects {
             new fromPurchase.FetchPurchasesAction(0)
           ]
         })
-        .catch(e => {
+        .catch(() => {
           load.dismiss()
           return Observable.of(new fromPurchase.AddPurchaseFailureAction())
         })
@@ -97,7 +97,7 @@ export class PurchaseEffects {
           .map(providers => {
             return new fromPurchase.FetchProvidersSuccessAction(providers)
           })
-          .catch(e => {
+          .catch(() => {
             return Observable.of(new fromPurchase.FetchProvidersFailureAction())
           })
       )
@@ -118,7 +118,7 @@ export class PurchaseEffects {
               new fromPurchase.FetchProvidersAction()
             ]
           })
-          .catch(e => {
+          .catch(() => {
             return Observable.of(new fromPurchase.AddProviderFailureAction())
           })
       )
@@ -144,29 +144,29 @@ export class PurchaseEffects {
       }).present()
     })
 
-  @Effect()
-  fetchStocks$ = this.actions$
-    .ofType(fromPurchase.FETCH_STOCK)
-    .switchMap(() => {
-      return Observable.fromPromise(
-        this.localService.getTenantId()
-      ).mergeMap(tenantId =>
-        this.stockService
-          .fetchStocks(tenantId)
-          .map(stocks => {
-            return new fromPurchase.FetchStockSuccessAction(stocks)
-          })
-          .catch(e => {
-            return Observable.of(new fromPurchase.FetchStockFailureAction())
-          })
-      )
-    })
+  // @Effect()
+  // fetchStocks$ = this.actions$
+  //   .ofType(fromPurchase.FETCH_STOCK)
+  //   .switchMap(() => {
+  //     return Observable.fromPromise(
+  //       this.localService.getTenantId()
+  //     ).mergeMap(tenantId =>
+  //       this.stockService
+  //         .fetchStocks(tenantId)
+  //         .map(stocks => {
+  //           return new fromPurchase.FetchStockSuccessAction(stocks)
+  //         })
+  //         .catch(e => {
+  //           return Observable.of(new fromPurchase.FetchStockFailureAction())
+  //         })
+  //     )
+  //   })
 
   constructor(
     private actions$: Actions,
     private purchaseService: PurchaseService,
     private providerService: ProviderService,
-    private stockService: StockService,
+    // private stockService: StockService,
     private localService: LocalService,
     private toastCtrl: ToastController,
     private loadCtrl: LoadingController

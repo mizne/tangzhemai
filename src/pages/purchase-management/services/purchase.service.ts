@@ -1,25 +1,12 @@
-import { HttpClient, HttpParams } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 
 import { APIResponse } from '../../../app/interceptors/api-error-interceptor'
 import { Purchase, PurchaseResp } from '../models/purchase.model'
 
-import * as R from 'ramda'
 import { PurchaseFilter } from '../purchase-management.action'
 
-import { Storage } from '@ionic/storage'
-
-const allProviders = [
-  {
-    id: '0',
-    name: '测试供应商0'
-  },
-  {
-    id: '1',
-    name: '测试供应商1'
-  }
-]
 
 @Injectable()
 export class PurchaseService {
@@ -27,7 +14,6 @@ export class PurchaseService {
 
   constructor(
     private http: HttpClient,
-    private storage: Storage
   ) {}
 
   fetchPurchases(
@@ -38,7 +24,7 @@ export class PurchaseService {
     if (filter !== PurchaseFilter.DEFAULT) {
       query += `&status=${filter}`
     }
-    
+
     return this.http
       .get(this.purchaseUrl + query)
       .map(resp => (resp as APIResponse).result as PurchaseResp[])
@@ -46,8 +32,6 @@ export class PurchaseService {
         result.map(Purchase.convertFromResp)
       )
       .catch(this.handleError)
-
-      // return Observable.fromPromise(this.storage.get('FAKE_PURCHASES').then(purchases => purchases || []))
   }
 
   addPurchase(tenantId: string, purchase: Purchase) {
@@ -66,7 +50,7 @@ export class PurchaseService {
     .catch(this.handleError)
   }
 
-  
+
   private handleError(error: any) {
     const errMsg = error.message
       ? error.message

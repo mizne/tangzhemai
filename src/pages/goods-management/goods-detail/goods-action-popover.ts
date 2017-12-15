@@ -6,7 +6,6 @@ import {
   ModalController,
   ViewController,
   NavParams,
-  AlertController
 } from 'ionic-angular'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
@@ -72,7 +71,6 @@ export class GoodsActionPopoverPage {
     private navParams: NavParams,
     public app: App,
     public modalCtrl: ModalController,
-    private alertCtrl: AlertController,
     private store: Store<State>,
     private feedbackService: FeedbackService,
     private destroyService: DestroyService

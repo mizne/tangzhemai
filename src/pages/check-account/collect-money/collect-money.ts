@@ -6,8 +6,6 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store'
 import { State, getCollectMoney } from '../reducers'
 
-import { CollectMoney } from '../models/collect-money.model'
-
 /**
  * Generated class for the CollectMoneyPage page.
  *
@@ -23,7 +21,7 @@ export class CollectMoneyPage {
   collectMoneyDesc$: Observable<{
     revenueReceived: string // 收款实收
     revenueReceivedNet: string // 收款实收净额
-  
+
     receivedOrderAmount: string // 收款订单金额
     receivedOrderMerchantDiscount: string // 收款订单 商家优惠
     receivedRefundAmount: string // 收款实退金额
@@ -37,7 +35,7 @@ export class CollectMoneyPage {
   }
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private store: Store<State>
   ) {
@@ -53,7 +51,7 @@ export class CollectMoneyPage {
     .map((collectMoney) => ({
       revenueReceived: collectMoney.revenueReceived.toFixed(2) + '元',// 收款实收
       revenueReceivedNet: collectMoney.revenueReceivedNet.toFixed(2) + '元', // 收款实收净额
-    
+
       receivedOrderAmount: collectMoney.receivedOrderAmount.toFixed(2) + '元', // 收款订单金额
       receivedOrderMerchantDiscount: collectMoney.receivedOrderMerchantDiscount.toFixed(2) + '元', // 收款订单 商家优惠
       receivedRefundAmount: collectMoney.receivedRefundAmount.toFixed(2) + '元', // 收款实退金额

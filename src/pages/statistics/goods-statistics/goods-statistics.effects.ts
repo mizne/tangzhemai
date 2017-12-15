@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Observable'
 
 import { StatisticsService } from '../../../app/services/statistics.service'
 import * as fromGoodsStatistics from './goods-statistics.action'
-import { StatisticsItem } from '../models/statistics.model'
 
 /**
  * Effects offer a way to isolate and easily test side-effects within your

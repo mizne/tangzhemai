@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store'
 
-import { SalesOrder } from './models/salesorder.model'
 import { Order } from '../order/models/order.model'
 
 export const FETCH_SALESORDER = '[SalesOrder] Fetch SalesOrders'

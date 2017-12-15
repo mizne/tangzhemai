@@ -5,7 +5,6 @@ import {
   NavController,
   NavParams,
   App,
-  AlertController,
   ModalController
 } from 'ionic-angular'
 import { FormControl } from '@angular/forms'
@@ -24,12 +23,8 @@ import {
   FetchGoodsAction,
   FetchGoodsParams,
   FetchGoodsCountParams,
-  FetchGoodsUnitsAction,
-  FectchGoodsTypesAction
 } from './goods-management.action'
 import { Goods } from './models/goods.model'
-
-import * as R from 'ramda'
 
 /**
  * Generated class for the GoodsManagementPage page.
@@ -111,7 +106,6 @@ export class GoodsManagementPage {
     public navParams: NavParams,
     private app: App,
     private feedbackService: FeedbackService,
-    private alertCtrl: AlertController,
     private store: Store<State>,
     private destroyService: DestroyService,
     private modalCtrl: ModalController
@@ -174,7 +168,7 @@ export class GoodsManagementPage {
       .subscribe(({ goodsParams, countParams }) => {
         this.store.dispatch(new FetchGoodsAction(goodsParams))
         this.store.dispatch(new FetchGoodsCountAction(countParams))
-        
+
       })
   }
 
@@ -201,7 +195,7 @@ export class GoodsManagementPage {
         this.feedbackService.feedback()
       })
       .takeUntil(this.destroyService)
-      .subscribe(data => {
+      .subscribe(() => {
         this.modalCtrl.create(AddGoodsPage, {
           action: GooodsActionType.CREATE
         }).present()

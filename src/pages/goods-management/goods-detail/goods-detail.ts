@@ -1,6 +1,5 @@
 import { Component } from '@angular/core'
 import { NavController, NavParams, PopoverController } from 'ionic-angular'
-import { FormControl } from '@angular/forms'
 
 import { Observable } from 'rxjs/Observable'
 import { Goods } from '../models/goods.model'

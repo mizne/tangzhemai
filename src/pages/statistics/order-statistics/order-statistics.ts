@@ -1,6 +1,5 @@
-
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core'
-import { IonicPage, NavController, NavParams } from 'ionic-angular'
+import { Component, OnInit } from '@angular/core'
+import { NavController, NavParams } from 'ionic-angular'
 
 import { Observable } from 'rxjs/Observable'
 import { Store } from '@ngrx/store'
@@ -11,7 +10,6 @@ import {
   getOrdersStatisticsOfToday,
   getOrdersStatisticsOfThisMonth,
   getOrdersStatisticsOfThisYear,
-  getOrderStatisticsLoading
 } from '../reducers'
 import {
   FetchOrdersStatisticsOfTodayAction,

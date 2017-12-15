@@ -9,15 +9,12 @@ import {
 import { Store } from '@ngrx/store'
 import { State, getCurrentSalesOrders, getSalesOrderLoading } from './reducers'
 import { FetchSalesOrderAction } from './salesorder-management.action'
-
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
 
 import { AddSalesorderPage } from './add-salesorder/add-salesorder'
 import { OrderDetailPage } from '../order/order-detail/order-detail'
-
 import { Order } from '../order/models/order.model'
-
 import { DestroyService } from '../../app/services/destroy.service'
 
 /**

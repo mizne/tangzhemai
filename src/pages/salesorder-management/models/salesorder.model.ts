@@ -1,4 +1,4 @@
-import * as R from 'ramda'
+// import * as R from 'ramda'
 
 export interface OrderGoods {
   id?: string
@@ -15,11 +15,11 @@ export class SalesOrder {
   phone?: string
   status?: number
 
-  static convertFromResp(resp: SalesOrderResp): SalesOrder {
-    return R.reject(R.isNil, {
+  // static convertFromResp(resp: SalesOrderResp): SalesOrder {
+  //   return R.reject(R.isNil, {
 
-    })
-  }
+  //   })
+  // }
 }
 
 export interface SalesOrderResp {

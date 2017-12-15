@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store'
-import { CheckAccount } from './models/check-account.model'
 import { GoodsWriteOff } from './models/goods-writeoff.model'
 import { CollectMoney } from './models/collect-money.model'
 
