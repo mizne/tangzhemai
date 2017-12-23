@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage'
 import * as R from 'ramda'
 
+import { LoginResp } from '../../pages/login/login.service'
+
 @Injectable()
 export class TenantService {
 
@@ -65,13 +67,16 @@ export class TenantService {
     })
   }
 
-  login({ tenantId, token, name, aliasName }): Promise<any> {
+  login({ tenantId, token, name, aliasName }: LoginResp): Promise<LoginResp> {
     return Promise.all([
       this.setTenantId(tenantId),
       this.setToken(token),
       this.setLoginName(name),
       this.setAliasName(aliasName)
     ])
+    .then(() => ({
+      tenantId, token, name, aliasName
+    }))
   }
 
   logout(): Promise<any> {
@@ -81,6 +86,7 @@ export class TenantService {
       this.storage.remove('LOGIN_NAME'),
       this.storage.remove('ALIAS_NAME')
     ])
+
   }
 
   hasLogin(): Promise<void> {
