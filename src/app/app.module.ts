@@ -51,8 +51,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser'
 import { AppVersion } from '@ionic-native/app-version'
 import { FileOpener } from '@ionic-native/file-opener'
 
-import './rxjs-imports'
-
 // https://docs.sentry.io/clients/javascript/integrations/angular/
 import * as Raven from 'raven-js'
 
