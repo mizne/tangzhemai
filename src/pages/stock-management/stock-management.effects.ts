@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core'
 // import * as fromStock from './stock-management.action'
 // import { StockService } from './stock.service'
 
-// import { LocalService } from '../../app/services/local.service'
+// import { LocalService } from '../../app/services/tenant.service'
 
 @Injectable()
 export class StockEffects {

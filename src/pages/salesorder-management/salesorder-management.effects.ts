@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable'
 import * as fromSalesOrder from './salesorder-management.action'
 import { SalesOrderService } from './salesorder.service'
 
-import { LocalService } from '../../app/services/local.service'
+import { TenantService } from '../../app/services/tenant.service'
 
 @Injectable()
 export class SalesOrderEffects {
@@ -20,7 +20,7 @@ export class SalesOrderEffects {
       })
       load.present()
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.salesOrderService
           .fetchSalesOrders(tenantId)
@@ -39,7 +39,7 @@ export class SalesOrderEffects {
   constructor(
     private actions$: Actions,
     private salesOrderService: SalesOrderService,
-    private localService: LocalService,
+    private tenantService: TenantService,
     private loadCtrl: LoadingController
   ) {}
 }

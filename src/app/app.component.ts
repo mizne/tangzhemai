@@ -12,7 +12,8 @@ import { Observable } from 'rxjs/Observable'
 import { OrderPage } from '../pages/order/order'
 
 import { NativeService } from './services/native.service'
-import { LocalService } from './services/local.service'
+import { TenantService } from './services/tenant.service'
+import { LoggerService } from './services/logger.service'
 
 declare const JPush: any
 
@@ -34,7 +35,8 @@ export class MyApp {
     private device: Device,
     private nativeService: NativeService,
     private alertCtrl: AlertController,
-    private localService: LocalService,
+    private tenantService: TenantService,
+    private logger: LoggerService,
     private app: App,
     private zone: NgZone
   ) {
@@ -52,25 +54,31 @@ export class MyApp {
         this.statusBar.styleDefault()
         this.splashScreen.hide()
 
-        // this.localService.clear()
-
-        this.localService
+        this.tenantService
           .hasLogin()
           .then(() => {
             this.store.dispatch(new ToTabsPageAction())
 
             if (this.device.platform) {
-              this.localService.getTenantId().then(tenantId => {
+              this.tenantService.getTenantId().then(tenantId => {
                 JPush.setAlias(
                   {
                     sequence: 1,
                     alias: tenantId
                   },
                   () => {
-                    // window.alert(`set alias success; alias: ${tenantId}`)
+                    this.logger.info({
+                      module: 'JPush',
+                      method: 'setAlias',
+                      description: `set alias success; alias: ${tenantId}`
+                    })
                   },
-                  () => {
-                    // window.alert(`set alias failed; err: ${errMsg}`)
+                  (err) => {
+                    this.logger.error({
+                      module: 'JPush',
+                      method: 'setAlias',
+                      description: `set alias failed; err: ${err.message}`
+                    })
                   }
                 )
               })
@@ -86,13 +94,28 @@ export class MyApp {
           this.nativeService.detectionUpgrade()
         }
 
-        return this.localService.getJPushID()
+        return this.tenantService.getJPushID()
       })
       .then(id => {
         if (id) {
           return id
         } else {
           return this.fetchRegistrationID()
+          .then(id => {
+            this.logger.info({
+              module: 'JPush',
+              method: 'fetchRegistrationID',
+              description: `fetch registration id success; id: ${id}`
+            })
+            return id
+          })
+          .catch(e => {
+            this.logger.error({
+              module: 'JPush',
+              method: 'fetchRegistrationID',
+              description: `fetch registration id failed; err: ${e.message}`
+            })
+          })
         }
       })
       .then(() => {
@@ -140,7 +163,7 @@ export class MyApp {
             tryCount += 1
             window.setTimeout(getRegistrationID, 100)
           } else {
-            this.localService.setJPushID(data)
+            this.tenantService.setJPushID(data)
             resolve(data)
           }
         } catch (exception) {

@@ -1,12 +1,19 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { LocalService } from '../services/local.service'
-import { Device } from '@ionic-native/device'
+import { Injectable } from '@angular/core'
+import { TenantService } from '../services/tenant.service'
+import * as Raven from 'raven-js'
+import { environment } from '../../environments/environment'
+import { Observable } from 'rxjs/Observable';
 
 interface ErrorInfo {
-  module: string,
-  method: string,
+  module: string
+  method: string
   description: string
+}
+
+interface HttpErrorInfo {
+  module: string
+  method: string
+  error: any
 }
 
 /*
@@ -17,39 +24,73 @@ interface ErrorInfo {
 */
 @Injectable()
 export class LoggerService {
-  private url = 'http://logger.xiaovbao.cn/api/v1/mobile-admin/error-message'
-
-  constructor(
-    public http: HttpClient,
-    private localService: LocalService,
-    private device: Device
-  ) {
-  }
+  constructor(private tenantService: TenantService) {}
 
   /**
    * info 级别日志记录
    *
    * @param {ErrorInfo} error
-   * @returns {Promise<any>}
-   * @memberof LoggerProvider
+   * @returns {(Promise<any> | void)}
+   * @memberof LoggerService
    */
-  info(error: ErrorInfo): Promise<any> {
-    return this.postErrorMessage(error.module, 'INFO', error.method, error.description)
+  info(error: ErrorInfo): Promise<any> | void {
+    if (environment.production) {
+      return this.postErrorMessage(
+        error.module,
+        'INFO',
+        error.method,
+        error.description
+      )
+    } else {
+      console.info(error.description)
+    }
   }
 
   /**
    * error 级别日志记录
    *
    * @param {ErrorInfo} error
-   * @returns {Promise<any>}
-   * @memberof LoggerProvider
+   * @returns {(Promise<any> | void)}
+   * @memberof LoggerService
    */
-  error(error: ErrorInfo): Promise<any> {
-    return this.postErrorMessage(error.module, 'ERROR', error.method, error.description)
+  error(error: ErrorInfo): Promise<any> | void {
+    if (environment.production) {
+      return this.postErrorMessage(
+        error.module,
+        'ERROR',
+        error.method,
+        error.description
+      )
+    } else {
+      console.error(error.description)
+    }
+  }
+/**
+ * 记录 Http error
+ *
+ * @param {HttpErrorInfo} info
+ * @returns {Observable<any>}
+ * @memberof LoggerService
+ */
+httpError(info: HttpErrorInfo): Observable<any> {
+    const errMsg = info.error.message
+      ? info.error.message
+      : info.error.status
+        ? `${info.error.status} - ${info.error.statusText}`
+        : 'Server error'
+
+    this.error({
+      module: info.module,
+      method: info.method,
+      description: errMsg
+    })
+
+    return Observable.throw(errMsg)
   }
 
   /**
-   * 日志记录
+   * 调用 Sentry.io 实现
+   * https://docs.sentry.io/clients/javascript/integrations/angular/
    *
    * @private
    * @param {any} module
@@ -57,39 +98,19 @@ export class LoggerService {
    * @param {any} method
    * @param {any} description
    * @returns {Promise<any>}
-   * @memberof LoggerProvider
+   * @memberof LoggerService
    */
   private postErrorMessage(module, level, method, description): Promise<any> {
-    return Promise.all([this.localService.getTenantId(), this.localService.getLoginName()])
-    .then(([tenantId, loginName]) => {
-      const params = {
-        tenantId,
-        loginName,
-        module,
-        level,
-        method,
-        description,
-        devicePlatform: this.device.platform,
-        deviceVersion: this.device.version,
-        deviceUUID: this.device.uuid
-      }
-      return this.http.post(this.url, params)
-      .toPromise()
-      .catch(this.handleError)
+    return Promise.all([
+      this.tenantService.getTenantId(),
+      this.tenantService.getLoginName()
+    ]).then(([tenantId, loginName]) => {
+      const msg = `Module: ${module}, Method: ${method}, TenantId: ${tenantId}, LoginName: ${loginName}, description: ${description}`
+
+      Raven.captureMessage(
+        msg,
+        level === 'INFO' ? { level: 'info' } : undefined
+      )
     })
-
-  }
-
-  /**
-   * http 错误处理
-   *
-   * @private
-   * @param {*} error
-   * @returns {Promise<any>}
-   * @memberof LoggerProvider
-   */
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error)
-    return Promise.reject(error.message || error)
   }
 }

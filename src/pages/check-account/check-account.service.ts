@@ -7,6 +7,7 @@ import { APIResponse } from '../../app/interceptors/api-error-interceptor'
 import { CheckAccount } from './models/check-account.model'
 import { GoodsWriteOff } from './models/goods-writeoff.model'
 import { CollectMoney } from './models/collect-money.model'
+import { LoggerService } from '../../app/services/logger.service'
 
 export interface FetchCheckAccountResp {
   checkAccount: CheckAccount,
@@ -19,7 +20,10 @@ export class CheckAccountService {
   private goodsWriteOffUrl = '/admin/GoodsWriteOff'
   private revenueReceivedUrl = '/admin/revenueReceived'
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private logger: LoggerService
+  ) {}
 
   fetchCheckAccount(tenantId: string, startTime: string, endTime: string): Observable<FetchCheckAccountResp> {
 
@@ -46,7 +50,13 @@ export class CheckAccountService {
       }
       return result
     })
-    .catch(this.handleError)
+    .catch((e) => {
+      return this.logger.httpError({
+        module: 'CheckAccountService',
+        method: 'fetchCheckAccount',
+        error: e
+      })
+    })
   }
 
   fetchGoodsWriteOff(tenantId: string, startTime: string, endTime: string): Observable<GoodsWriteOff[]> {
@@ -55,7 +65,13 @@ export class CheckAccountService {
     return this.http
       .get(this.goodsWriteOffUrl + query)
       .map(resp => (resp as APIResponse).result)
-      .catch(this.handleError)
+      .catch((e) => {
+        return this.logger.httpError({
+          module: 'CheckAccountService',
+          method: 'fetchGoodsWriteOff',
+          error: e
+        })
+      })
   }
 
   fetchRevenueReceived(tenantId: string, startTime: string, endTime: string): Observable<CollectMoney[]> {
@@ -64,14 +80,12 @@ export class CheckAccountService {
     return this.http
       .get(this.revenueReceivedUrl + query)
       .map(resp => (resp as APIResponse).result)
-      .catch(this.handleError)
-  }
-
-  private handleError(error: any) {
-    const errMsg = error.message
-      ? error.message
-      : error.status ? `${error.status} - ${error.statusText}` : 'Server error'
-    console.error(errMsg) // log to console instead
-    return Observable.throw(errMsg)
+      .catch((e) => {
+        return this.logger.httpError({
+          module: 'CheckAccountService',
+          method: 'fetchRevenueReceived',
+          error: e
+        })
+      })
   }
 }

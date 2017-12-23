@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable'
 
 import * as fromSelectGoods from './select-goods.action'
 
-import { LocalService } from '../../../app/services/local.service'
+import { TenantService } from '../../../app/services/tenant.service'
 import { GoodsService } from '../../../app/services/goods.service'
 
 @Injectable()
@@ -14,7 +14,7 @@ export class SelectGoodsEffects {
     .ofType(fromSelectGoods.FETCH_GOODS)
     .switchMap(() => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .fetchGoods(tenantId)
@@ -32,7 +32,7 @@ export class SelectGoodsEffects {
     .ofType(fromSelectGoods.FETCH_GOODS_TYPES)
     .switchMap(() => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .fetchAllGoodsTypes(tenantId)
@@ -50,6 +50,6 @@ export class SelectGoodsEffects {
   constructor(
     private actions$: Actions,
     private goodsService: GoodsService,
-    private localService: LocalService
+    private tenantService: TenantService
   ) {}
 }

@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { reducers } from './reducers'
+import { AppEffects } from './app.effects'
 import { environment } from '../environments/environment'
 
 import { ApiErrorInterceptor } from './interceptors/api-error-interceptor'
@@ -33,7 +34,7 @@ import { MoreAppsPageModule } from '../pages/more-apps/more-apps.module'
 import { LoggerService } from './services/logger.service'
 import { NativeService } from './services/native.service'
 import { FeedbackService } from './services/feedback.service'
-import { LocalService } from './services/local.service'
+import { TenantService } from './services/tenant.service'
 import { StatisticsService } from './services/statistics.service'
 import { GoodsService } from './services/goods.service'
 
@@ -51,6 +52,19 @@ import { AppVersion } from '@ionic-native/app-version'
 import { FileOpener } from '@ionic-native/file-opener'
 
 import './rxjs-imports'
+
+// https://docs.sentry.io/clients/javascript/integrations/angular/
+import * as Raven from 'raven-js'
+
+Raven.config(
+  'https://9fa0a3911d90480e9a174b06d7d03431@sentry.io/263317'
+).install()
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    Raven.captureException(err)
+  }
+}
 
 @NgModule({
   declarations: [MyApp],
@@ -79,7 +93,7 @@ import './rxjs-imports'
           maxAge: 42
         })
       : [],
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AppEffects]),
 
     IonicModule.forRoot(MyApp, {
       spinner: 'crescent'
@@ -102,14 +116,15 @@ import './rxjs-imports'
     AppVersion,
     FileOpener,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: RavenErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: ApiErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     LoggerService,
     NativeService,
     FeedbackService,
-    LocalService,
+    TenantService,
     StatisticsService,
-    GoodsService,
+    GoodsService
   ]
 })
 export class AppModule {}

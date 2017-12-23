@@ -6,7 +6,7 @@ import { APIResponse } from '../../../app/interceptors/api-error-interceptor'
 import { Purchase, PurchaseResp } from '../models/purchase.model'
 
 import { PurchaseFilter } from '../purchase-management.action'
-
+import { LoggerService } from '../../../app/services/logger.service'
 
 @Injectable()
 export class PurchaseService {
@@ -14,6 +14,7 @@ export class PurchaseService {
 
   constructor(
     private http: HttpClient,
+    private logger: LoggerService
   ) {}
 
   fetchPurchases(
@@ -31,31 +32,27 @@ export class PurchaseService {
       .map(result =>
         result.map(Purchase.convertFromResp)
       )
-      .catch(this.handleError)
+      .catch(e => {
+        return this.logger.httpError({
+          module: 'PurchaseService',
+          method: 'fetchPurchases',
+          error: e
+        })
+      })
   }
 
   addPurchase(tenantId: string, purchase: Purchase) {
-    // console.log('to add purchase ', purchase)
-    // return this.http.post(this.purchaseUrl, {
-    //   ...purchase,
-    //   tenantId
-    // })
-    // .catch(this.handleError)
-
     return this.http.post(this.purchaseUrl, {
       ...Purchase.convertFromModel(purchase),
       tenantId
     })
     .map(resp => (resp as APIResponse).result)
-    .catch(this.handleError)
-  }
-
-
-  private handleError(error: any) {
-    const errMsg = error.message
-      ? error.message
-      : error.status ? `${error.status} - ${error.statusText}` : 'Server error'
-    console.error(errMsg) // log to console instead
-    return Observable.throw(errMsg)
+    .catch(e => {
+      return this.logger.httpError({
+        module: 'PurchaseService',
+        method: 'addPurchase',
+        error: e
+      })
+    })
   }
 }

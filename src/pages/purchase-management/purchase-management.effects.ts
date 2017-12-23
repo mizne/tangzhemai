@@ -9,7 +9,7 @@ import { PurchaseService } from './services/purchase.service'
 import { ProviderService } from './services/provider.service'
 // import { StockService } from './services/stock.service'
 
-import { LocalService } from '../../app/services/local.service'
+import { TenantService } from '../../app/services/tenant.service'
 
 @Injectable()
 export class PurchaseEffects {
@@ -23,7 +23,7 @@ export class PurchaseEffects {
       })
       load.present()
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.purchaseService
           .fetchPurchases(tenantId, filter)
@@ -47,7 +47,7 @@ export class PurchaseEffects {
     })
     load.present()
     return Observable.fromPromise(
-      this.localService.getTenantId()
+      this.tenantService.getTenantId()
     ).mergeMap(tenantId =>
       this.purchaseService
         .addPurchase(tenantId, purchase)
@@ -90,7 +90,7 @@ export class PurchaseEffects {
     .ofType(fromPurchase.FETCH_PROVIDERS)
     .switchMap(() => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.providerService
           .fetchProviders(tenantId)
@@ -108,7 +108,7 @@ export class PurchaseEffects {
     .map((action: fromPurchase.AddProviderAction) => action.providerName)
     .switchMap((providerName) => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.providerService
           .addProvider(tenantId, providerName)
@@ -167,7 +167,7 @@ export class PurchaseEffects {
     private purchaseService: PurchaseService,
     private providerService: ProviderService,
     // private stockService: StockService,
-    private localService: LocalService,
+    private tenantService: TenantService,
     private toastCtrl: ToastController,
     private loadCtrl: LoadingController
   ) {}

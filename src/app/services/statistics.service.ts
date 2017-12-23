@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage'
 import fecha from 'fecha'
 
 import { GoodsStatistics } from '../../pages/statistics/models/statistics.model'
+import { LoggerService } from './logger.service'
 
 // import { LoggerService } from '../../app/services/logger.service'
 
@@ -22,14 +23,16 @@ export class StatisticsService {
   constructor(
     public http: HttpClient,
     // private logger: LoggerService,
-    private storage: Storage
+    private storage: Storage,
+    private logger: LoggerService
   ) {}
+
 
   /**
    * 获取 当天 所有订单统计信息
    *
    * @returns {Observable<Array<any>>}
-   * @memberof StatisticsProvider
+   * @memberof StatisticsService
    */
   fetchOrderStatisticsOfToday(): Observable<Array<any>> {
     const now = new Date()
@@ -45,11 +48,12 @@ export class StatisticsService {
     })
   }
 
+
   /**
    * 获取 当月 所有订单统计信息
    *
    * @returns {Observable<Array<any>>}
-   * @memberof StatisticsProvider
+   * @memberof StatisticsService
    */
   fetchOrderStatisticsOfThisMonth(): Observable<Array<any>> {
     const [startYear, startMonth] = fecha
@@ -72,11 +76,12 @@ export class StatisticsService {
     })
   }
 
+
   /**
    * 获取 当年 所有订单统计信息
    *
    * @returns {Observable<Array<any>>}
-   * @memberof StatisticsProvider
+   * @memberof StatisticsService
    */
   fetchOrderStatisticsOfThisYear(): Observable<Array<any>> {
     const startYear = fecha.format(new Date(), 'YYYY')
@@ -90,13 +95,19 @@ export class StatisticsService {
     })
   }
 
+
   /**
    * 获取 统计信息
    *
    * @private
-   * @param {any} { startTime, endTime, type, status }
+   * @param {any} {
+   *     startTime,
+   *     endTime,
+   *     type,
+   *     status
+   *   }
    * @returns {Observable<Array<any>>}
-   * @memberof StatisticsProvider
+   * @memberof StatisticsService
    */
   private _fetchOrderStatistics({
     startTime,
@@ -115,7 +126,13 @@ export class StatisticsService {
         })
       })
       .map(resp => (resp as any).result)
-      .catch(this.handleError.bind(this, '_fetchOrderStatistics'))
+      .catch((e) => {
+        return this.logger.httpError({
+          module: 'StatisticsService',
+          method: '_fetchOrderStatistics',
+          error: e
+        })
+      })
   }
 
   fetchGoodsStatisticsOfToday(): Observable<GoodsStatistics[]> {
@@ -143,25 +160,12 @@ export class StatisticsService {
       })
       .map(resp => (resp as any).result)
       .map(results => results.map(GoodsStatistics.convertFromResp))
-      .catch(this.handleError.bind(this, '_fetchGoodsStatistics'))
-  }
-
-  /**
-   * http 错误处理
-   *
-   * @private
-   * @param {string} method
-   * @param {*} error
-   * @returns {Observable<any>}
-   * @memberof StatisticsProvider
-   */
-  private handleError(method: string, error: any): Observable<any> {
-    // this.logger.error({
-    //   module: 'statisticsService',
-    //   method,
-    //   description: error.message || `${method} failed`
-    // })
-    console.error(method, error)
-    return Observable.throw([])
+      .catch((e) => {
+        return this.logger.httpError({
+          module: 'StatisticsService',
+          method: '_fetchGoodsStatistics',
+          error: e
+        })
+      })
   }
 }

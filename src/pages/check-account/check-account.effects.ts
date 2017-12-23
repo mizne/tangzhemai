@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable'
 import * as fromCheckAccount from './check-account.action'
 import { CheckAccountService } from './check-account.service'
 
-import { LocalService } from '../../app/services/local.service'
+import { TenantService } from '../../app/services/tenant.service'
 
 @Injectable()
 export class CheckEffects {
@@ -19,7 +19,7 @@ export class CheckEffects {
       // })
       // load.present()
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.checkAccountService
           .fetchCheckAccount(tenantId, startTime, endTime)
@@ -39,6 +39,6 @@ export class CheckEffects {
   constructor(
     private actions$: Actions,
     private checkAccountService: CheckAccountService,
-    private localService: LocalService,
+    private tenantService: TenantService,
   ) {}
 }

@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store'
 import { State } from './reducers'
 import { LogoutAction } from '../../app/app.action'
 import { FeedbackService } from '../../app/services/feedback.service'
-import { LocalService } from '../../app/services/local.service'
+import { TenantService } from '../../app/services/tenant.service'
 
 import { AboutPage } from './about/about'
 import { HelpCenterPage } from './help-center/help-center'
@@ -65,13 +65,13 @@ export class MinePage {
     private callNumber: CallNumber,
     private store: Store<State>,
     private feedbackService: FeedbackService,
-    private localService: LocalService,
+    private tenantService: TenantService,
     private app: App,
     private toastCtrl: ToastController
   ) {}
 
   ionViewDidLoad() {
-    this.merchantName = this.localService.getAliasName()
+    this.merchantName = this.tenantService.getAliasName()
   }
 
   executeAction(command: string) {

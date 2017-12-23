@@ -5,10 +5,15 @@ import { Observable } from 'rxjs/Observable'
 import { APIResponse } from '../../app/interceptors/api-error-interceptor'
 import { Order, OrderResp } from './models/order.model'
 
+import { LoggerService } from '../../app/services/logger.service'
+
 @Injectable()
 export class OrderService {
   private orderUrl = '/admin/order'
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private logger: LoggerService
+  ) {}
 
   fetchOrders(
     tenantId: string,
@@ -23,15 +28,12 @@ export class OrderService {
       .map(result =>
         result.map(Order.convertFromResp)
       )
-      .catch(this.handleError)
-  }
-
-
-  private handleError(error: any) {
-    const errMsg = error.message
-      ? error.message
-      : error.status ? `${error.status} - ${error.statusText}` : 'Server error'
-    console.error(errMsg) // log to console instead
-    return Observable.throw(errMsg)
+      .catch(e => {
+        return this.logger.httpError({
+          module: 'OrderService',
+          method: 'fetchOrders',
+          error: e
+        })
+      })
   }
 }

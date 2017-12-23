@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable'
 import { ToastController } from 'ionic-angular'
 
 import { MerchantInfoService } from '../services/merchant-info.service'
-import { LocalService } from '../../../app/services/local.service'
+import { TenantService } from '../../../app/services/tenant.service'
 import * as fromDelivery from './delivery.action'
 
 /**
@@ -30,7 +30,7 @@ export class DeliveryEffects {
   fetchMerchantInfo$: Observable<Action> = this.actions$
     .ofType(fromDelivery.FETCH_MERCHANT_INFO)
     .switchMap(() => {
-      return Observable.fromPromise(this.localService.getTenantId()).mergeMap(
+      return Observable.fromPromise(this.tenantService.getTenantId()).mergeMap(
         tenantId => {
           return this.merchantInfoService
             .fetchMerchantInfo(tenantId)
@@ -51,7 +51,7 @@ export class DeliveryEffects {
     .ofType(fromDelivery.EDIT_DELIVERY_START_TIME)
     .map((action: fromDelivery.EditDeliveryStartTimeAction) => action.startTime)
     .switchMap(startTime => {
-      return Observable.fromPromise(this.localService.getTenantId()).mergeMap(
+      return Observable.fromPromise(this.tenantService.getTenantId()).mergeMap(
         tenantId => {
           return this.merchantInfoService
             .editMerchantInfo(tenantId, {
@@ -102,7 +102,7 @@ export class DeliveryEffects {
     .ofType(fromDelivery.EDIT_DELIVERY_END_TIME)
     .map((action: fromDelivery.EditDeliveryEndTimeAction) => action.endTime)
     .switchMap(endTime => {
-      return Observable.fromPromise(this.localService.getTenantId()).mergeMap(
+      return Observable.fromPromise(this.tenantService.getTenantId()).mergeMap(
         tenantId => {
           return this.merchantInfoService
             .editMerchantInfo(tenantId, {
@@ -147,7 +147,7 @@ export class DeliveryEffects {
   constructor(
     private actions$: Actions,
     private merchantInfoService: MerchantInfoService,
-    private localService: LocalService,
+    private tenantService: TenantService,
     private toastCtrl: ToastController
   ) {}
 }

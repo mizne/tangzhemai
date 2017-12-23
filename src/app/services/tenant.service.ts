@@ -3,7 +3,7 @@ import { Storage } from '@ionic/storage'
 import * as R from 'ramda'
 
 @Injectable()
-export class LocalService {
+export class TenantService {
 
   constructor(
     private storage: Storage
@@ -63,6 +63,24 @@ export class LocalService {
         return Promise.resolve()
       }
     })
+  }
+
+  login({ tenantId, token, name, aliasName }): Promise<any> {
+    return Promise.all([
+      this.setTenantId(tenantId),
+      this.setToken(token),
+      this.setLoginName(name),
+      this.setAliasName(aliasName)
+    ])
+  }
+
+  logout(): Promise<any> {
+    return Promise.all([
+      this.storage.remove('TENANT_ID'),
+      this.storage.remove('TOKEN'),
+      this.storage.remove('LOGIN_NAME'),
+      this.storage.remove('ALIAS_NAME')
+    ])
   }
 
   hasLogin(): Promise<void> {

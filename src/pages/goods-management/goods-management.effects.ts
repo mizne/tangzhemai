@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable'
 import * as fromGoods from './goods-management.action'
 import { GoodsService } from '../../app/services/goods.service'
 
-import { LocalService } from '../../app/services/local.service'
+import { TenantService } from '../../app/services/tenant.service'
 
 @Injectable()
 export class GoodsEffects {
@@ -21,7 +21,7 @@ export class GoodsEffects {
       })
       load.present()
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .fetchGoods(
@@ -49,7 +49,7 @@ export class GoodsEffects {
     .map((action: fromGoods.FetchGoodsCountAction) => action.payload)
     .switchMap(({ goodsName, goodsType, isActive }) => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .fetchGoodsCount(tenantId, goodsName, goodsType, isActive)
@@ -65,7 +65,7 @@ export class GoodsEffects {
     .ofType(fromGoods.FETCH_GOODS_TYPES)
     .switchMap(() => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .fetchAllGoodsTypes(tenantId)
@@ -84,7 +84,7 @@ export class GoodsEffects {
     .map((action: fromGoods.AddGoodsTypeAction) => action.goodsTypeName)
     .switchMap(goodsTypeName => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .addGoodsType(tenantId, goodsTypeName)
@@ -134,7 +134,7 @@ export class GoodsEffects {
     .map((action: fromGoods.AddGoodsAction) => action.goods)
     .switchMap(goods => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId => {
         const load = this.loadCtrl.create({
           content: '新增商品中...'
@@ -191,7 +191,7 @@ export class GoodsEffects {
     .ofType(fromGoods.FETCH_GOODS_UNITS)
     .switchMap(() => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .fetchAllGoodsUnits(tenantId)
@@ -210,7 +210,7 @@ export class GoodsEffects {
     .map((action: fromGoods.AddGoodsUnitAction) => action.goodsUnit)
     .switchMap(goodsUnit => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .addGoodsUnit(tenantId, goodsUnit)
@@ -263,7 +263,7 @@ export class GoodsEffects {
       load.present()
 
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .offShelfGoods(tenantId, goodsId)
@@ -316,7 +316,7 @@ export class GoodsEffects {
       load.present()
 
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId =>
         this.goodsService
           .onShelfGoods(tenantId, goodsId)
@@ -370,7 +370,7 @@ export class GoodsEffects {
     .map((action: fromGoods.EditGoodsAction) => action.goods)
     .switchMap(goods => {
       return Observable.fromPromise(
-        this.localService.getTenantId()
+        this.tenantService.getTenantId()
       ).mergeMap(tenantId => {
         return this.goodsService
           .editGoods(tenantId, goods.id, goods)
@@ -412,7 +412,7 @@ export class GoodsEffects {
   constructor(
     private actions$: Actions,
     private goodsService: GoodsService,
-    private localService: LocalService,
+    private tenantService: TenantService,
     private toastCtrl: ToastController,
     private loadCtrl: LoadingController
   ) {}

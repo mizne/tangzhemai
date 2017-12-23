@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store'
 import { State, getTodayStatistics } from './reducers'
 import { FetchTodayStatisticsAction } from './home.action'
 
-import { LocalService } from '../../app/services/local.service'
+import { TenantService } from '../../app/services/tenant.service'
 import { DestroyService } from '../../app/services/destroy.service'
 
 @Component({
@@ -60,7 +60,7 @@ export class HomePage {
     public navCtrl: NavController,
     private store: Store<State>,
     private app: App,
-    private localService: LocalService,
+    private tenantService: TenantService,
     private destroyService: DestroyService
   ) {}
 
@@ -78,7 +78,7 @@ export class HomePage {
   }
 
   private initDataSource(): void {
-    this.merchantName = this.localService.getAliasName()
+    this.merchantName = this.tenantService.getAliasName()
   }
 
   private initSubscriber(): void {

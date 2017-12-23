@@ -17,7 +17,8 @@ import { ToTabsPageAction } from '../../app/app.action'
 import { LoginService } from './login.service'
 
 import { FeedbackService } from '../../app/services/feedback.service'
-import { LocalService } from '../../app/services/local.service'
+import { TenantService } from '../../app/services/tenant.service'
+import { LoggerService } from '../../app/services/logger.service'
 
 declare const JPush: any
 
@@ -48,7 +49,8 @@ export class LoginPage implements OnInit, OnDestroy {
     private store: Store<State>,
     private device: Device,
     private feedbackService: FeedbackService,
-    private localService: LocalService
+    private tenantService: TenantService,
+    private logger: LoggerService
   ) {}
 
   ionViewDidLoad(): void {}
@@ -94,13 +96,14 @@ export class LoginPage implements OnInit, OnDestroy {
     this.subscription = this.loginService.login(this.myForm.value).subscribe(
       result => {
         loading.dismiss()
-        Observable.forkJoin(
-          this.localService.setTenantId(result.tenantId),
-          this.localService.setToken(result.token),
-          this.localService.setLoginName(result.name),
-          this.localService.setAliasName(result.aliasName)
-        )
-          .toPromise()
+        // Observable.forkJoin(
+        //   this.tenantService.setTenantId(result.tenantId),
+        //   this.tenantService.setToken(result.token),
+        //   this.tenantService.setLoginName(result.name),
+        //   this.tenantService.setAliasName(result.aliasName)
+        // )
+        //   .toPromise()
+        this.tenantService.login(result)
           .then(() => {
             this.store.dispatch(new ToTabsPageAction())
             // 真机或模拟器运行
@@ -111,10 +114,18 @@ export class LoginPage implements OnInit, OnDestroy {
                   alias: result.tenantId
                 },
                 () => {
-                  // window.alert(`set alias success; alias: ${this.myForm.value.name}`)
+                  this.logger.info({
+                    module: 'JPush',
+                    method: 'setAlias',
+                    description: `set alias success; alias: ${result.tenantId}`
+                  })
                 },
-                () => {
-                  // window.alert(`set alias failed; err: ${errMsg}`)
+                (err) => {
+                  this.logger.error({
+                    module: 'JPush',
+                    method: 'setAlias',
+                    description: `set alias failed; err: ${err.message}`
+                  })
                 }
               )
             }

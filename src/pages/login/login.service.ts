@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
-// import { LoggerService } from '../../app/services/logger.service'
+import { LoggerService } from '../../app/services/logger.service'
 
-// import { APIResponse } from '../interceptor'
+export interface LoginResp {
+  tenantId: string
+  token: string
+  name: string
+  aliasName: string
+}
+
+// import { APIResponse } from '../../app/interceptors/api-error-interceptor'
 
 /*
   Generated class for the OcrServiceProvider provider.
@@ -15,10 +22,7 @@ import { Observable } from 'rxjs/Observable'
 export class LoginService {
   private url = '/admin/login'
 
-  constructor(
-    public http: HttpClient,
-    // private logger: LoggerService
-  ) {}
+  constructor(public http: HttpClient, private logger: LoggerService) {}
 
   /**
    * 最大 http请求错误 重试次数
@@ -44,7 +48,7 @@ export class LoginService {
    * @returns {Promise<any>}
    * @memberof LoginProvider
    */
-  login({ name, password }): Observable<any> {
+  login({ name, password }): Observable<LoginResp> {
     return this.http
       .post(this.url, {
         userName: name,
@@ -59,20 +63,12 @@ export class LoginService {
           return r.result[0]
         }
       })
-      .catch(this.handleError.bind(this, 'login'))
-  }
-
-  /**
-   * http 错误处理
-   *
-   * @private
-   * @param {string} method
-   * @param {*} error
-   * @returns {Promise<any>}
-   * @memberof LoginProvider
-   */
-  private handleError(method: string, error: any): Observable<any> {
-    console.error(method, error)
-    return Observable.throw(new Error(error.message || '用户名或密码错误!'))
+      .catch(e => {
+        return this.logger.httpError({
+          module: 'LoginService',
+          method: 'login',
+          error: e
+        })
+      })
   }
 }

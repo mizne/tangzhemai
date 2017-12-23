@@ -7,7 +7,7 @@ import { Effect, Actions } from '@ngrx/effects'
 import * as fromAddSalesOrder from './add-salesorder.action'
 // import * as fromSalesOrderManagement from '../salesorder-management.action'
 
-// import { LocalService } from '../../../app/services/local.service'
+// import { LocalService } from '../../../app/services/tenant.service'
 // import { SalesOrderService } from '../salesorder.service'
 // import { StockService } from '../../purchase-management/services/stock.service'
 

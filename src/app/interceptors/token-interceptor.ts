@@ -10,19 +10,19 @@ import {
 import { Observable } from 'rxjs/Observable'
 
 import { environment } from '../../environments/environment'
-import { LocalService } from '../services/local.service'
+import { TenantService } from '../services/tenant.service'
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   private url = `${environment.SERVER_URL}/api/test`
 
-  constructor(private localService: LocalService) {}
+  constructor(private tenantService: TenantService) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return Observable.fromPromise(this.localService.getToken())
+    return Observable.fromPromise(this.tenantService.getToken())
       .map(token => {
         const cloneParams: {
           url?: string

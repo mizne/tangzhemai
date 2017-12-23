@@ -5,12 +5,17 @@ import { Observable } from 'rxjs/Observable'
 import { APIResponse } from '../../../app/interceptors/api-error-interceptor'
 import { MerchantInfo, MerchantInfoResp } from '../models/merchant-info.model'
 
+import { LoggerService } from '../../../app/services/logger.service'
+
 @Injectable()
 export class MerchantInfoService {
   private merchantInfoUrl = '/admin/deal/tenantInfo'
   private changePasswordUrl = '/admin/changePassword'
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private logger: LoggerService
+  ) {}
 
   fetchMerchantInfo(
     tenantId: string,
@@ -20,12 +25,13 @@ export class MerchantInfoService {
     return this.http.get(this.merchantInfoUrl + query)
     .map(res => (res as APIResponse).result[0] as MerchantInfoResp)
     .map(MerchantInfo.convertFromResp)
-    .catch(this.handleError)
-
-    // return Observable.of({
-    //   name: 'testName',
-    //   industry: 'email'
-    // }).delay(3e3)
+    .catch(e => {
+      return this.logger.httpError({
+        module: 'MerchantInfoService',
+        method: 'fetchMerchantInfo',
+        error: e
+      })
+    })
   }
 
   editMerchantInfo(tenantId: string, merchantInfo: MerchantInfo): Observable<any> {
@@ -36,7 +42,13 @@ export class MerchantInfoService {
       }
     })
     .map(res => (res as APIResponse).result)
-    .catch(this.handleError)
+    .catch(e => {
+      return this.logger.httpError({
+        module: 'MerchantInfoService',
+        method: 'editMerchantInfo',
+        error: e
+      })
+    })
   }
 
   changePassword(tenantId: string, oldPassword: string, newPassword: string): Observable<any> {
@@ -46,14 +58,12 @@ export class MerchantInfoService {
       tenantId
     })
     .map(res => (res as APIResponse).result)
-    .catch(this.handleError)
-  }
-
-  private handleError(error: any) {
-    const errMsg = error.message
-      ? error.message
-      : error.status ? `${error.status} - ${error.statusText}` : 'Server error'
-    console.error(errMsg) // log to console instead
-    return Observable.throw(errMsg)
+    .catch(e => {
+      return this.logger.httpError({
+        module: 'MerchantInfoService',
+        method: 'changePassword',
+        error: e
+      })
+    })
   }
 }
